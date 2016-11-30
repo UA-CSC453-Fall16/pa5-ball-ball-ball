@@ -1,0 +1,39 @@
+-----------
+CLASS DECL|
+-----------
+class member variables
+(VarDecl in body)
+
+------------
+METHOD DECL|
+------------
+method local variables
+(VarDecl in body)
+
+---------
+VAR DECL|
+---------
+we don't even have these yet:
+Type ID;
+
+------
+TYPES|
+------
+MeggyColor[]
+int[]
+ID
+
+------------
+STATEMENTS:|
+------------
+Meggy.setAuxLEDs(Exp);
+ID = Exp;
+ID[] = Exp;
+
+------------
+EXPRESSION:|
+------------
+Exp[Exp]
+Exp.length
+new Meggy.Color[Exp]
+new int[Exp]
