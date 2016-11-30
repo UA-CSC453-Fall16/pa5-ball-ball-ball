@@ -23,11 +23,18 @@ tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenColor,(_,_)):(T
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenButton,(_,_)):(TokenDot,(_,_)):rest) = (TokenMeggyButton, (r1,c1)):(tokenSimplifier rest)
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenTone,(_,_)):(TokenDot,(_,_)):rest)   = (TokenMeggyTone, (r1,c1)):(tokenSimplifier rest)
 
---TODO Check that this isn't an issue
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenColor,(_,_)):rest)  = (TokenMeggyColorType, (r1,c1)):(tokenSimplifier rest)
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenButton,(_,_)):rest) = (TokenMeggyButtonType, (r1,c1)):(tokenSimplifier rest)
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenTone,(_,_)):rest)   = (TokenMeggyToneType, (r1,c1)):(tokenSimplifier rest)
 
+--PA5 Relex
+tokenSimplifier ((TokenDot, (r1,c1)):(TookenLength,(_,_)):rest) = (TokenDotLength, (r1,c1)):(tokenSimplifier rest)
+tokenSimplifier ((TokenInt, (r1,c1)):(TokenLeftBracket,(_,_)):(TokenRightBracket,(_,_)):rest) = (TokenIntArrayType, (r1,c1)):(tokenSimplifier rest)
+tokenSimplifier ((TokenBigMeggy, (r1,c1)):
+                 (TokenDot,(_,_)):
+                 (TokenColor,(_,_)):
+                 (TokenLeftBracket,(_,_)):
+                 (TokenRightBracket,(_,_)):rest)  = (TokenColorArrayType, (r1,c1)):(tokenSimplifier rest)
 
 tokenSimplifier ((TokenImport, (r1,c1)):
                  (TokenLittleMeggy, (_,_)):

@@ -150,8 +150,17 @@ data Token
     | TokenNew           -- new
     | TokenTone
 
-
-    --Relex tokens (see Relex.hs, second Lexing pass to shorten Meggy calls and ByteCast to one token)
+    {-
+      Relex tokens:
+        Relex is a second lexer pass to simplify the token strings. This helps alleviate
+        issues with LL(1) parsing. Instead of dealing with the ambiguity of seeing the "Meggy"
+        token, we can be confident that we will get a TokenMeggySetPix instead of 
+        "Meggy" "." "setPixel". Quite helpful. See ReLex.hs for more documentation.
+        Another example is the first line of every meggy java program:
+            [TokenImport, TokenMeggy, TokenDot, TokenBigMeggy, TokenSemicolon] => [TokenMeggyImport]
+        or:
+            [TokenInt, TokenLeftBracket, TokenRightBracket] => [TokenIntArrayType]
+    -}
     | TokenMeggySetPix
     | TokenMeggyDelay
     | TokenMeggyGetPix
@@ -166,6 +175,15 @@ data Token
     | TokenMeggyToneType
     | TokenByteCast
 
+    --PA5 Stuff
+    | TokenIntArrayType
+    | TokenColorArrayType
+    | TokenSetAuxLEDs
+    | TokenMeggySetAux
+    | TokenLength
+    | TokenDotLength
+    | TokenAssign
+
     --misc
     | WhiteSpace
     | TokenNewLine
@@ -177,7 +195,7 @@ data Token
 -- Lookup keyword tokens.
 lookupKW :: (Int,Int) -> String -> (Token, (Int,Int))
 lookupKW (row,col) keyword
-    -- Meggy keywords
+    -- Literal keywords
     | keyword  == "DARK"        = (TokenColorValue 0, (row,(col - (length keyword))))
     | keyword  == "RED"         = (TokenColorValue 1, (row,(col - (length keyword))))
     | keyword  == "ORANGE"      = (TokenColorValue 2, (row,(col - (length keyword))))
@@ -186,12 +204,6 @@ lookupKW (row,col) keyword
     | keyword  == "BLUE"        = (TokenColorValue 5, (row,(col - (length keyword))))
     | keyword  == "VIOLET"      = (TokenColorValue 6, (row,(col - (length keyword))))
     | keyword  == "WHITE"       = (TokenColorValue 7, (row,(col - (length keyword))))
-    | keyword  == "checkButton" = (TokenCheckButton, (row,(col - (length keyword))))
-    | keyword  == "getPixel"    = (TokenGetPixel, (row,(col - (length keyword))))
-    | keyword  == "setPixel"    = (TokenSetPixel, (row,(col - (length keyword))))
-    | keyword  == "Button"      = (TokenButton, (row,(col - (length keyword))))
-    | keyword  == "toneStart"   = (TokenToneStart, (row,(col - (length keyword))))
-    | keyword  == "delay"       = (TokenDelay, (row,(col - (length keyword))))
     | keyword  == "Up"          = (TokenButtonValue "Up", (row,(col - (length keyword))))
     | keyword  == "Down"        = (TokenButtonValue "Down", (row,(col - (length keyword))))
     | keyword  == "Left"        = (TokenButtonValue "Left", (row,(col - (length keyword))))
@@ -210,29 +222,46 @@ lookupKW (row,col) keyword
     | keyword  == "A3"          = (TokenToneValue 36363, (row,(col - (length keyword))))
     | keyword  == "As3"         = (TokenToneValue 34323, (row,(col - (length keyword))))
     | keyword  == "B3"          = (TokenToneValue 32397, (row,(col - (length keyword))))
-    -- others
-    | keyword  == "class"       = (TokenClass, (row,(col - (length keyword))))
-    | keyword  == "public"      = (TokenPublic, (row,(col - (length keyword))))
-    | keyword  == "static"      = (TokenStatic, (row,(col - (length keyword))))
-    | keyword  == "void"        = (TokenVoid, (row,(col - (length keyword))))
-    | keyword  == "main"        = (TokenMain, (row,(col - (length keyword))))
+    | keyword  == "true"        = (TokenTrue, (row,(col - (length keyword))))
+    | keyword  == "false"       = (TokenFalse, (row,(col - (length keyword))))
+
+    -- Meggy library keywords
+    | keyword  == "checkButton" = (TokenCheckButton, (row,(col - (length keyword))))
+    | keyword  == "getPixel"    = (TokenGetPixel,    (row,(col - (length keyword))))
+    | keyword  == "setPixel"    = (TokenSetPixel,    (row,(col - (length keyword))))
+    | keyword  == "toneStart"   = (TokenToneStart,   (row,(col - (length keyword))))
+    | keyword  == "delay"       = (TokenDelay,       (row,(col - (length keyword))))
+    | keyword  == "setAuxLEDs"  = (TokenSetAuxLEDs,  (row, (col - (length keyword))))
+
+    -- Java/General keywords
     | keyword  == "import"      = (TokenImport, (row,(col - (length keyword))))
     | keyword  == "meggy"       = (TokenLittleMeggy, (row,(col - (length keyword))))
     | keyword  == "Meggy"       = (TokenBigMeggy, (row,(col - (length keyword))))
-    | keyword  == "byte"        = (TokenByte, (row,(col - (length keyword))))
-    | keyword  == "String"      = (TokenString, (row,(col - (length keyword))))
-    | keyword  == "Color"       = (TokenColor, (row,(col - (length keyword))))
-    | keyword  == "true"        = (TokenTrue, (row,(col - (length keyword))))
-    | keyword  == "false"       = (TokenFalse, (row,(col - (length keyword))))
+    | keyword  == "public"      = (TokenPublic, (row,(col - (length keyword))))
+    | keyword  == "static"      = (TokenStatic, (row,(col - (length keyword))))
+    | keyword  == "main"        = (TokenMain, (row,(col - (length keyword))))
+    | keyword  == "length"      = (TokenLength, (row,(col - (length keyword))))
+    
+    -- Control flow
     | keyword  == "if"          = (TokenIf, (row,(col - (length keyword))))
     | keyword  == "else"        = (TokenElse, (row,(col - (length keyword))))
     | keyword  == "while"       = (TokenWhile, (row,(col - (length keyword))))
     | keyword  == "return"      = (TokenReturn, (row,(col - (length keyword))))
+
+    -- Class/Instance keywords
+    | keyword  == "class"       = (TokenClass, (row,(col - (length keyword))))
     | keyword  == "this"        = (TokenThis, (row,(col - (length keyword))))
     | keyword  == "new"         = (TokenNew, (row,(col - (length keyword))))
-    | keyword  == "int"         = (TokenInt, (row,(col - (length keyword))))
+
+    -- Type keywords
     | keyword  == "boolean"     = (TokenBoolean, (row,(col - (length keyword))))
+    | keyword  == "byte"        = (TokenByte, (row,(col - (length keyword))))
+    | keyword  == "int"         = (TokenInt, (row,(col - (length keyword))))
+    | keyword  == "void"        = (TokenVoid, (row,(col - (length keyword))))
+    | keyword  == "Color"       = (TokenColor, (row,(col - (length keyword))))
+    | keyword  == "Button"      = (TokenButton, (row,(col - (length keyword))))
     | keyword  == "Tone"        = (TokenTone, (row,(col - (length keyword))))
+    | keyword  == "String"      = (TokenString, (row,(col - (length keyword))))
     | otherwise                 = (TokenID keyword, (row,(col - (length keyword))))
 
 -- Indicate which states are final states and the
