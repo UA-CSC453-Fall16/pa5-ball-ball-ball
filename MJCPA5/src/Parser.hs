@@ -586,6 +586,8 @@ first_Type t =
         TokenMeggyButtonType -> True
         TokenMeggyColorType  -> True
         TokenMeggyToneType   -> True
+        TokenIntArrayType 	 -> True
+        TokenColorArrayType  -> True
         _ -> False
 
 grab_Type :: Token -> Type
@@ -607,6 +609,7 @@ follow_E  t =
         TokenDot   -> True
         TokenRightParen -> True
         TokenSemiColon  -> True
+        TokenRightBracket -> True
         _  -> False
 
 follow_F' :: Token -> Bool
