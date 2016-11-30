@@ -1,0 +1,24 @@
+3,5c3,8
+< ClassDeclaration    ::= "class" Identifier "{" ( MethodDeclaration )* "}"
+< MethodDeclaration   ::= "public" Type Identifier "(" ( Type Identifier ( "," Type Identifier )* )? ")" "{" ( Statement )* ("return" Expression ";")? "}"
+< Type    ::= "boolean"
+---
+> ClassDeclaration    ::= "class" Identifier "{" ( VarDeclaration )* ( MethodDeclaration )* "}"
+> VarDeclaration  ::= Type Identifier ";"
+> MethodDeclaration   ::= "public" Type Identifier "(" ( Type Identifier ( "," Type Identifier )* )? ")" "{" ( VarDeclaration )* ( Statement )* ("return" Expression ";")? "}"
+> Type    ::= "Meggy.Color" "[" "]"
+> |   "int" "[" "]"
+> |   "boolean"
+11a15
+> |   Identifier
+13a18
+> |   "Meggy.setAuxLEDs" "(" Expression ")" ";"
+19a25,26
+> |   Identifier "=" Expression ";"
+> |   Identifier "[" Expression "]" "=" Expression ";"
+21a29,30
+> |   Expression "[" Expression "]"
+> |   Expression "." "length"
+33a43,44
+> |   "new" "Meggy.Color" "[" Expression "]"
+> |   "new" "int" "[" Expression "]"

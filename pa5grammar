@@ -1,0 +1,48 @@
+Goal    ::= "import" "meggy.Meggy" ";" MainClass ( ClassDeclaration )* <EOF>
+MainClass   ::= "class" Identifier "{" "public" "static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" (Statement)* "}" "}"
+ClassDeclaration    ::= "class" Identifier "{" ( VarDeclaration )* ( MethodDeclaration )* "}"
+VarDeclaration  ::= Type Identifier ";"
+MethodDeclaration   ::= "public" Type Identifier "(" ( Type Identifier ( "," Type Identifier )* )? ")" "{" ( VarDeclaration )* ( Statement )* ("return" Expression ";")? "}"
+Type    ::= "Meggy.Color" "[" "]"
+|   "int" "[" "]"
+|   "boolean"
+|   "byte"
+|   "int"
+|   "void"
+|   "Meggy.Color"
+|   "Meggy.Button"
+|   "Meggy.Tone"
+|   Identifier
+Statement   ::= "{" ( Statement )* "}"
+|   "Meggy.setPixel" "(" Expression "," Expression "," Expression ")" ";"
+|   "Meggy.setAuxLEDs" "(" Expression ")" ";"
+|   "Meggy.toneStart" "(" Expression "," Expression ")" ";"
+|   "Meggy.delay" "(" Expression ")" ";"
+|   Expression "." Identifier "(" ( Expression ( "," Expression )* )? ")" ";"
+|   "if" "(" Expression ")" Statement
+|   "if" "(" Expression ")" Statement "else" Statement
+|   "while" "(" Expression ")" Statement
+|   Identifier "=" Expression ";"
+|   Identifier "[" Expression "]" "=" Expression ";"
+Expression  ::= Expression ( "&&" | "<" | "==" | "+" | "-" | "*" ) Expression
+|   "-" Expression
+|   Expression "[" Expression "]"
+|   Expression "." "length"
+|   Expression "." Identifier "(" ( Expression ( "," Expression )* )? ")"
+|   "Meggy.getPixel" "(" Expression "," Expression ")"
+|   "Meggy.checkButton" "(" Expression ")"
+|   "(" "byte" ")" Expression
+|   <INT_LITERAL>
+|   <COLOR_LITERAL>
+|   <BUTTON_LITERAL>
+|   <TONE_LITERAL>
+|   "true"
+|   "false"
+|   Identifier
+|   "this"
+|   "new" "Meggy.Color" "[" Expression "]"
+|   "new" "int" "[" Expression "]"
+|   "new" Identifier "(" ")"
+|   "!" Expression
+|   "(" Expression ")"
+Identifier  ::= <IDENTIFIER>
