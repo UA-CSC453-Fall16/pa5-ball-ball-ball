@@ -1,0 +1,8 @@
+.stack-work/*
+MJCPA4/.stack-work/*
+*.o
+*.hi
+*.test
+*.s
+
+
