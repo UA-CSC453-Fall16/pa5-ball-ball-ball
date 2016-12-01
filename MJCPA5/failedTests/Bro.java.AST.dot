@@ -1,9 +1,0 @@
-digraph {
-4  [label = "IntLiteral 5"];
-3 -> 4
-3  [label = "Body"];
-2 -> 3
-2  [label = "MainClass"];
-1 -> 2
-1  [label = "Prog"];
-}

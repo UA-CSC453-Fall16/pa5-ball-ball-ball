@@ -10,42 +10,40 @@ digraph {
 5  [label = " Invoke setPix  "];
 4 -> 5
 4  [label = "Instance C  "];
-14  [label = "IntLiteral 5"];
-3 -> 14
 3 -> 4
 3  [label = "Body"];
 2 -> 3
 2  [label = "MainClass"];
-21  [label = " Id ("pixeli") "];
-22  [label = " Id ("pixelj") "];
-23  [label = "ColorLiteral 1"];
-20 -> 23
-20 -> 22
-20 -> 21
-20  [label = "SetPixel"];
-26  [label = " Invoke genInt  "];
-25 -> 26
-25  [label = "Instance this  "];
-30  [label = " Id ("pixeli") "];
-29 -> 30
-29  [label = "Return"];
-19 -> 29
-19 -> 25
+20  [label = " Id ("pixeli") "];
+21  [label = " Id ("pixelj") "];
+22  [label = "ColorLiteral 1"];
+19 -> 22
+19 -> 21
 19 -> 20
-19  [label = "Body"];
+19  [label = "SetPixel"];
+25  [label = " Invoke genInt  "];
+24 -> 25
+24  [label = "Instance this  "];
+29  [label = " Id ("pixeli") "];
+28 -> 29
+28  [label = "Return"];
+18 -> 28
+18 -> 24
 18 -> 19
-18  [label = "Method setPix typesig: TS [("pixeli",ByteType),("pixelj",ByteType)] ByteType"];
-37  [label = "IntLiteral 5"];
-36 -> 37
-36  [label = "Return"];
-35 -> 36
-35  [label = "Body"];
-34 -> 35
-34  [label = "Method genInt typesig: TS [] IntType"];
-17 -> 34
+18  [label = "Body"];
 17 -> 18
-17  [label = "Class C"];
-1 -> 17
+17  [label = "Method setPix typesig: TS [("pixeli",ByteType),("pixelj",ByteType)] ByteType"];
+36  [label = "IntLiteral 5"];
+35 -> 36
+35  [label = "Return"];
+34 -> 35
+34  [label = "Body"];
+33 -> 34
+33  [label = "Method genInt typesig: TS [] IntType"];
+16 -> 33
+16 -> 17
+16  [label = "Class C"];
+1 -> 16
 1 -> 2
 1  [label = "Prog"];
 }

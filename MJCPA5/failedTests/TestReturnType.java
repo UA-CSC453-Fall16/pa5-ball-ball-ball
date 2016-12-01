@@ -3,7 +3,6 @@ import meggy.Meggy;
 class TestReturnType {
     public static void main(String[] whatever){
 	new C().setPix((byte)1,(byte)1);
-	5;
     }
 }
 

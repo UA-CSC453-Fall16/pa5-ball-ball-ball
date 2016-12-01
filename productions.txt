@@ -1,13 +1,13 @@
-Type -> TokenIntArrayType 
-      | TokenColorArrayType
+Type -> TokenIntArrayType	DONE
+      | TokenColorArrayType	DONE
 
-J -> new P
+J -> new P			DONE
 
-P -> TokenInt [ E ]
-   | MeggyColor [ E ]
-   | TokenID ( )
+P -> TokenInt [ E ]		DONE
+   | MeggyColor [ E ]		DONE
+   | TokenID ( )		DONE
 
-Stm -> TokenMeggySetAux ( E ) ;
+Stm -> TokenMeggySetAux ( E ) ;	DONE
 
 SL  -> Stm SL (for SetAux, I don't think change is needed)
 

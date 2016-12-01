@@ -64,6 +64,8 @@ data Type
     | MeggyColorType
     | MeggyButtonType
     | MeggyToneType
+    | IntArrayType
+    | ColorArrayType
     | Error
     deriving (Show,Eq)
 

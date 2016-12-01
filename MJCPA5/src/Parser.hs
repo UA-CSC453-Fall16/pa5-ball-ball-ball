@@ -241,6 +241,14 @@ parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) =
     in
         (Instance invocation id, ts5)
 
+parseStm ((TokenThis, (row,col)):rest) = 
+    let
+        ts1 = match rest TokenDot
+        (invocation, ts2) = parseInvoke ts1 --This should an invocation AST
+        ts3 = match ts2 TokenSemiColon
+    in
+        (Instance invocation "this", ts3)
+
 parseStm ((t, (row,col)):rest) = 
     error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
@@ -384,13 +392,17 @@ parseI' ((t, (row,col)):rest) child =
     else
         error("ERR: (Parser - ParseI') Invalid expression near * on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
---J
+--J original
 parseJ  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
 parseJ ((TokenNew, (row,col)):(TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) = 
     let
         (invocation, ts1) = parseL rest
     in
         (Instance invocation id, ts1)
+
+--J new
+parseJ  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
+parseJ ((TokenNew, (row,col)):rest) = parseP rest
 
 parseJ ((TokenByteCast, (row,col)):rest) =
     let
@@ -403,6 +415,28 @@ parseJ ((t, (row,col)):rest) =
         parseK ((t, (row,col)):rest)
     else
         error ("ERR: (Parser - ParseJ) Invalid expression on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
+
+--P
+parseP :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
+parseP ((TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) =
+	let
+        (invocation, ts1) = parseL rest
+    in
+        (Instance invocation id, ts1)
+
+parseP ((TokenInt, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
+	let
+		(capacity, ts1) = parseE rest
+		ts2 = match ts1 TokenRightBracket
+	in
+		(IntArrayInstace capacity, ts2)
+
+parseP ((TokenColor, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
+	let
+		(capacity, ts1) = parseE rest
+		ts2 = match ts1 TokenRightBracket
+	in
+		(ColorArrayInstace capacity, ts2)	
 
 --K
 parseK  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
@@ -601,6 +635,8 @@ grab_Type t =
         TokenMeggyButtonType -> MeggyButtonType
         TokenMeggyColorType  -> MeggyColorType
         TokenMeggyToneType   -> MeggyToneType
+        TokenIntArrayType    -> IntArrayType
+        TokenColorArrayType  -> ColorArrayType
         _ -> error ("ERR: (Parser - grab_Type) Did not expect " ++ show t ++ "as a type \n")
 
 follow_E :: Token -> Bool
