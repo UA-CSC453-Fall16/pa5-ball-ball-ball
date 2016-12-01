@@ -17,12 +17,24 @@ data AST
     | Body      [AST]               -- An if statement, method, while loop etc. have a body of statements (These are blocks {...})
     | Return    AST                 -- Return statements have return expressions, void methods don't have a Return AST
 
+{-
+ _________    ___   ______      ___       
+|  _   _  | .'   `.|_   _ `.  .'   `.  _  
+|_/ | | \_|/  .-.  \ | | `. \/  .-.  \(_) 
+    | |    | |   | | | |  | || |   | | _          We need to change MD and CD so that they have an extra AST for all of the variable declarations. 
+   _| |_   \  `-'  /_| |_.' /\  `-'  /(_)         This gon' funk up the parser
+  |_____|   `.___.'|______.'  `.___.'  
+
+-}
+
+
     -- Library Methods
     | SetPixel      AST AST AST     -- A set pixel call has two byte params and a color
     | Delay         AST
     | GetPixel      AST AST
     | CheckButton   AST
     | ToneStart     AST AST
+    | SetAuxLEDs    AST
 
     --Operators
     | LogicalAnd    AST AST
@@ -45,6 +57,15 @@ data AST
     | Instance      AST String      -- new XYZ() creates an instance AST which has a class name and 
                                     -- a child that should be invoke
     | Invoke        [AST] String    -- invoke is the child of an instance, it has a method name and a list of expression parameters as children
+
+    -- PA5 Stuff
+    | IntArrayInstance AST          -- Child node is the capacity which may be an expression which needs to be evaluated
+    | ColorArrayInstance AST        -- Child node is the capacita ahasi ahasf adwn 42 is the answer to the universe weba
+    | Variable      Type String     -- A declaration for a variable -> Type Id;
+    | Assignment    AST String      -- The ast is the value of the expression being assigned to the identifier represented by String -> Id = E;
+    | ArrayAssignment String AST AST -- The identifier of the array is the String, the left AST is the expression for the index of the array 
+                                     -- and the right AST is the value being assigned to that array index. -> Id [E] = E;
+    | ArrayAcess    AST AST          -- The left AST is the array being accessed, the right AST is the index -> E[E]
 
     --Literals
     | IntLiteral    Int
