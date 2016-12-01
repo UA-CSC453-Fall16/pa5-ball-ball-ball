@@ -231,6 +231,23 @@ parseStm ((TokenMeggyToneStart, (row,col)):rest) =
     in
         ((ToneStart exp1 exp2), ts6)
 
+parseStm ((TokenMeggySetAux, (row, col)):rest) = 
+    let
+        ts1 = match rest TokenLeftParen
+        (exp, ts2) = parseE rest
+        ts3 = match ts2  TokenRightParen
+        ts4 = match ts3  TokenSemiColon
+    in
+        ((SetAuxLEDs exp), ts4)
+
+parseStm ((TokenId id, (row,col)):rest) =
+    let
+        ts1 = match rest TokenAssign
+        (exp, ts2) = parseE ts1;
+        ts3 = match ts2  TokenSemiColon
+    in
+        ((Variable exp id), ts3)
+
 parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) = 
     let
         ts1 = match rest TokenLeftParen
@@ -239,7 +256,7 @@ parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) =
         (invocation, ts4) = parseInvoke ts3 --This should an invocation AST
         ts5          = match ts4 TokenSemiColon
     in
-        (Instance invocation id, ts5)
+        ((Instance invocation id), ts5)
 
 parseStm ((t, (row,col)):rest) = 
     error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
