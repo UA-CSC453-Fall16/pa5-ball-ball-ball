@@ -232,16 +232,18 @@ parseStm ((TokenMeggyToneStart, (row,col)):rest) =
     in
         ((ToneStart exp1 exp2), ts6)
 
-parseStm ts@((t, (row,col)):rest) = 
-    if first_Expression t 
-        then 
-            let
-                (j_ast, ts1) = parseJ ts --This should return an Instance AST with its invocaation as a child
-                ts2          = match ts1 TokenSemiColon
-            in
-                (j_ast, ts2)
-        else
-            error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
+parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) = 
+    let
+        ts1 = match rest TokenLeftParen
+        ts2 = match ts1  TokenRightParen
+        ts3 = match ts2  TokenDot
+        (invocation, ts4) = parseInvoke ts3 --This should an invocation AST
+        ts5          = match ts4 TokenSemiColon
+    in
+        (Instance invocation id, ts5)
+
+parseStm ((t, (row,col)):rest) = 
+    error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
 -- for else body of if-else
 parseA  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
@@ -375,7 +377,7 @@ parseI' ((TokenMul, (row,col)):rest) child =
     let 
         (j_ast, ts1)      = parseJ rest
     in
-        parseG' ts1 (Mul child j_ast)
+        parseI' ts1 (Mul child j_ast)
 
 parseI' ((t, (row,col)):rest) child = 
     if follow_I' t then
@@ -413,9 +415,9 @@ parseK ((TokenNot, (row,col)):rest) =
 
 parseK ((TokenSub, (row,col)):rest) = 
     let
-        (l_ast, ts1) = parseL rest
+        (j_ast, ts1) = parseJ rest
     in
-        (UnaryMinus l_ast, ts1)
+        (UnaryMinus j_ast, ts1)
 
 parseK ((t, (row,col)):rest) = 
     if first_L t then
