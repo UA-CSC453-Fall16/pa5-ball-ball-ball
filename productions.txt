@@ -1,0 +1,19 @@
+Type -> TokenIntArrayType 
+      | TokenColorArrayType
+
+J -> new P
+
+P -> TokenInt [ E ]
+   | MeggyColor [ E ]
+   | TokenID ( )
+
+Stm -> TokenMeggySetAux ( E ) ;
+
+SL  -> Stm SL (for SetAux, I don't think change is needed)
+
+VD -> Type Id ; VD  (but can't allow VOID in type checking?!)
+
+VD -> Ɛ
+ (for public, }, return, if, while, {, MeggySetPix, MeggyToneStart,
+         MeggyDelay, MeggyAuxleds, new, byteCast, !, -, MeggyGetPix,
+         MeggyCheckButton, dot, (, int, true, false, this, Id, ColorVal, ButtonVal, ToneVal)

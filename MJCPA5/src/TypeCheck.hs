@@ -78,9 +78,9 @@ tCheck ((Method child method_name (TS params return_type)), st)
 tCheck ((Body []), st)            = VoidType
 tCheck ((Body (Epsilon:[]) ), st) = VoidType
 tCheck ((Body ((Return ret_exp):[])), st) = tCheck ((Return ret_exp), st)
-tCheck ((Body (child:rest)), st)
-    | tCheck (child, st) /= VoidType = error ("Type check error in Body, found non-void type statement that wasn't a return expression")
-    | otherwise = tCheck ((Body rest), st)
+tCheck ((Body (child:rest)), st) = tCheck ((Body rest), st) -- added this
+    -- | tCheck (child, st) /= VoidType = error ("Type check error in Body, found non-void type statement that wasn't a return expression")
+    -- | otherwise = tCheck ((Body rest), st)
 
 tCheck ((Return child), st@(SymTab scope [method_name,class_name])) = 
     let

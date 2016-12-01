@@ -1,0 +1,1835 @@
+
+==================== FINAL INTERFACE ====================
+2016-12-01 05:15:06.125675884 UTC
+
+interface main@main:Lexer 8001
+  interface hash: 096effbdda499bd5ce539429de4dcd8b
+  ABI hash: ba2bc94142bdc1c134083511bd0f019b
+  export-list hash: 85d7c38f12e022923f1a05eb06ba6a89
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 6ea86ecbb747c8bfd1b624d46b10840a
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Lexer.driveTable
+  Lexer.final
+  Lexer.lexer
+  Lexer.lexer'
+  Lexer.lookupKW
+  Lexer.nextState
+  Lexer.nextStrings
+  Lexer.Token{Lexer.TokenAdd Lexer.TokenAnd Lexer.TokenAssign Lexer.TokenBigMeggy Lexer.TokenBoolean Lexer.TokenButton Lexer.TokenButtonValue Lexer.TokenByte Lexer.TokenByteCast Lexer.TokenCheckButton Lexer.TokenClass Lexer.TokenColor Lexer.TokenColorArrayType Lexer.TokenColorValue Lexer.TokenComma Lexer.TokenComment Lexer.TokenDelay Lexer.TokenDot Lexer.TokenDotLength Lexer.TokenEOF Lexer.TokenElse Lexer.TokenEquality Lexer.TokenFalse Lexer.TokenGetPixel Lexer.TokenID Lexer.TokenIf Lexer.TokenImport Lexer.TokenInt Lexer.TokenIntArrayType Lexer.TokenLeftBracket Lexer.TokenLeftCurly Lexer.TokenLeftParen Lexer.TokenLength Lexer.TokenLessThan Lexer.TokenLittleMeggy Lexer.TokenMain Lexer.TokenMeggyButton Lexer.TokenMeggyButtonType Lexer.TokenMeggyCheckButton Lexer.TokenMeggyColor Lexer.TokenMeggyColorType Lexer.TokenMeggyDelay Lexer.TokenMeggyGetPix Lexer.TokenMeggyImport Lexer.TokenMeggySetAux Lexer.TokenMeggySetPix Lexer.TokenMeggyTone Lexer.TokenMeggyToneStart Lexer.TokenMeggyToneType Lexer.TokenMul Lexer.TokenNew Lexer.TokenNewLine Lexer.TokenNot Lexer.TokenNum Lexer.TokenPublic Lexer.TokenReturn Lexer.TokenRightBracket Lexer.TokenRightCurly Lexer.TokenRightParen Lexer.TokenSemiColon Lexer.TokenSetAuxLEDs Lexer.TokenSetPixel Lexer.TokenStatic Lexer.TokenString Lexer.TokenSub Lexer.TokenThis Lexer.TokenTone Lexer.TokenToneStart Lexer.TokenToneValue Lexer.TokenTrue Lexer.TokenUnknown Lexer.TokenVoid Lexer.TokenWhile Lexer.UnexpectedEOF Lexer.WhiteSpace}
+module dependencies:
+package dependencies: base-4.9.0.0* ghc-prim-0.5.0.0
+                      integer-gmp-1.0.0.1
+orphans: base-4.9.0.0:GHC.Base base-4.9.0.0:GHC.Float
+family instance modules: base-4.9.0.0:Control.Applicative
+                         base-4.9.0.0:Data.Either base-4.9.0.0:Data.Functor.Const
+                         base-4.9.0.0:Data.Monoid base-4.9.0.0:Data.Type.Equality
+                         base-4.9.0.0:GHC.Generics base-4.9.0.0:GHC.IO.Exception
+                         base-4.9.0.0:GHC.TypeLits
+import  -/  base-4.9.0.0:Data.Char eb33dc25ecb52d018a0ca26590e2b50b
+import  -/  base-4.9.0.0:Data.Foldable 8aeb682f6c74f97fcf0ace0d608a43ea
+import  -/  base-4.9.0.0:GHC.Base 8ed3be81c0707b322f975a84ae1bb816
+import  -/  base-4.9.0.0:GHC.Err 3bba35a16538d33d424682ce66876cdd
+import  -/  base-4.9.0.0:GHC.Num 48f506a8f4ecf06285d0a0706594dcc0
+import  -/  base-4.9.0.0:GHC.Show 952347a6ab730bcb25c0854d8bc6ca51
+import  -/  base-4.9.0.0:GHC.Unicode 2343b0871604cc5116abba8f24d75b42
+import  -/  base-4.9.0.0:Prelude b9bddb97799837fe67a8d00939a5b6c3
+import  -/  base-4.9.0.0:Text.Read 9c1be14f7e5eac8b18bcb566c5763677
+import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
+a92d36fb480bd9ffd532ed906def93c4
+  $fEqToken :: GHC.Classes.Eq Lexer.Token
+  DFunId
+  {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Lexer.Token Lexer.$fEqToken_$c== Lexer.$fEqToken_$c/= -}
+a92d36fb480bd9ffd532ed906def93c4
+  $fEqToken_$c/= :: Lexer.Token -> Lexer.Token -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (a :: Lexer.Token) (b :: Lexer.Token) ->
+                 case Lexer.$fEqToken_$c== a b of wild {
+                   GHC.Types.False -> GHC.Types.True
+                   GHC.Types.True -> GHC.Types.False }) -}
+a92d36fb480bd9ffd532ed906def93c4
+  $fEqToken_$c== :: Lexer.Token -> Lexer.Token -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (ds :: Lexer.Token) (ds1 :: Lexer.Token) ->
+                 case ds of wild {
+                   DEFAULT
+                   -> GHC.Prim.tagToEnum#
+                        @ GHC.Types.Bool
+                        (GHC.Prim.==#
+                           (GHC.Prim.dataToTag# @ Lexer.Token wild)
+                           (GHC.Prim.dataToTag# @ Lexer.Token ds1))
+                   Lexer.TokenColorValue a1
+                   -> case ds1 of wild1 {
+                        DEFAULT
+                        -> case GHC.Prim.dataToTag# @ Lexer.Token wild1 of wild2 {
+                             DEFAULT -> GHC.Types.False 23# -> GHC.Types.True }
+                        Lexer.TokenColorValue b1 -> GHC.Classes.eqInt a1 b1 }
+                   Lexer.TokenButtonValue a1
+                   -> case ds1 of wild1 {
+                        DEFAULT
+                        -> case GHC.Prim.dataToTag# @ Lexer.Token wild1 of wild2 {
+                             DEFAULT -> GHC.Types.False 24# -> GHC.Types.True }
+                        Lexer.TokenButtonValue b1 -> GHC.Base.eqString a1 b1 }
+                   Lexer.TokenID a1
+                   -> case ds1 of wild1 {
+                        DEFAULT
+                        -> case GHC.Prim.dataToTag# @ Lexer.Token wild1 of wild2 {
+                             DEFAULT -> GHC.Types.False 31# -> GHC.Types.True }
+                        Lexer.TokenID b1 -> GHC.Base.eqString a1 b1 }
+                   Lexer.TokenNum a1
+                   -> case ds1 of wild1 {
+                        DEFAULT
+                        -> case GHC.Prim.dataToTag# @ Lexer.Token wild1 of wild2 {
+                             DEFAULT -> GHC.Types.False 32# -> GHC.Types.True }
+                        Lexer.TokenNum b1 -> GHC.Classes.eqInt a1 b1 }
+                   Lexer.TokenToneValue a1
+                   -> case ds1 of wild1 {
+                        DEFAULT
+                        -> case GHC.Prim.dataToTag# @ Lexer.Token wild1 of wild2 {
+                             DEFAULT -> GHC.Types.False 42# -> GHC.Types.True }
+                        Lexer.TokenToneValue b1 -> GHC.Classes.eqInt a1 b1 }
+                   Lexer.UnexpectedEOF a1
+                   -> case ds1 of wild1 {
+                        DEFAULT
+                        -> case GHC.Prim.dataToTag# @ Lexer.Token wild1 of wild2 {
+                             DEFAULT -> GHC.Types.False 72# -> GHC.Types.True }
+                        Lexer.UnexpectedEOF b1 -> GHC.Base.eqString a1 b1 }
+                   Lexer.TokenUnknown a1
+                   -> case ds1 of wild1 {
+                        DEFAULT
+                        -> case GHC.Prim.dataToTag# @ Lexer.Token wild1 of wild2 {
+                             DEFAULT -> GHC.Types.False 74# -> GHC.Types.True }
+                        Lexer.TokenUnknown b1 -> GHC.Base.eqString a1 b1 } }) -}
+a92d36fb480bd9ffd532ed906def93c4
+  $fShowToken :: GHC.Show.Show Lexer.Token
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Lexer.Token
+                  Lexer.$fShowToken_$cshowsPrec
+                  Lexer.$fShowToken_$cshow
+                  Lexer.$fShowToken_$cshowList -}
+a92d36fb480bd9ffd532ed906def93c4
+  $fShowToken1 :: Lexer.Token -> GHC.Show.ShowS
+  {- Arity: 2,
+     Unfolding: (Lexer.$fShowToken_$cshowsPrec Lexer.$fShowToken2) -}
+53d2d2ee0a4e404f1f68eee5ee43253e
+  $fShowToken2 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
+a92d36fb480bd9ffd532ed906def93c4
+  $fShowToken_$cshow :: Lexer.Token -> GHC.Base.String
+  {- Arity: 1, Strictness: <S,1*U> -}
+a92d36fb480bd9ffd532ed906def93c4
+  $fShowToken_$cshowList :: [Lexer.Token] -> GHC.Show.ShowS
+  {- Arity: 2,
+     Unfolding: (GHC.Show.showList__
+                   @ Lexer.Token
+                   Lexer.$fShowToken1) -}
+a92d36fb480bd9ffd532ed906def93c4
+  $fShowToken_$cshowsPrec ::
+    GHC.Types.Int -> Lexer.Token -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <L,1*U(U)><S,1*U><L,U> -}
+92b990fd993c6c5d053c7fbf38dbcd80
+  $tc'TokenAdd :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   1967119066087146283##
+                   5365625240525436563##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenAdd1) -}
+e774a0bcdb1dd4bdcd911f4929837e02
+  $tc'TokenAdd1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenAdd"#) -}
+059bf5369380a4ff66ac873403f1a045
+  $tc'TokenAnd :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   9851940477389447733##
+                   6216177217853417903##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenAnd1) -}
+4b148c121f0dadfb85cc27a8787589e6
+  $tc'TokenAnd1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenAnd"#) -}
+ead4134de89bc5077399d34099ed7ff5
+  $tc'TokenAssign :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   8180125238010626063##
+                   938359767467228484##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenAssign1) -}
+37d110b015d76280b5a753aa3e6c363c
+  $tc'TokenAssign1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenAssign"#) -}
+b5fd931177e5745a0c39e3d902daca8b
+  $tc'TokenBigMeggy :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6485869955172846950##
+                   10383684136342533616##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenBigMeggy1) -}
+5947ca34b42baf5cdf66f5cb020a969f
+  $tc'TokenBigMeggy1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenBigMeggy"#) -}
+a9c0f377e7cc921fa7d9f12a2e8abc4f
+  $tc'TokenBoolean :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17699528310033268550##
+                   8699844465647176746##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenBoolean1) -}
+7ca044922fee81d1fb8c35777263ba65
+  $tc'TokenBoolean1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenBoolean"#) -}
+c446565ed4e6adb1e7177df4c750ab24
+  $tc'TokenButton :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   7639389381572394663##
+                   6967762588685029696##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenButton1) -}
+f0310160d8d6cfe556865b3335289a77
+  $tc'TokenButton1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenButton"#) -}
+6a4041ebabb66d96e4dbfaa7642b6a38
+  $tc'TokenButtonValue :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   10447340113931688687##
+                   7345890519607620277##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenButtonValue1) -}
+d5bf904fa74d3fb0fdb17018538a5621
+  $tc'TokenButtonValue1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenButtonValue"#) -}
+0ddc084b8c030307f670f9dab5d9621e
+  $tc'TokenByte :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   3307992577142040992##
+                   17868861617241635565##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenByte1) -}
+4d6183d8640642bc73e765855359ef60
+  $tc'TokenByte1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenByte"#) -}
+fffe4d9504416127964ea6a519a8b808
+  $tc'TokenByteCast :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   9968806847852886793##
+                   7682817578661958985##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenByteCast1) -}
+f3c3bf32ccb0f22e87f35da8d56c0027
+  $tc'TokenByteCast1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenByteCast"#) -}
+0eef7a49283ef211340863aac52e0ac2
+  $tc'TokenCheckButton :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   18181191888012889132##
+                   11376442616969746112##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenCheckButton1) -}
+efd0906f1e557f3e0a6489be3b400add
+  $tc'TokenCheckButton1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenCheckButton"#) -}
+3a2715e7b2436051361a491941852f1b
+  $tc'TokenClass :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6380820993084205395##
+                   2230301728304406661##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenClass1) -}
+ce65bb2062705d8014f2000b9ef2d9cf
+  $tc'TokenClass1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenClass"#) -}
+8b6f75047ef1c05d6862f8d774cc9a7d
+  $tc'TokenColor :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   8276790601500390066##
+                   3436720202915097552##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenColor1) -}
+1ea36432963345093ca7b433caca2c5e
+  $tc'TokenColor1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenColor"#) -}
+192f4ece2b3f36e7faec763ebbfee5e0
+  $tc'TokenColorArrayType :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   16981464951027733373##
+                   6327939760920832292##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenColorArrayType1) -}
+675a67d01fc5f459b7a16c482619a699
+  $tc'TokenColorArrayType1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenColorArrayType"#) -}
+90c8d43b7ab8743866d12deb2d3537d4
+  $tc'TokenColorValue :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17247340056711925298##
+                   3475511759050109792##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenColorValue1) -}
+b036bce9de2395f4cc9884543c7f4b87
+  $tc'TokenColorValue1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenColorValue"#) -}
+f23975bb0c05b4600c59c7c2ef071697
+  $tc'TokenComma :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2136832180552699498##
+                   14586660179008642093##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenComma1) -}
+2083d25478c52d5d304573d94e1342f7
+  $tc'TokenComma1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenComma"#) -}
+092459735aff4868bb00a1bbde916e54
+  $tc'TokenComment :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2611608754069800730##
+                   3304681827134347222##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenComment1) -}
+bee075b79dffcf099839c25ded2bc300
+  $tc'TokenComment1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenComment"#) -}
+244b78974324cf3959873510ef0f7e1d
+  $tc'TokenDelay :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12915029757809964515##
+                   14915616087064176303##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenDelay1) -}
+396a0eb2206ae151fd74fc8631c850a4
+  $tc'TokenDelay1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenDelay"#) -}
+7e80e6b6ab4a356268c5e91c77f03c12
+  $tc'TokenDot :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   7200658106347844881##
+                   9674502954691336497##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenDot1) -}
+11ad368c638cff3063384b6c18121715
+  $tc'TokenDot1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenDot"#) -}
+fbcdc94e9a7aa17f0412ebfe83b6c804
+  $tc'TokenDotLength :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2445781968531852351##
+                   6448267102098902876##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenDotLength1) -}
+dacd4bc2ed9921bb1eae5da369e64c01
+  $tc'TokenDotLength1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenDotLength"#) -}
+a77cac86bed0923124975984d6cf57b0
+  $tc'TokenEOF :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6709171449616123918##
+                   278662131538968982##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenEOF1) -}
+347c684028571d7eb1a6a633d3781948
+  $tc'TokenEOF1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenEOF"#) -}
+a3ffca2280d138466bfb4f344b1740e5
+  $tc'TokenElse :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   11360651405378218866##
+                   16653764201251217825##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenElse1) -}
+954b72dafaa5e7b04bcb9cfe426a8933
+  $tc'TokenElse1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenElse"#) -}
+5ae0a82fd9effdc0588f048596b9d2d0
+  $tc'TokenEquality :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   8916816002168014926##
+                   7221822096276082529##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenEquality1) -}
+6e001a020f5aae638ca4e47333fe18ba
+  $tc'TokenEquality1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenEquality"#) -}
+ae5f1ad27c96d03ea4326c1c62a7b4f0
+  $tc'TokenFalse :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   3055696161432890658##
+                   1261121704148511553##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenFalse1) -}
+0f9d07e5a4586a5b40f43b80809a5bb4
+  $tc'TokenFalse1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenFalse"#) -}
+a3dd191a0d8dabcc6b52b45b7ac35dae
+  $tc'TokenGetPixel :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   404023239761639444##
+                   11760000057995064197##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenGetPixel1) -}
+cb09b81e920f95b479f028d085a089d8
+  $tc'TokenGetPixel1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenGetPixel"#) -}
+12f5bc37b5f7484e06ac2b2b27313356
+  $tc'TokenID :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   10444347951118970704##
+                   12603259269415305617##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenID1) -}
+9aa637c6bd789e674a1c5f55f8744075
+  $tc'TokenID1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenID"#) -}
+4709c153d4c0ec4c7ad43bb85a1b0a0d
+  $tc'TokenIf :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   8669466817925900162##
+                   9253291470908988105##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenIf1) -}
+3082e44082163dd223cdaec00f6b50ea
+  $tc'TokenIf1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenIf"#) -}
+03a7b8efeb400c30825cc5c0a1db2635
+  $tc'TokenImport :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6681478795225711971##
+                   14279725198984867632##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenImport1) -}
+89c8495d98602a75e2b7010cf876795f
+  $tc'TokenImport1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenImport"#) -}
+b65a2596be553c1af21af64df2880310
+  $tc'TokenInt :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   8276307705889253370##
+                   5403317883235824165##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenInt1) -}
+4e6192b421c0194f444998b43c05f16f
+  $tc'TokenInt1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenInt"#) -}
+6b0b6c0476cb25770d313ed184f70815
+  $tc'TokenIntArrayType :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   13262397308629306493##
+                   13093626704854127422##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenIntArrayType1) -}
+55642fe8e146933319f0c90e5b6998b3
+  $tc'TokenIntArrayType1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenIntArrayType"#) -}
+6a496695240dc31a46037c4f3866a10d
+  $tc'TokenLeftBracket :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6079333772848345233##
+                   12575489039865217149##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenLeftBracket1) -}
+bfbe9d3ca26bf18978ef7acf1a464a76
+  $tc'TokenLeftBracket1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenLeftBracket"#) -}
+de181bdfe1d13a588c9dc189617ab057
+  $tc'TokenLeftCurly :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   14347178622719324444##
+                   15417375351460961473##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenLeftCurly1) -}
+d3ea53e9d764e6a627133ed57b3573f3
+  $tc'TokenLeftCurly1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenLeftCurly"#) -}
+432b0a4af87482d24254f09444783255
+  $tc'TokenLeftParen :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   8478231808787906132##
+                   1798533536248558962##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenLeftParen1) -}
+94047ae5b3b2a3894fecb34bc9930edd
+  $tc'TokenLeftParen1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenLeftParen"#) -}
+9739203d0bb68276311b952d87395dbd
+  $tc'TokenLength :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   10421709848415250176##
+                   6352577811553187145##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenLength1) -}
+4ab407e42d897e256230b97384e88063
+  $tc'TokenLength1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenLength"#) -}
+a9ee745d0e257e53f08f3065f28edf5f
+  $tc'TokenLessThan :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   13177696748767462754##
+                   11792444103420931265##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenLessThan1) -}
+56e5d821164c81f57f0fc6739b2bbe3e
+  $tc'TokenLessThan1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenLessThan"#) -}
+479b1451f1552037f5870a86d60db71e
+  $tc'TokenLittleMeggy :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6818874526929307359##
+                   3714128097337912499##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenLittleMeggy1) -}
+ef8a5486f0381a40e4770dc96150ddcc
+  $tc'TokenLittleMeggy1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenLittleMeggy"#) -}
+d87a427598d447e26524ecd9e8dfe67e
+  $tc'TokenMain :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17712317017780348039##
+                   6431951411724763669##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMain1) -}
+92216803c278dea9b528ef73ea823078
+  $tc'TokenMain1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMain"#) -}
+6aa313b7e0d95c9739401c49c57a8549
+  $tc'TokenMeggyButton :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12160682239065389517##
+                   2479834016196098410##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyButton1) -}
+ca63f20b9802ef025a17630c5d462842
+  $tc'TokenMeggyButton1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyButton"#) -}
+dfc5cc40dfacef345bfde1bbacfb8734
+  $tc'TokenMeggyButtonType :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   11725697788062881313##
+                   14901064817707318411##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyButtonType1) -}
+7576d2db5be158dace178476e1a2ecb6
+  $tc'TokenMeggyButtonType1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyButtonType"#) -}
+678129e50b16db61d5fc20996a348027
+  $tc'TokenMeggyCheckButton :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   16037172850499968781##
+                   16533070673138059361##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyCheckButton1) -}
+c673e14a042befdb34a8eaed0a18ad72
+  $tc'TokenMeggyCheckButton1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyCheckButton"#) -}
+8254e6e4f630b3770de08925de6a7730
+  $tc'TokenMeggyColor :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   8374196699270464084##
+                   4228303799547164052##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyColor1) -}
+2f0da3f39ebd1738b8e55f88bd319b76
+  $tc'TokenMeggyColor1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyColor"#) -}
+7744cb5fedebb06dec57d70050395b3c
+  $tc'TokenMeggyColorType :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2869737457238783125##
+                   17127343220424006214##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyColorType1) -}
+a1044537b06e5e96be6cda3c49c601f5
+  $tc'TokenMeggyColorType1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyColorType"#) -}
+5af49ac29438bbbbab90145e212b5320
+  $tc'TokenMeggyDelay :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   7323082655454079786##
+                   14973987635861511218##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyDelay1) -}
+9f14a05e4c09c518a068c62e4e5a76b3
+  $tc'TokenMeggyDelay1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyDelay"#) -}
+50b8727a27cfa01794f6250ddf741d7f
+  $tc'TokenMeggyGetPix :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12492180812569467136##
+                   6957457479398658060##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyGetPix1) -}
+5599449e10f17e1e0fcbd6b8c2e0ef38
+  $tc'TokenMeggyGetPix1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyGetPix"#) -}
+cd01b9891ba7cda6dae917f54a8bf934
+  $tc'TokenMeggyImport :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   5580529163401241631##
+                   17291432341649828462##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyImport1) -}
+a93295d7569320dcde69b23a142a1c4b
+  $tc'TokenMeggyImport1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyImport"#) -}
+83dd0c64afbe95f3050e29ac0dd88588
+  $tc'TokenMeggySetAux :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   10642450680254508966##
+                   9317855813862449595##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggySetAux1) -}
+c8d514944c46f56285be7af555eafae0
+  $tc'TokenMeggySetAux1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggySetAux"#) -}
+cba3c3409f0de4997cc07cdb34f43939
+  $tc'TokenMeggySetPix :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   7852017832807475331##
+                   14809529107640141716##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggySetPix1) -}
+363a61012f0a604ac836e702a105cc70
+  $tc'TokenMeggySetPix1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggySetPix"#) -}
+1b0207465bbfea2a5fd3eee19d392b12
+  $tc'TokenMeggyTone :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   348696127479440956##
+                   6939083242941599365##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyTone1) -}
+37c2225ff335f7d010f2cc407589c745
+  $tc'TokenMeggyTone1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyTone"#) -}
+493bb8cdde6d9686073fcf9e12c447e5
+  $tc'TokenMeggyToneStart :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6124097177178330260##
+                   16094061035272548741##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyToneStart1) -}
+ea407372fba638a9feb2d42cacd9f6ba
+  $tc'TokenMeggyToneStart1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyToneStart"#) -}
+6957785369557a229954bad48d94f701
+  $tc'TokenMeggyToneType :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   13406628325150386532##
+                   11572839325464708814##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMeggyToneType1) -}
+379366238dd56ecbb5e64afa22e77da2
+  $tc'TokenMeggyToneType1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMeggyToneType"#) -}
+5c7d31ca570d32e5007a3db5caf944a5
+  $tc'TokenMul :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   8163946660767793898##
+                   13502155312823517901##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenMul1) -}
+18688263f7256dda6df93a79a275012e
+  $tc'TokenMul1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenMul"#) -}
+dd567494e4e3583fa52f4c679c9c0520
+  $tc'TokenNew :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17992998480822342395##
+                   1147390661012106705##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenNew1) -}
+acf4f4be8ecc5549b6053788520d9a5e
+  $tc'TokenNew1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenNew"#) -}
+ef8638820143a95140a62ad8341a24a4
+  $tc'TokenNewLine :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6983840578484029911##
+                   10376944085075325730##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenNewLine1) -}
+27679945d4e7041dc17e31f8f274bf7e
+  $tc'TokenNewLine1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenNewLine"#) -}
+98086067fbdd62b6e5d8b7e763ca2197
+  $tc'TokenNot :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   14810213774740211890##
+                   4487752138872617258##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenNot1) -}
+a018a75a2f270bd2c309b11df0089aaa
+  $tc'TokenNot1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenNot"#) -}
+285e7224db2636b601de98a1eb30830e
+  $tc'TokenNum :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6492842697420188404##
+                   16236633322927601587##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenNum1) -}
+8b307d08e876bb83036826ccaaed6b2f
+  $tc'TokenNum1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenNum"#) -}
+59bc842936e682f91989bed719f37848
+  $tc'TokenPublic :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   814439954166419518##
+                   8073378500108865982##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenPublic1) -}
+157dd28a7076d085628558da639388fb
+  $tc'TokenPublic1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenPublic"#) -}
+14e99ec2b2ef2d0b7814e4705d21d2e0
+  $tc'TokenReturn :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   4664895557871164796##
+                   9718710038312607301##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenReturn1) -}
+1caecb1dd039e34a94ec2aae950fc8bc
+  $tc'TokenReturn1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenReturn"#) -}
+53f7bc921b956ce700bd6be261d0cb10
+  $tc'TokenRightBracket :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6990180841492378034##
+                   757320002913016214##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenRightBracket1) -}
+a4a6bd1ec6b742aa9bf9945a755d79e7
+  $tc'TokenRightBracket1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenRightBracket"#) -}
+c76f3e4e6e82fae10d1a07afcf7a0078
+  $tc'TokenRightCurly :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   14010870814539003754##
+                   18215645586778896759##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenRightCurly1) -}
+6da34599c583279ee64ec329accad0b4
+  $tc'TokenRightCurly1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenRightCurly"#) -}
+834df82f7dd6cba22296bd8117db2151
+  $tc'TokenRightParen :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17723286979729258199##
+                   846994491621274328##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenRightParen1) -}
+919b7e556416b07a832ac825367c9dbb
+  $tc'TokenRightParen1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenRightParen"#) -}
+39199fbcef04fb7839cc9a627fe4a454
+  $tc'TokenSemiColon :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6991681690031494429##
+                   15427148005378481322##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenSemiColon1) -}
+19040914280eca5bb06b32f14feded0b
+  $tc'TokenSemiColon1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenSemiColon"#) -}
+0bfbc0d441eaea376e78c4ab7e4a7bbb
+  $tc'TokenSetAuxLEDs :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2630817483256082908##
+                   4585880399895494575##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenSetAuxLEDs1) -}
+394179c6e4d2361d218239f5e544788f
+  $tc'TokenSetAuxLEDs1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenSetAuxLEDs"#) -}
+b895e97fe98213a501a4dfa5384752a5
+  $tc'TokenSetPixel :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   15669066539174483061##
+                   4826036112098974068##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenSetPixel1) -}
+e17146c7785e958ef46717ad58d8c696
+  $tc'TokenSetPixel1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenSetPixel"#) -}
+e5991c2e0e668ec226bf1e7a95d30376
+  $tc'TokenStatic :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   4887003222790940739##
+                   14322484153661628098##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenStatic1) -}
+4ec8512c158d3cf8b751e691bd3b60e7
+  $tc'TokenStatic1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenStatic"#) -}
+3dd5f9973476c670afbf7b94c1e6c552
+  $tc'TokenString :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   708624540045772972##
+                   18090781775994276489##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenString1) -}
+ba0961329905664f60f29498b47516eb
+  $tc'TokenString1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenString"#) -}
+ef735da13330dfb63449708727a0d0f4
+  $tc'TokenSub :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   3258458109665341879##
+                   5519203674250188379##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenSub1) -}
+69fca62eada8089eaec130c4f890865d
+  $tc'TokenSub1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenSub"#) -}
+56ef00b833980a079cfa50f3e19d996f
+  $tc'TokenThis :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   4218266906012914345##
+                   2880363666776040657##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenThis1) -}
+e3bf5f8d3b005cdd53ac52ce0be90346
+  $tc'TokenThis1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenThis"#) -}
+2a2dac698d6575e30b866f6147235df9
+  $tc'TokenTone :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   1026094424427859719##
+                   5663468295746873660##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenTone1) -}
+6e3289a55306695745676a95d83818cc
+  $tc'TokenTone1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenTone"#) -}
+565b1d3fef6c5686c15ea46f4c4b1bf7
+  $tc'TokenToneStart :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   1670082033134431329##
+                   1024931837596370148##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenToneStart1) -}
+abf1537f665e4c7cc8bd014e485486dd
+  $tc'TokenToneStart1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenToneStart"#) -}
+887e18e824abe427a9a56b614fe339f1
+  $tc'TokenToneValue :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   18385028237874076049##
+                   12195615250268399287##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenToneValue1) -}
+1bb9c77e817546eb430fc2117e920c5f
+  $tc'TokenToneValue1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenToneValue"#) -}
+41d6df5bb5c68f728fcf56f8c5875726
+  $tc'TokenTrue :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6938983365496753201##
+                   11165531583494788555##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenTrue1) -}
+2e82418c2efb6b10f9d1768e0a94a5c3
+  $tc'TokenTrue1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenTrue"#) -}
+d289e81cc38e3f05b91eecd723532f88
+  $tc'TokenUnknown :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17539622783175157758##
+                   15181872924908035235##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenUnknown1) -}
+a9b2d2258431c41d0ccb65bfaed71584
+  $tc'TokenUnknown1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenUnknown"#) -}
+d9aaa8a4809fc836cc4860eaf9bd9995
+  $tc'TokenVoid :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   849262275048673393##
+                   12865892349457222652##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenVoid1) -}
+4fb6cd3e1f02e2c51e9b860047e68d12
+  $tc'TokenVoid1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenVoid"#) -}
+bfceba7b5aae32db05aa12a137a43742
+  $tc'TokenWhile :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12874199923736806725##
+                   8401873374462988995##
+                   Lexer.$trModule
+                   Lexer.$tc'TokenWhile1) -}
+5f2bb142e2a51f8bf69ef536a52fcb7c
+  $tc'TokenWhile1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'TokenWhile"#) -}
+41df859a465f8e25f6c16984ac5d7b3a
+  $tc'UnexpectedEOF :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   1363701164009728310##
+                   8272896928621862851##
+                   Lexer.$trModule
+                   Lexer.$tc'UnexpectedEOF1) -}
+410585f3e025e55f8b18612298b50443
+  $tc'UnexpectedEOF1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'UnexpectedEOF"#) -}
+5429cb4d5a4e4f7965cb55341a6207fd
+  $tc'WhiteSpace :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   5468855732451293814##
+                   4652334589148669563##
+                   Lexer.$trModule
+                   Lexer.$tc'WhiteSpace1) -}
+5bb181c5094a5d02aca49ee5329f6544
+  $tc'WhiteSpace1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'WhiteSpace"#) -}
+bdd2b6e30aa22955c3b53987ae31396c
+  $tcToken :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12122783494436623506##
+                   11120357704490123388##
+                   Lexer.$trModule
+                   Lexer.$tcToken1) -}
+02e1a6e10ce98abeca84d3b64704d78d
+  $tcToken1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "Token"#) -}
+b6476986cc137449fd112e15a46699c7
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module Lexer.$trModule2 Lexer.$trModule1) -}
+4149be738d185819c3925196abfe08a2
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "Lexer"#) -}
+e150854f4a6cefbf21a81d1415e81d98
+  $trModule2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "main"#) -}
+e41475ff19f1639e76ac1296cc1ed675
+  $wdriveTable ::
+    GHC.Types.Int
+    -> GHC.Types.Int
+    -> GHC.Types.Int
+    -> GHC.Base.String
+    -> GHC.Base.String
+    -> (# (GHC.Types.Int, GHC.Types.Int),
+          (Lexer.Token, (GHC.Types.Int, GHC.Types.Int)), GHC.Base.String #)
+  {- Arity: 5, Strictness: <L,U(U)><L,U(U)><L,1*U(1*U)><L,U><S,1*U>,
+     Inline: [0] -}
+a358d151dae91bdfba6edca8c15a1f23
+  $wlexer' ::
+    GHC.Base.String
+    -> GHC.Types.Int
+    -> GHC.Types.Int
+    -> [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+  {- Arity: 3, Strictness: <S,1*U><L,U(U)><L,U(U)>, Inline: [0] -}
+d2a314456f19e98b2bb7565a4ec80bfd
+  $wlookupKW ::
+    GHC.Types.Int
+    -> GHC.Types.Int
+    -> GHC.Base.String
+    -> (# Lexer.Token, (GHC.Types.Int, GHC.Types.Int) #)
+  {- Arity: 3, Strictness: <L,U><L,1*U(U)><S,U>, Inline: [0] -}
+a92d36fb480bd9ffd532ed906def93c4
+  data Token
+    = TokenImport
+    | TokenLittleMeggy
+    | TokenBigMeggy
+    | TokenDot
+    | TokenLeftCurly
+    | TokenRightCurly
+    | TokenLeftBracket
+    | TokenRightBracket
+    | TokenLeftParen
+    | TokenRightParen
+    | TokenComma
+    | TokenSemiColon
+    | TokenComment
+    | TokenClass
+    | TokenPublic
+    | TokenStatic
+    | TokenVoid
+    | TokenMain
+    | TokenIf
+    | TokenElse
+    | TokenWhile
+    | TokenString
+    | TokenByte
+    | TokenColorValue GHC.Types.Int
+    | TokenButtonValue GHC.Base.String
+    | TokenColor
+    | TokenButton
+    | TokenSetPixel
+    | TokenGetPixel
+    | TokenCheckButton
+    | TokenDelay
+    | TokenID GHC.Base.String
+    | TokenNum GHC.Types.Int
+    | TokenSub
+    | TokenAdd
+    | TokenMul
+    | TokenAnd
+    | TokenEquality
+    | TokenNot
+    | TokenTrue
+    | TokenFalse
+    | TokenReturn
+    | TokenToneValue GHC.Types.Int
+    | TokenInt
+    | TokenBoolean
+    | TokenToneStart
+    | TokenLessThan
+    | TokenThis
+    | TokenNew
+    | TokenTone
+    | TokenMeggySetPix
+    | TokenMeggyDelay
+    | TokenMeggyGetPix
+    | TokenMeggyToneStart
+    | TokenMeggyCheckButton
+    | TokenMeggyTone
+    | TokenMeggyColor
+    | TokenMeggyButton
+    | TokenMeggyImport
+    | TokenMeggyColorType
+    | TokenMeggyButtonType
+    | TokenMeggyToneType
+    | TokenByteCast
+    | TokenIntArrayType
+    | TokenColorArrayType
+    | TokenSetAuxLEDs
+    | TokenMeggySetAux
+    | TokenLength
+    | TokenDotLength
+    | TokenAssign
+    | WhiteSpace
+    | TokenNewLine
+    | UnexpectedEOF GHC.Base.String
+    | TokenEOF
+    | TokenUnknown GHC.Base.String
+72dfd0a2c0a62a24bce88b3e9844bd31
+  driveTable ::
+    (GHC.Types.Int, GHC.Types.Int)
+    -> GHC.Types.Int
+    -> GHC.Base.String
+    -> GHC.Base.String
+    -> ((GHC.Types.Int, GHC.Types.Int),
+        (Lexer.Token, (GHC.Types.Int, GHC.Types.Int)), GHC.Base.String)
+  {- Arity: 4,
+     Strictness: <S,1*U(U(U),U(U))><L,1*U(1*U)><L,U><S,1*U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (4, True, False)
+                (\ (w :: (GHC.Types.Int, GHC.Types.Int))
+                   (w1 :: GHC.Types.Int)
+                   (w2 :: GHC.Base.String)
+                   (w3 :: GHC.Base.String) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case Lexer.$wdriveTable
+                        ww1
+                        ww2
+                        w1
+                        w2
+                        w3 of ww3 { (#,,#) ww4 ww5 ww6 ->
+                 (ww4, ww5, ww6) } }) -}
+c676bd98fafdf610ebabc57d4e7826f1
+  final ::
+    (GHC.Types.Int, GHC.Types.Int)
+    -> GHC.Types.Int
+    -> GHC.Base.String
+    -> (GHC.Types.Bool, (Lexer.Token, (GHC.Types.Int, GHC.Types.Int)))
+  {- Arity: 3, Strictness: <S,1*U(U,U(U))><S(S),1*U(1*U)><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: (GHC.Types.Int, GHC.Types.Int))
+                   (w1 :: GHC.Types.Int)
+                   (w2 :: GHC.Base.String) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case w1 of ww3 { GHC.Types.I# ww4 ->
+                 case ww4 of ds {
+                   DEFAULT -> (GHC.Types.False, (Lexer.TokenUnknown w2, (ww1, ww2)))
+                   3#
+                   -> (GHC.Types.True,
+                       case Lexer.$wlookupKW ww1 ww2 w2 of ww5 { (#,#) ww6 ww7 ->
+                       (ww6, ww7) })
+                   4# -> (GHC.Types.True, (Lexer.WhiteSpace, (ww1, ww2)))
+                   5#
+                   -> (GHC.Types.True,
+                       (Lexer.TokenNum
+                          (case Text.Read.readEither6
+                                  @ GHC.Types.Int
+                                  (Text.ParserCombinators.ReadP.run
+                                     @ GHC.Types.Int
+                                     ((GHC.Read.$fReadInt3
+                                         GHC.Read.$fReadInt_$sconvertInt
+                                         Text.ParserCombinators.ReadPrec.minPrec)
+                                        `cast`
+                                      (Text.ParserCombinators.ReadP.N:ReadP[0] <GHC.Types.Int>_R)
+                                        @ GHC.Types.Int
+                                        (Text.Read.readEither5 @ GHC.Types.Int))
+                                     w2) of wild {
+                             []
+                             -> GHC.Err.errorWithoutStackTrace
+                                  @ 'GHC.Types.PtrRepLifted
+                                  @ GHC.Types.Int
+                                  Text.Read.readEither4
+                             : x ds1
+                             -> case ds1 of wild1 {
+                                  [] -> x
+                                  : ipv ipv1
+                                  -> GHC.Err.errorWithoutStackTrace
+                                       @ 'GHC.Types.PtrRepLifted
+                                       @ GHC.Types.Int
+                                       Text.Read.readEither2 } }),
+                        (ww1, ww2)))
+                   6# -> (GHC.Types.True, (Lexer.TokenNot, (ww1, ww2)))
+                   7# -> (GHC.Types.True, (Lexer.TokenDot, (ww1, ww2)))
+                   8# -> (GHC.Types.True, (Lexer.TokenSemiColon, (ww1, ww2)))
+                   9# -> (GHC.Types.True, (Lexer.TokenLeftParen, (ww1, ww2)))
+                   10# -> (GHC.Types.True, (Lexer.TokenRightParen, (ww1, ww2)))
+                   11# -> (GHC.Types.True, (Lexer.TokenLeftBracket, (ww1, ww2)))
+                   12# -> (GHC.Types.True, (Lexer.TokenRightBracket, (ww1, ww2)))
+                   13# -> (GHC.Types.True, (Lexer.TokenLeftCurly, (ww1, ww2)))
+                   14# -> (GHC.Types.True, (Lexer.TokenRightCurly, (ww1, ww2)))
+                   15# -> (GHC.Types.True, (Lexer.TokenComma, (ww1, ww2)))
+                   16# -> (GHC.Types.True, (Lexer.TokenNewLine, (ww1, ww2)))
+                   21# -> (GHC.Types.True, (Lexer.TokenMul, (ww1, ww2)))
+                   22# -> (GHC.Types.True, (Lexer.TokenAnd, (ww1, ww2)))
+                   23# -> (GHC.Types.True, (Lexer.TokenEquality, (ww1, ww2)))
+                   24# -> (GHC.Types.True, (Lexer.TokenSub, (ww1, ww2)))
+                   25# -> (GHC.Types.True, (Lexer.TokenAdd, (ww1, ww2)))
+                   26# -> (GHC.Types.True, (Lexer.TokenMul, (ww1, ww2)))
+                   27# -> (GHC.Types.True, (Lexer.TokenLessThan, (ww1, ww2)))
+                   28# -> (GHC.Types.True, (Lexer.TokenNewLine, (ww1, ww2)))
+                   50# -> (GHC.Types.True, (Lexer.TokenComment, (ww1, ww2)))
+                   999#
+                   -> (GHC.Types.True, (Lexer.TokenUnknown w2, (ww1, ww2))) } } }) -}
+5a08f4ec0fe3c3ed6272e1a45b4ab895
+  lexer ::
+    GHC.Base.String -> [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: (\ (input :: GHC.Base.String) ->
+                 GHC.Base.++
+                   @ (Lexer.Token, (GHC.Types.Int, GHC.Types.Int))
+                   (Lexer.$wlexer'
+                      (GHC.Base.++ @ GHC.Types.Char input Lexer.lexer6)
+                      Lexer.lexer5
+                      Lexer.lexer5)
+                   Lexer.lexer1) -}
+7e66e07fb9baf7d1f60635e914fce160
+  lexer' ::
+    GHC.Base.String
+    -> (GHC.Types.Int, GHC.Types.Int)
+    -> [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+  {- Arity: 2, Strictness: <S,1*U><S,1*U(U(U),U(U))>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: GHC.Base.String) (w1 :: (GHC.Types.Int, GHC.Types.Int)) ->
+                 case w1 of ww { (,) ww1 ww2 -> Lexer.$wlexer' w ww1 ww2 }) -}
+4fd1bad96281cd04846fe53d4f7ce430
+  lexer1 :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+  {- HasNoCafRefs,
+     Unfolding: (GHC.Types.:
+                   @ (Lexer.Token, (GHC.Types.Int, GHC.Types.Int))
+                   Lexer.lexer2
+                   (GHC.Types.[] @ (Lexer.Token, (GHC.Types.Int, GHC.Types.Int)))) -}
+c1fdadf247deed3575960103048192ff
+  lexer2 :: (Lexer.Token, (GHC.Types.Int, GHC.Types.Int))
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: ((Lexer.TokenEOF, Lexer.lexer3)) -}
+cc45a83e1a15a8750c242237babce0c9
+  lexer3 :: (GHC.Types.Int, GHC.Types.Int)
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: ((Lexer.lexer4, Lexer.lexer4)) -}
+90ae29eb69887ad41e696f1a34eab8a8
+  lexer4 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# -1#) -}
+544b8630bb89228296357fbfb10d9214
+  lexer5 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 1#) -}
+a720fc14deedce54d93055645b911cd3
+  lexer6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# " "#) -}
+8fb09c298c818e431b9a92123f63b0f0
+  lookupKW ::
+    (GHC.Types.Int, GHC.Types.Int)
+    -> GHC.Base.String -> (Lexer.Token, (GHC.Types.Int, GHC.Types.Int))
+  {- Arity: 2, Strictness: <S,1*U(U,1*U(U))><S,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: (GHC.Types.Int, GHC.Types.Int)) (w1 :: GHC.Base.String) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case Lexer.$wlookupKW ww1 ww2 w1 of ww3 { (#,#) ww4 ww5 ->
+                 (ww4, ww5) } }) -}
+6e63e2e33f93fd879c4809257652603b
+  nextState ::
+    (GHC.Types.Int, GHC.Types.Int)
+    -> GHC.Types.Int
+    -> GHC.Types.Char
+    -> ((GHC.Types.Int, GHC.Types.Int), GHC.Types.Int, GHC.Types.Bool)
+  {- Arity: 3,
+     Strictness: <S,1*U(U(U),U(U))><S(S),1*U(1*U)><L,1*U(U)>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: (GHC.Types.Int, GHC.Types.Int))
+                   (w1 :: GHC.Types.Int)
+                   (w2 :: GHC.Types.Char) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case w1 of ww3 { GHC.Types.I# ww4 ->
+                 case ww4 of ds {
+                   DEFAULT
+                   -> ((ww1,
+                        case ww2 of wild { GHC.Types.I# x ->
+                        GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                       Lexer.nextState29, GHC.Types.True)
+                   0#
+                   -> case w2 of wild { GHC.Types.C# ds1 ->
+                      case ds1 of ds2 {
+                        DEFAULT
+                        -> case GHC.Prim.tagToEnum#
+                                  @ GHC.Types.Bool
+                                  (GHC.Prim.leWord#
+                                     (GHC.Prim.int2Word# (GHC.Prim.-# (GHC.Prim.ord# ds2) 48#))
+                                     9##) of wild1 {
+                             GHC.Types.False
+                             -> case GHC.Unicode.$wgeneralCategory ds2 of wild2 {
+                                  DEFAULT
+                                  -> case ds2 of wild3 {
+                                       DEFAULT
+                                       -> let {
+                                            x :: GHC.Prim.Word#
+                                            = GHC.Prim.int2Word# (GHC.Prim.ord# wild3)
+                                          } in
+                                          case GHC.Prim.tagToEnum#
+                                                 @ GHC.Types.Bool
+                                                 (GHC.Prim.leWord# x 887##) of wild4 {
+                                            GHC.Types.False
+                                            -> case {__pkg_ccall base-4.9.0.0 u_iswspace GHC.Prim.Int#
+                                                                                         -> GHC.Prim.State#
+                                                                                              GHC.Prim.RealWorld
+                                                                                         -> (# GHC.Prim.State#
+                                                                                                 GHC.Prim.RealWorld,
+                                                                                               GHC.Prim.Int# #)}
+                                                      (GHC.Prim.ord# wild3)
+                                                      GHC.Prim.realWorld# of wild5 { (#,#) ds3 ds4 ->
+                                               case ds4 of wild6 {
+                                                 DEFAULT
+                                                 -> ((ww1,
+                                                      case ww2 of wild7 { GHC.Types.I# x1 ->
+                                                      GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                                                     Lexer.nextState28, GHC.Types.True)
+                                                 0#
+                                                 -> ((ww1,
+                                                      case ww2 of wild7 { GHC.Types.I# x1 ->
+                                                      GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                                                     Lexer.nextState27, GHC.Types.True) } }
+                                            GHC.Types.True
+                                            -> case x of wild5 {
+                                                 DEFAULT
+                                                 -> case GHC.Prim.tagToEnum#
+                                                           @ GHC.Types.Bool
+                                                           (GHC.Prim.leWord#
+                                                              (GHC.Prim.minusWord# wild5 9##)
+                                                              4##) of wild6 {
+                                                      GHC.Types.False
+                                                      -> case wild5 of wild7 {
+                                                           DEFAULT
+                                                           -> ((ww1,
+                                                                case ww2 of wild8 { GHC.Types.I# x1 ->
+                                                                GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                                                               Lexer.nextState27, GHC.Types.True)
+                                                           160##
+                                                           -> ((ww1,
+                                                                case ww2 of wild8 { GHC.Types.I# x1 ->
+                                                                GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                                                               Lexer.nextState28, GHC.Types.True) }
+                                                      GHC.Types.True
+                                                      -> ((ww1,
+                                                           case ww2 of wild7 { GHC.Types.I# x1 ->
+                                                           GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                                                          Lexer.nextState28, GHC.Types.True) }
+                                                 32##
+                                                 -> ((ww1,
+                                                      case ww2 of wild6 { GHC.Types.I# x1 ->
+                                                      GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                                                     Lexer.nextState28, GHC.Types.True) } }
+                                       '\t'#
+                                       -> ((ww1,
+                                            case ww2 of wild4 { GHC.Types.I# x ->
+                                            GHC.Types.I# (GHC.Prim.+# x 4#) }),
+                                           Lexer.nextState28, GHC.Types.True)
+                                       ' '#
+                                       -> ((ww1,
+                                            case ww2 of wild4 { GHC.Types.I# x ->
+                                            GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                           Lexer.nextState28, GHC.Types.True)
+                                       '$'#
+                                       -> ((ww1,
+                                            case ww2 of wild4 { GHC.Types.I# x ->
+                                            GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                           Lexer.nextState27, GHC.Types.True)
+                                       '/'#
+                                       -> ((ww1,
+                                            case ww2 of wild4 { GHC.Types.I# x ->
+                                            GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                           Lexer.nextState26, GHC.Types.True)
+                                       '_'#
+                                       -> ((ww1,
+                                            case ww2 of wild4 { GHC.Types.I# x ->
+                                            GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                           Lexer.nextState27, GHC.Types.True) }
+                                  GHC.Unicode.UppercaseLetter
+                                  -> ((ww1,
+                                       case ww2 of wild3 { GHC.Types.I# x ->
+                                       GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                      Lexer.nextState27, GHC.Types.True)
+                                  GHC.Unicode.LowercaseLetter
+                                  -> ((ww1,
+                                       case ww2 of wild3 { GHC.Types.I# x ->
+                                       GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                      Lexer.nextState27, GHC.Types.True)
+                                  GHC.Unicode.TitlecaseLetter
+                                  -> ((ww1,
+                                       case ww2 of wild3 { GHC.Types.I# x ->
+                                       GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                      Lexer.nextState27, GHC.Types.True)
+                                  GHC.Unicode.ModifierLetter
+                                  -> ((ww1,
+                                       case ww2 of wild3 { GHC.Types.I# x ->
+                                       GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                      Lexer.nextState27, GHC.Types.True)
+                                  GHC.Unicode.OtherLetter
+                                  -> ((ww1,
+                                       case ww2 of wild3 { GHC.Types.I# x ->
+                                       GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                      Lexer.nextState27, GHC.Types.True) }
+                             GHC.Types.True
+                             -> ((ww1,
+                                  case ww2 of wild2 { GHC.Types.I# x ->
+                                  GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                 Lexer.lexer5, GHC.Types.True) }
+                        '\n'#
+                        -> ((case ww1 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) },
+                             Lexer.$fShowToken2),
+                            Lexer.nextState25, GHC.Types.True)
+                        '!'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState24, GHC.Types.True)
+                        '&'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState23, GHC.Types.True)
+                        '('#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState22, GHC.Types.True)
+                        ')'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState21, GHC.Types.True)
+                        '*'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState20, GHC.Types.True)
+                        '+'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState19, GHC.Types.True)
+                        ','#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState18, GHC.Types.True)
+                        '-'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState17, GHC.Types.True)
+                        '.'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState16, GHC.Types.True)
+                        ';'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState15, GHC.Types.True)
+                        '<'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState14, GHC.Types.True)
+                        '='#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState13, GHC.Types.True)
+                        '['#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState12, GHC.Types.True)
+                        ']'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState11, GHC.Types.True)
+                        '{'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState10, GHC.Types.True)
+                        '}'#
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState9, GHC.Types.True) } }
+                   1#
+                   -> case w2 of wild { GHC.Types.C# c# ->
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.leWord#
+                                (GHC.Prim.int2Word# (GHC.Prim.-# (GHC.Prim.ord# c#) 48#))
+                                9##) of wild1 {
+                        GHC.Types.False
+                        -> case GHC.Unicode.$wgeneralCategory c# of wild2 {
+                             DEFAULT
+                             -> case c# of wild3 {
+                                  DEFAULT -> ((ww1, ww2), Lexer.nextState8, GHC.Types.False)
+                                  '$'# -> ((ww1, ww2), Lexer.nextState29, GHC.Types.False)
+                                  '_'# -> ((ww1, ww2), Lexer.nextState29, GHC.Types.False) }
+                             GHC.Unicode.UppercaseLetter
+                             -> ((ww1, ww2), Lexer.nextState29, GHC.Types.False)
+                             GHC.Unicode.LowercaseLetter
+                             -> ((ww1, ww2), Lexer.nextState29, GHC.Types.False)
+                             GHC.Unicode.TitlecaseLetter
+                             -> ((ww1, ww2), Lexer.nextState29, GHC.Types.False)
+                             GHC.Unicode.ModifierLetter
+                             -> ((ww1, ww2), Lexer.nextState29, GHC.Types.False)
+                             GHC.Unicode.OtherLetter
+                             -> ((ww1, ww2), Lexer.nextState29, GHC.Types.False) }
+                        GHC.Types.True
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.lexer5, GHC.Types.True) } }
+                   2#
+                   -> case w2 of ww5 { GHC.Types.C# ww6 ->
+                      case GHC.Unicode.$wgeneralCategory ww6 of wild {
+                        DEFAULT
+                        -> case GHC.Prim.tagToEnum#
+                                  @ GHC.Types.Bool
+                                  (GHC.Prim.leWord#
+                                     (GHC.Prim.int2Word# (GHC.Prim.-# (GHC.Prim.ord# ww6) 48#))
+                                     9##) of wild1 {
+                             GHC.Types.False
+                             -> case ww6 of wild2 {
+                                  DEFAULT -> ((ww1, ww2), Lexer.nextState7, GHC.Types.False)
+                                  '$'#
+                                  -> ((ww1,
+                                       case ww2 of wild3 { GHC.Types.I# x ->
+                                       GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                      Lexer.nextState27, GHC.Types.True)
+                                  '_'#
+                                  -> ((ww1,
+                                       case ww2 of wild3 { GHC.Types.I# x ->
+                                       GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                      Lexer.nextState27, GHC.Types.True) }
+                             GHC.Types.True
+                             -> ((ww1,
+                                  case ww2 of wild2 { GHC.Types.I# x ->
+                                  GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                                 Lexer.nextState27, GHC.Types.True) }
+                        GHC.Unicode.UppercaseLetter
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState27, GHC.Types.True)
+                        GHC.Unicode.LowercaseLetter
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState27, GHC.Types.True)
+                        GHC.Unicode.TitlecaseLetter
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState27, GHC.Types.True)
+                        GHC.Unicode.ModifierLetter
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState27, GHC.Types.True)
+                        GHC.Unicode.OtherLetter
+                        -> ((ww1,
+                             case ww2 of wild1 { GHC.Types.I# x ->
+                             GHC.Types.I# (GHC.Prim.+# x 1#) }),
+                            Lexer.nextState27, GHC.Types.True) } }
+                   30#
+                   -> case w2 of wild { GHC.Types.C# x ->
+                      case x of wild1 {
+                        DEFAULT
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState29, GHC.Types.True)
+                        '*'#
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState6, GHC.Types.True)
+                        '/'#
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState5, GHC.Types.True) } }
+                   32#
+                   -> case w2 of wild { GHC.Types.C# x ->
+                      case x of wild1 {
+                        DEFAULT
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState29, GHC.Types.True)
+                        '&'#
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState4, GHC.Types.True) } }
+                   33#
+                   -> case w2 of wild { GHC.Types.C# x ->
+                      case x of wild1 {
+                        DEFAULT
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState29, GHC.Types.True)
+                        '='#
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState3, GHC.Types.True) } }
+                   40#
+                   -> case w2 of wild { GHC.Types.C# x ->
+                      case x of wild1 {
+                        DEFAULT
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState5, GHC.Types.True)
+                        '\n'#
+                        -> ((case ww1 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) },
+                             Lexer.$fShowToken2),
+                            Lexer.nextState2, GHC.Types.True) } }
+                   41#
+                   -> case w2 of wild { GHC.Types.C# x ->
+                      case x of wild1 {
+                        DEFAULT
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState6, GHC.Types.True)
+                        '\n'#
+                        -> ((case ww1 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) },
+                             Lexer.$fShowToken2),
+                            Lexer.nextState6, GHC.Types.True)
+                        '*'#
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState1, GHC.Types.True) } }
+                   42#
+                   -> case w2 of wild { GHC.Types.C# x ->
+                      case x of wild1 {
+                        DEFAULT -> ((ww1, ww2), Lexer.nextState6, GHC.Types.False)
+                        '/'#
+                        -> ((ww1,
+                             case ww2 of wild2 { GHC.Types.I# x1 ->
+                             GHC.Types.I# (GHC.Prim.+# x1 1#) }),
+                            Lexer.nextState2, GHC.Types.True) } } } } }) -}
+c19addce17133b59c9e9fe4f93022c5a
+  nextState1 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 42#) -}
+33da3b786e65bd8538491bd2aa21b7ff
+  nextState10 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 13#) -}
+dc3c0a6ed050a3d9dca942331d983294
+  nextState11 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 12#) -}
+28bfaabb2be62f92bec16e7a324aff40
+  nextState12 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 11#) -}
+bdaea059136b4f375c9971df5896aabc
+  nextState13 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 33#) -}
+b6ad5e1e19d4e23825296f10580f1dec
+  nextState14 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 27#) -}
+9cdea369c3ff044b57188f6642945985
+  nextState15 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 8#) -}
+57199608e551bea644136e4333bc9dcd
+  nextState16 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 7#) -}
+1470652fddf041fbaab5f098b5d8599d
+  nextState17 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 24#) -}
+16982b054c6b74e590ab7632ed0a4375
+  nextState18 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 15#) -}
+4e37c8d9986403dac0b4cd415dbfdb1a
+  nextState19 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 25#) -}
+23c20457c78188489c16d7e24c9bec43
+  nextState2 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 50#) -}
+6cad454a980c1b353257450730dd147c
+  nextState20 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 26#) -}
+927fa4f73e0324f76e2e8f2bb905af85
+  nextState21 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 10#) -}
+8d7db7cfb6b32f4c5db9c038479d6858
+  nextState22 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 9#) -}
+64f52f5aac2a617bd7822d5ba3a030f6
+  nextState23 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 32#) -}
+710ded762c15fc2fa09228331aa0799b
+  nextState24 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 6#) -}
+a408bf4ea6fd029db40e9772e98410c1
+  nextState25 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 28#) -}
+afa4e01aeb75a462efe71296eae8b13c
+  nextState26 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 30#) -}
+133df88607f754ba6cdda088ae09a127
+  nextState27 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 2#) -}
+d82be86349fd6dab9a7e9c5a2117f126
+  nextState28 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 4#) -}
+594c7ca43380881f0805e04983f8db9b
+  nextState29 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 999#) -}
+4be010acd1d9951ed0d800647a639d53
+  nextState3 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 23#) -}
+3743e1795da1b191b3a0e11ed548db79
+  nextState4 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 22#) -}
+bfbe5493a0f964935879385ae9e733a4
+  nextState5 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 40#) -}
+6ed98b3a989249b01d546f8461f047a3
+  nextState6 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 41#) -}
+391cabb35d75a0b46f21bb791129d8ca
+  nextState7 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 3#) -}
+684588778721358358d2e44ebbf1fc99
+  nextState8 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 5#) -}
+84f9f72159ae8c522a59b57635ee1309
+  nextState9 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 14#) -}
+6543a6cef868a77fc02e29b0f6c0a266
+  nextStrings ::
+    GHC.Base.String
+    -> GHC.Types.Char
+    -> GHC.Base.String
+    -> GHC.Types.Bool
+    -> (GHC.Base.String, GHC.Base.String)
+  {- Arity: 4, HasNoCafRefs, Strictness: <L,U><L,U><L,U><S,1*U>m,
+     Unfolding: InlineRule (4, True, False)
+                (\ (tokStr :: GHC.Base.String)
+                   (c :: GHC.Types.Char)
+                   (remaining :: GHC.Base.String)
+                   (consume :: GHC.Types.Bool) ->
+                 case consume of wild {
+                   GHC.Types.False
+                   -> (tokStr, GHC.Types.: @ GHC.Types.Char c remaining)
+                   GHC.Types.True
+                   -> (GHC.Base.augment
+                         @ GHC.Types.Char
+                         (\ @ b
+                            (c1 :: GHC.Types.Char -> b -> b)[OneShot]
+                            (n :: b)[OneShot] ->
+                          GHC.Base.foldr @ GHC.Types.Char @ b c1 n tokStr)
+                         (GHC.Types.: @ GHC.Types.Char c (GHC.Types.[] @ GHC.Types.Char)),
+                       remaining) }) -}
+instance [safe] GHC.Classes.Eq [Lexer.Token] = Lexer.$fEqToken
+instance [safe] GHC.Show.Show [Lexer.Token] = Lexer.$fShowToken
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+
