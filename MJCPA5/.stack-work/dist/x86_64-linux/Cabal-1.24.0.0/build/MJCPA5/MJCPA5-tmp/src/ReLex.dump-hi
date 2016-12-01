@@ -1,0 +1,91 @@
+
+==================== FINAL INTERFACE ====================
+2016-12-01 05:16:43.81494487 UTC
+
+interface main@main:ReLex 8001
+  interface hash: 974e31c2c549aa6ea63c0c73ef1ac5e2
+  ABI hash: d7f51314d9c6049a9de3545f15462854
+  export-list hash: 68318aac8f31d9d16966e6edf64afc31
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 6ea86ecbb747c8bfd1b624d46b10840a
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  ReLex.tokenSimplifier
+module dependencies: Lexer
+package dependencies: base-4.9.0.0* ghc-prim-0.5.0.0
+                      integer-gmp-1.0.0.1
+orphans: base-4.9.0.0:GHC.Base base-4.9.0.0:GHC.Float
+family instance modules: base-4.9.0.0:Control.Applicative
+                         base-4.9.0.0:Data.Either base-4.9.0.0:Data.Functor.Const
+                         base-4.9.0.0:Data.Monoid base-4.9.0.0:Data.Type.Equality
+                         base-4.9.0.0:GHC.Generics base-4.9.0.0:GHC.IO.Exception
+                         base-4.9.0.0:GHC.TypeLits
+import  -/  base-4.9.0.0:Prelude b9bddb97799837fe67a8d00939a5b6c3
+import  -/  Lexer ba2bc94142bdc1c134083511bd0f019b
+  exports: 85d7c38f12e022923f1a05eb06ba6a89
+  Token a92d36fb480bd9ffd532ed906def93c4
+  TokenBigMeggy c649203161a4cadb2671dbbb984bb19e
+  TokenButton f7d93c4562420826773a553b02cdd409
+  TokenByte 7f34ecbf17c1c70333051ee6ae217ccc
+  TokenByteCast 807460654ec622e687171bc7000dccc2
+  TokenCheckButton 85f8e8009f15900b3ab307c2992cc088
+  TokenColor bb149da5942f69df86b8091df29a2148
+  TokenColorArrayType 5dbff86423780f2717631dae01df418b
+  TokenDelay 718d84ede384abc729ea9d98ae5dc724
+  TokenDot 6dba61d97dc1eb22ef8fd02f57d81a9c
+  TokenDotLength 4fef95db4035ee03dc1700d47c1c352e
+  TokenGetPixel c3351b3a04cac18c0b315425f5d0ccde
+  TokenImport ba585f436cf848d210d1575217135fd4
+  TokenInt 3441a77e46378a411ba32217a5506f67
+  TokenIntArrayType eada29c5fcd6f5199ab6aa1952c0b4a4
+  TokenLeftBracket 55abb399e6f5cda561297f12ff21ee46
+  TokenLeftParen 7d80a2d03697fba4c12149f8b9770a7e
+  TokenLength 751a21ccf3fd3296d23bae9dce49204f
+  TokenLittleMeggy 17888ec26e0fc3e84e704632951cd46f
+  TokenMeggyButton df5bd9293b42ef2eef4ffaca74af83f4
+  TokenMeggyButtonType 4e0102e186110d98a8f9771933d38eaa
+  TokenMeggyCheckButton 0868d3d38c0f2d81a470daba17607270
+  TokenMeggyColor 1b2b9f2092a08ce9f5c5446352f374b4
+  TokenMeggyColorType 76b65404b0e32f066a7a98492756f866
+  TokenMeggyDelay 6e818727a9d2694f88a3b1807547808f
+  TokenMeggyGetPix 729e77d0b4855070e6ae562a54c1aee3
+  TokenMeggyImport b9b1e23381f2dc8faa543ee79cfbc19a
+  TokenMeggySetAux d424e2c7834409a8452ea6e5c5d47244
+  TokenMeggySetPix 0e1a60170759d408e31defbd553b0afe
+  TokenMeggyTone cabc5fee56bb0077c0184559640ec811
+  TokenMeggyToneStart 98a78db7fa357eaaec8319db97a2f238
+  TokenMeggyToneType 241e0a5cbcdfd2355b07803405d1657f
+  TokenRightBracket 7a1d485ba276d8466705ad19ca8b3dd7
+  TokenRightParen 421d149ba1a8b5cb6a6dda01e128c856
+  TokenSemiColon 94cc2576687f4c99edf0aca1c29cb1a9
+  TokenSetAuxLEDs 8787a38ef5c314e1cd25c7c804a6c9f1
+  TokenSetPixel a66ca364e3525e3e0b5a370b95227685
+  TokenTone 27897e8262daca4044d2afb2109efb5b
+  TokenToneStart 3edd8fe08e767273f3467b887bb370ce
+d1d96cdd30874983116fa67df44b10ef
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module ReLex.$trModule2 ReLex.$trModule1) -}
+cc728f0eda6d452187d48df1f66b6beb
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "ReLex"#) -}
+488d7ad353e0e110a577276d4cc07b36
+  $trModule2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "main"#) -}
+c35b720e2a147686b29e58d25f70b372
+  tokenSimplifier ::
+    [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+    -> [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+  {- Arity: 1, Strictness: <S,1*U> -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+

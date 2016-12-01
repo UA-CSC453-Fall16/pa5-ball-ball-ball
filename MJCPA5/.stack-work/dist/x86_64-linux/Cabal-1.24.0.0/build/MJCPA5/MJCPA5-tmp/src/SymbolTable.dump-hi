@@ -1,0 +1,1028 @@
+
+==================== FINAL INTERFACE ====================
+2016-12-01 05:14:59.438172963 UTC
+
+interface main@main:SymbolTable 8001
+  interface hash: 0d1dcd44fc8bfdfc802e02e63a6cf660
+  ABI hash: d23a60d8b7f5d4c4a5976c5077e50e04
+  export-list hash: 5fca622cbe27c3102def4ca0ee895dcb
+  orphan hash: abc87357b4832885b7ae5eb685f13299
+  flag hash: 6ea86ecbb747c8bfd1b624d46b10840a
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  SymbolTable.checkDoubleDef
+  SymbolTable.checkExpect
+  SymbolTable.emptyScope
+  SymbolTable.emptySymTab
+  SymbolTable.getReturn
+  SymbolTable.insertClass
+  SymbolTable.insertMethod
+  SymbolTable.insertParam
+  SymbolTable.insertParameters
+  SymbolTable.lookupParamOffset
+  SymbolTable.lookupParamType
+  SymbolTable.lookupReturn
+  SymbolTable.lookupTypeSig
+  SymbolTable.namedScopeLookup
+  SymbolTable.namedScopeLookup'
+  SymbolTable.popScope
+  SymbolTable.pushScope
+  SymbolTable.setProgScope
+  SymbolTable.typeToBytes
+  SymbolTable.STE{SymbolTable.ClassSTE SymbolTable.MethodSTE SymbolTable.VarSTE}
+  SymbolTable.Scope
+  SymbolTable.SymbolTable{SymbolTable.SymTab}
+module dependencies: Util
+package dependencies: array-0.5.1.1@array-0.5.1.1 base-4.9.0.0*
+                      containers-0.5.7.1@containers-0.5.7.1
+                      deepseq-1.4.2.0@deepseq-1.4.2.0 ghc-prim-0.5.0.0
+                      integer-gmp-1.0.0.1
+orphans: base-4.9.0.0:GHC.Base base-4.9.0.0:GHC.Float
+family instance modules: base-4.9.0.0:Control.Applicative
+                         base-4.9.0.0:Data.Complex base-4.9.0.0:Data.Either
+                         base-4.9.0.0:Data.Functor.Const base-4.9.0.0:Data.Functor.Identity
+                         base-4.9.0.0:Data.List.NonEmpty base-4.9.0.0:Data.Monoid
+                         base-4.9.0.0:Data.Semigroup base-4.9.0.0:Data.Type.Equality
+                         base-4.9.0.0:Data.Version base-4.9.0.0:Data.Void
+                         base-4.9.0.0:GHC.Exts base-4.9.0.0:GHC.Generics
+                         base-4.9.0.0:GHC.IO.Exception base-4.9.0.0:GHC.TypeLits
+                         containers-0.5.7.1@containers-0.5.7.1:Data.Map.Base
+                         containers-0.5.7.1@containers-0.5.7.1:Data.Set.Base
+import  -/  base-4.9.0.0:GHC.Base 8ed3be81c0707b322f975a84ae1bb816
+import  -/  base-4.9.0.0:GHC.Err 3bba35a16538d33d424682ce66876cdd
+import  -/  base-4.9.0.0:GHC.Num 48f506a8f4ecf06285d0a0706594dcc0
+import  -/  base-4.9.0.0:GHC.Show 952347a6ab730bcb25c0854d8bc6ca51
+import  -/  base-4.9.0.0:Prelude b9bddb97799837fe67a8d00939a5b6c3
+import  -/  containers-0.5.7.1@containers-0.5.7.1:Data.Map 24b19ef74cea78e4c18332bed9f0491d
+import  -/  containers-0.5.7.1@containers-0.5.7.1:Data.Map.Base 1e8d61dcc59a1a983b27bab6fd6bdcaf
+import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
+import  -/  Util 8289d5fba27cd9a7e4a3433d9fbc0162
+  exports: 3eb83b1dfe1a017918c549046bcbf987
+  IntType 21e4510bfd39bc0c74f42b840453825b
+  TS 1f65413cd086a2bb7ca29e0abb58494b
+  Type 216c38e075746053d42eb4f61425ba46
+  TypeSig 67ba545ae43e5b9360cc0d3a5ac3ea30
+a759599db969b35484ce6a9f163595a2
+  $fEqSTE :: GHC.Classes.Eq SymbolTable.STE
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ SymbolTable.STE
+                  SymbolTable.$fEqSTE_$c==
+                  SymbolTable.$fEqSTE_$c/= -}
+a759599db969b35484ce6a9f163595a2
+  $fEqSTE_$c/= ::
+    SymbolTable.STE -> SymbolTable.STE -> GHC.Types.Bool
+  {- Arity: 2, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (a :: SymbolTable.STE) (b :: SymbolTable.STE) ->
+                 case SymbolTable.$fEqSTE_$c== a b of wild {
+                   GHC.Types.False -> GHC.Types.True
+                   GHC.Types.True -> GHC.Types.False }) -}
+a759599db969b35484ce6a9f163595a2
+  $fEqSTE_$c== ::
+    SymbolTable.STE -> SymbolTable.STE -> GHC.Types.Bool
+  {- Arity: 2, Strictness: <S,1*U><S,1*U> -}
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  $fEqSymbolTable :: GHC.Classes.Eq SymbolTable.SymbolTable
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ SymbolTable.SymbolTable
+                  SymbolTable.$fEqSymbolTable_$c==
+                  SymbolTable.$fEqSymbolTable_$c/= -}
+9bbd77cf8f56ed6e5382efacc7becffb
+  $fEqSymbolTable1 ::
+    Data.Map.Base.Map [GHC.Types.Char] SymbolTable.STE
+    -> Data.Map.Base.Map [GHC.Types.Char] SymbolTable.STE
+    -> GHC.Types.Bool
+  {- Unfolding: (Data.Map.Base.$fEqMap_$c==
+                   @ [GHC.Types.Char]
+                   @ SymbolTable.STE
+                   GHC.Classes.$fEq[]_$s$fEq[]1
+                   SymbolTable.$fEqSTE) -}
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  $fEqSymbolTable_$c/= ::
+    SymbolTable.SymbolTable
+    -> SymbolTable.SymbolTable -> GHC.Types.Bool
+  {- Arity: 2, Strictness: <S,1*U(U,1*U)><S,1*U(U,1*U)>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (a :: SymbolTable.SymbolTable) (b :: SymbolTable.SymbolTable) ->
+                 case SymbolTable.$fEqSymbolTable_$c== a b of wild {
+                   GHC.Types.False -> GHC.Types.True
+                   GHC.Types.True -> GHC.Types.False }) -}
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  $fEqSymbolTable_$c== ::
+    SymbolTable.SymbolTable
+    -> SymbolTable.SymbolTable -> GHC.Types.Bool
+  {- Arity: 2, Strictness: <S,1*U(U,1*U)><S,1*U(U,1*U)>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: SymbolTable.SymbolTable)
+                   (w1 :: SymbolTable.SymbolTable) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 case w1 of ww3 { SymbolTable.SymTab ww4 ww5 ->
+                 SymbolTable.$w$c== ww1 ww2 ww4 ww5 } }) -}
+a759599db969b35484ce6a9f163595a2
+  $fShowSTE :: GHC.Show.Show SymbolTable.STE
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ SymbolTable.STE
+                  SymbolTable.$fShowSTE_$cshowsPrec
+                  SymbolTable.$fShowSTE_$cshow
+                  SymbolTable.$fShowSTE_$cshowList -}
+a759599db969b35484ce6a9f163595a2
+  $fShowSTE1 :: SymbolTable.STE -> GHC.Show.ShowS
+  {- Arity: 1,
+     Unfolding: (\ (w :: SymbolTable.STE) ->
+                 SymbolTable.$w$cshowsPrec 0# w) -}
+a759599db969b35484ce6a9f163595a2
+  $fShowSTE_$cshow :: SymbolTable.STE -> GHC.Base.String
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: (\ (x :: SymbolTable.STE) ->
+                 SymbolTable.$w$cshowsPrec 0# x (GHC.Types.[] @ GHC.Types.Char)) -}
+a759599db969b35484ce6a9f163595a2
+  $fShowSTE_$cshowList :: [SymbolTable.STE] -> GHC.Show.ShowS
+  {- Arity: 2,
+     Unfolding: (GHC.Show.showList__
+                   @ SymbolTable.STE
+                   SymbolTable.$fShowSTE1) -}
+a759599db969b35484ce6a9f163595a2
+  $fShowSTE_$cshowsPrec ::
+    GHC.Types.Int -> SymbolTable.STE -> GHC.Show.ShowS
+  {- Arity: 2, Strictness: <S(S),1*U(U)><S,1*U>, Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: GHC.Types.Int) (w1 :: SymbolTable.STE) ->
+                 case w of ww { GHC.Types.I# ww1 ->
+                 SymbolTable.$w$cshowsPrec ww1 w1 }) -}
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  $fShowSymbolTable :: GHC.Show.Show SymbolTable.SymbolTable
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ SymbolTable.SymbolTable
+                  SymbolTable.$fShowSymbolTable_$cshowsPrec
+                  SymbolTable.$fShowSymbolTable_$cshow
+                  SymbolTable.$fShowSymbolTable_$cshowList -}
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  $fShowSymbolTable1 :: SymbolTable.SymbolTable -> GHC.Show.ShowS
+  {- Arity: 1,
+     Unfolding: (\ (w :: SymbolTable.SymbolTable) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 SymbolTable.$w$cshowsPrec1 0# ww1 ww2 }) -}
+6a6133e60f7cc6a92c16e6ce86f728ea
+  $fShowSymbolTable2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "SymTab "#) -}
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  $fShowSymbolTable_$cshow ::
+    SymbolTable.SymbolTable -> GHC.Base.String
+  {- Arity: 1, Strictness: <S,1*U(1*U,1*U)>, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: SymbolTable.SymbolTable) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 SymbolTable.$w$cshow ww1 ww2 }) -}
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  $fShowSymbolTable_$cshowList ::
+    [SymbolTable.SymbolTable] -> GHC.Show.ShowS
+  {- Arity: 2,
+     Unfolding: (GHC.Show.showList__
+                   @ SymbolTable.SymbolTable
+                   SymbolTable.$fShowSymbolTable1) -}
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  $fShowSymbolTable_$cshowsPrec ::
+    GHC.Types.Int -> SymbolTable.SymbolTable -> GHC.Show.ShowS
+  {- Arity: 2, Strictness: <S(S),1*U(U)><S,1*U(1*U,U)>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: GHC.Types.Int) (w1 :: SymbolTable.SymbolTable) ->
+                 case w of ww { GHC.Types.I# ww1 ->
+                 case w1 of ww2 { SymbolTable.SymTab ww3 ww4 ->
+                 SymbolTable.$w$cshowsPrec1 ww1 ww3 ww4 } }) -}
+83cfd0578cab2f4cd250d264375a2fdd
+  $sfromList ::
+    [(GHC.Base.String, a)] -> Data.Map.Base.Map GHC.Base.String a
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: (\ @ a (ds :: [(GHC.Base.String, a)]) ->
+                 case ds of wild {
+                   [] -> Data.Map.Base.Tip @ GHC.Base.String @ a
+                   : ds1 ds2
+                   -> case ds1 of wild1 { (,) kx x ->
+                      case ds2 of wild2 {
+                        []
+                        -> case kx of dt { DEFAULT ->
+                           Data.Map.Base.Bin
+                             @ GHC.Base.String
+                             @ a
+                             1#
+                             dt
+                             x
+                             (Data.Map.Base.Tip @ GHC.Base.String @ a)
+                             (Data.Map.Base.Tip @ GHC.Base.String @ a) }
+                        : ipv ipv1
+                        -> case ipv of wild3 { (,) ky ds3 ->
+                           case GHC.Classes.$fOrd[]_$s$ccompare1 kx ky of wild4 {
+                             DEFAULT
+                             -> case kx of dt { DEFAULT ->
+                                SymbolTable.$sfromList1
+                                  @ a
+                                  (Data.Map.Base.Bin
+                                     @ GHC.Base.String
+                                     @ a
+                                     1#
+                                     dt
+                                     x
+                                     (Data.Map.Base.Tip @ GHC.Base.String @ a)
+                                     (Data.Map.Base.Tip @ GHC.Base.String @ a))
+                                  wild2 }
+                             GHC.Types.LT
+                             -> case kx of dt { DEFAULT ->
+                                SymbolTable.$wpoly_go10
+                                  @ a
+                                  1#
+                                  (Data.Map.Base.Bin
+                                     @ GHC.Base.String
+                                     @ a
+                                     1#
+                                     dt
+                                     x
+                                     (Data.Map.Base.Tip @ GHC.Base.String @ a)
+                                     (Data.Map.Base.Tip @ GHC.Base.String @ a))
+                                  wild2 } } } } } }) -}
+1475c22760ae779b9d81e5324d4ffabc
+  $sfromList1 ::
+    Data.Map.Base.Map GHC.Base.String a1
+    -> [(GHC.Base.String, a1)] -> Data.Map.Base.Map GHC.Base.String a1
+  {- Arity: 2, Strictness: <S,1*U><S,1*U> -}
+4f7bc1e557ca731d3a1a797077a7adfb
+  $sinsert_$sgo10 ::
+    GHC.Base.String
+    -> a1
+    -> Data.Map.Base.Map GHC.Base.String a1
+    -> Data.Map.Base.Map GHC.Base.String a1
+  {- Arity: 3, Strictness: <S,1*U><L,U><S,1*U> -}
+ef52629e1aefd45d3ae34b0dfbe7ebd8
+  $slookup1 ::
+    GHC.Base.String
+    -> Data.Map.Base.Map GHC.Base.String a -> GHC.Base.Maybe a
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U> -}
+27cf0b66ef7fdf306d542f66ace5cd6a
+  $tc'ClassSTE :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   5236387844243919848##
+                   10275335934382533650##
+                   SymbolTable.$trModule
+                   SymbolTable.$tc'ClassSTE1) -}
+ca4aff922967cb0bffc81139dc4914b1
+  $tc'ClassSTE1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'ClassSTE"#) -}
+428504e7345639f7c26a08cd5e2d8e73
+  $tc'MethodSTE :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   1391387658202159720##
+                   6255802644178119376##
+                   SymbolTable.$trModule
+                   SymbolTable.$tc'MethodSTE1) -}
+940fda230652af97a54a1aee3ab03c53
+  $tc'MethodSTE1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'MethodSTE"#) -}
+3de6aa7c6869e62a7a9e35ae12cce56b
+  $tc'SymTab :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   7783752334388720892##
+                   14735337839581463851##
+                   SymbolTable.$trModule
+                   SymbolTable.$tc'SymTab1) -}
+bd51bcbe4a9ee0949e0d5b4699b0b5c4
+  $tc'SymTab1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'SymTab"#) -}
+9bf525ecfe0aaec72b75a7b46f199368
+  $tc'VarSTE :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12619864584142062837##
+                   7441793144605084834##
+                   SymbolTable.$trModule
+                   SymbolTable.$tc'VarSTE1) -}
+01b1af7efedf3d8a16c5a137622aa058
+  $tc'VarSTE1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'VarSTE"#) -}
+92efa5bbc8659b42430c59ca12c0bbba
+  $tcSTE :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   11101155327820340614##
+                   8172110151173188026##
+                   SymbolTable.$trModule
+                   SymbolTable.$tcSTE1) -}
+c927a7ed3fa223a31ebe72f23a66caa6
+  $tcSTE1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "STE"#) -}
+64334dcd7b74a31086fa3191ba15caf4
+  $tcSymbolTable :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   16315112381331540980##
+                   15109422445116037451##
+                   SymbolTable.$trModule
+                   SymbolTable.$trModule1) -}
+d0109e5a74022861680f8ea30e383131
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module
+                   SymbolTable.$trModule2
+                   SymbolTable.$trModule1) -}
+498a42bd0d7b9efeb4b7c26f531661b1
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "SymbolTable"#) -}
+01c16c9e01f4e7f635e64b939dc83db0
+  $trModule2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "main"#) -}
+54685386bcaf732dd86d40178f9304cd
+  $w$c== ::
+    SymbolTable.Scope
+    -> [GHC.Base.String]
+    -> SymbolTable.Scope
+    -> [GHC.Base.String]
+    -> GHC.Types.Bool
+  {- Arity: 4, Strictness: <L,U><L,1*U><L,U><L,1*U>, Inline: [0],
+     Unfolding: (\ (ww :: SymbolTable.Scope)
+                   (ww1 :: [GHC.Base.String])
+                   (ww2 :: SymbolTable.Scope)
+                   (ww3 :: [GHC.Base.String]) ->
+                 case SymbolTable.$fEqSymbolTable1 ww ww2 of wild {
+                   GHC.Types.False -> GHC.Types.False
+                   GHC.Types.True -> GHC.Classes.$fEq[]_$s$c==2 ww1 ww3 }) -}
+2ea0c2ff223fba3fd2808cf2f972c72d
+  $w$cshow ::
+    SymbolTable.Scope -> [GHC.Base.String] -> GHC.Base.String
+  {- Arity: 2, Strictness: <L,1*U><L,1*U>, Inline: [0],
+     Unfolding: (\ (ww :: SymbolTable.Scope)
+                   (ww1 :: [GHC.Base.String]) ->
+                 GHC.Base.++
+                   @ GHC.Types.Char
+                   SymbolTable.$fShowSymbolTable2
+                   (Data.Map.Base.$w$cshowsPrec
+                      @ [GHC.Types.Char]
+                      @ SymbolTable.STE
+                      GHC.Show.$fShow[]_$s$fShow[]1
+                      SymbolTable.$fShowSTE
+                      11#
+                      ww
+                      (GHC.Types.:
+                         @ GHC.Types.Char
+                         GHC.Show.showSpace1
+                         (GHC.Show.showList__
+                            @ [GHC.Types.Char]
+                            GHC.Show.shows_$cshowList
+                            ww1
+                            (GHC.Types.[] @ GHC.Types.Char))))) -}
+a759599db969b35484ce6a9f163595a2
+  $w$cshowsPrec :: GHC.Prim.Int# -> SymbolTable.STE -> GHC.Show.ShowS
+  {- Arity: 2, Strictness: <S,U><S,1*U>, Inline: [0] -}
+e4ae6f7114b78830b4524558c9a93dd6
+  $w$cshowsPrec1 ::
+    GHC.Prim.Int#
+    -> SymbolTable.Scope -> [GHC.Base.String] -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <S,U><L,1*U><L,U>, Inline: [0],
+     Unfolding: (\ (ww :: GHC.Prim.Int#)
+                   (ww1 :: SymbolTable.Scope)
+                   (ww2 :: [GHC.Base.String]) ->
+                 let {
+                   f :: GHC.Base.String -> GHC.Base.String
+                   = Data.Map.Base.$w$cshowsPrec
+                       @ [GHC.Types.Char]
+                       @ SymbolTable.STE
+                       GHC.Show.$fShow[]_$s$fShow[]1
+                       SymbolTable.$fShowSTE
+                       11#
+                       ww1
+                 } in
+                 let {
+                   p :: GHC.Show.ShowS {- Arity: 1, Strictness: <L,U> -}
+                   = \ (x :: GHC.Base.String) ->
+                     GHC.Base.++
+                       @ GHC.Types.Char
+                       SymbolTable.$fShowSymbolTable2
+                       (f (GHC.Types.:
+                             @ GHC.Types.Char
+                             GHC.Show.showSpace1
+                             (GHC.Show.showList__
+                                @ [GHC.Types.Char]
+                                GHC.Show.shows_$cshowList
+                                ww2
+                                x)))
+                 } in
+                 case GHC.Prim.tagToEnum#
+                        @ GHC.Types.Bool
+                        (GHC.Prim.>=# ww 11#) of wild {
+                   GHC.Types.False -> p
+                   GHC.Types.True
+                   -> \ (x :: GHC.Base.String) ->
+                      GHC.Types.:
+                        @ GHC.Types.Char
+                        GHC.Show.shows9
+                        (p (GHC.Types.: @ GHC.Types.Char GHC.Show.shows6 x)) }) -}
+77135962b4181670fb0fbc838e9b133f
+  $wgetReturn :: SymbolTable.Scope -> [GHC.Base.String] -> Util.Type
+  {- Arity: 2, Strictness: <S,U><S,1*U>, Inline: [0],
+     Unfolding: (\ (ww :: SymbolTable.Scope)
+                   (ww1 :: [GHC.Base.String]) ->
+                 case ww1 of wild {
+                   [] -> SymbolTable.getReturn1
+                   : methodname ds
+                   -> case ds of wild1 {
+                        [] -> SymbolTable.getReturn1
+                        : classname ds1
+                        -> case ds1 of wild2 {
+                             []
+                             -> case SymbolTable.namedScopeLookup'
+                                       (SymbolTable.namedScopeLookup ww classname)
+                                       methodname of wild3 { (,) methodScope tsig ->
+                                case tsig of wild4 { Util.TS params returnType -> returnType } }
+                             : ipv ipv1 -> SymbolTable.getReturn1 } } }) -}
+07690347000b9ea8513298000b85cc2c
+  $winsertMethod ::
+    SymbolTable.Scope
+    -> [GHC.Base.String]
+    -> GHC.Base.String
+    -> [(GHC.Base.String, Util.Type)]
+    -> Util.Type
+    -> (# SymbolTable.Scope, [GHC.Base.String] #)
+  {- Arity: 5, Strictness: <S,U><S,1*U><S,U><S,U><L,U>, Inline: [0],
+     Unfolding: (\ (ww :: SymbolTable.Scope)
+                   (ww1 :: [GHC.Base.String])
+                   (w :: GHC.Base.String)
+                   (ww2 :: [(GHC.Base.String, Util.Type)])
+                   (ww3 :: Util.Type) ->
+                 case ww1 of wild {
+                   []
+                   -> case SymbolTable.insertMethod5
+                      ret_ty (# SymbolTable.Scope, [GHC.Base.String] #)
+                      of {}
+                   : classname ds
+                   -> case ds of wild1 {
+                        []
+                        -> case SymbolTable.$slookup1
+                                  @ SymbolTable.STE
+                                  classname
+                                  ww of wild2 {
+                             GHC.Base.Nothing
+                             -> case SymbolTable.insertMethod4
+                                ret_ty (# SymbolTable.Scope, [GHC.Base.String] #)
+                                of {}
+                             GHC.Base.Just ds1
+                             -> case ds1 of wild3 {
+                                  DEFAULT
+                                  -> case SymbolTable.insertMethod4
+                                     ret_ty (# SymbolTable.Scope, [GHC.Base.String] #)
+                                     of {}
+                                  SymbolTable.ClassSTE classScope
+                                  -> case SymbolTable.$slookup1
+                                            @ SymbolTable.STE
+                                            w
+                                            classScope of wild4 {
+                                       GHC.Base.Nothing
+                                       -> case SymbolTable.$winsertParameters
+                                                 (SymbolTable.$sinsert_$sgo10
+                                                    @ SymbolTable.STE
+                                                    classname
+                                                    (SymbolTable.ClassSTE
+                                                       (SymbolTable.$sinsert_$sgo10
+                                                          @ SymbolTable.STE
+                                                          w
+                                                          (SymbolTable.MethodSTE
+                                                             (SymbolTable.emptyScope,
+                                                              Util.TS ww2 ww3))
+                                                          classScope))
+                                                    ww)
+                                                 (GHC.Types.:
+                                                    @ GHC.Base.String
+                                                    w
+                                                    (GHC.Types.:
+                                                       @ GHC.Base.String
+                                                       classname
+                                                       (GHC.Types.[] @ GHC.Base.String)))
+                                                 SymbolTable.insertMethod3
+                                                 ww2 of ww4 { (#,#) ww5 ww6 ->
+                                          case ww6 of wild5 {
+                                            [] -> (# ww5, GHC.Types.[] @ GHC.Base.String #)
+                                            : curr nesting -> (# ww5, nesting #) } }
+                                       GHC.Base.Just ds2
+                                       -> case ds2 of wild5 {
+                                            DEFAULT
+                                            -> case SymbolTable.insertMethod2 wild5
+                                               ret_ty (# SymbolTable.Scope, [GHC.Base.String] #)
+                                               of {}
+                                            SymbolTable.MethodSTE inner
+                                            -> case SymbolTable.insertMethod1 w
+                                               ret_ty (# SymbolTable.Scope, [GHC.Base.String] #)
+                                               of {} } } } }
+                        : ipv ipv1
+                        -> case SymbolTable.insertMethod5
+                           ret_ty (# SymbolTable.Scope, [GHC.Base.String] #)
+                           of {} } }) -}
+a6d42fa88217b6d0d6be07da958b50d9
+  $winsertParam ::
+    SymbolTable.Scope
+    -> [GHC.Base.String]
+    -> GHC.Types.Int
+    -> GHC.Base.String
+    -> Util.Type
+    -> (# SymbolTable.SymbolTable, GHC.Types.Int #)
+  {- Arity: 5, Strictness: <L,U><S,1*U><L,1*U(U)><L,U><L,U>,
+     Inline: [0],
+     Unfolding: (\ (ww :: SymbolTable.Scope)
+                   (ww1 :: [GHC.Base.String])
+                   (w :: GHC.Types.Int)
+                   (w1 :: GHC.Base.String)
+                   (w2 :: Util.Type) ->
+                 case ww1 of wild {
+                   []
+                   -> case SymbolTable.insertParam2
+                      ret_ty (# SymbolTable.SymbolTable, GHC.Types.Int #)
+                      of {}
+                   : methodname ds
+                   -> case ds of wild1 {
+                        []
+                        -> case SymbolTable.insertParam2
+                           ret_ty (# SymbolTable.SymbolTable, GHC.Types.Int #)
+                           of {}
+                        : classname ds1
+                        -> case ds1 of wild2 {
+                             []
+                             -> let {
+                                  offset2 :: GHC.Types.Int
+                                  = case w of wild3 { GHC.Types.I# x ->
+                                    case w2 of wild4 {
+                                      DEFAULT -> GHC.Types.I# (GHC.Prim.+# x 1#)
+                                      Util.IntType -> GHC.Types.I# (GHC.Prim.+# x 2#) } }
+                                } in
+                                (# SymbolTable.SymTab
+                                     (SymbolTable.$sinsert_$sgo10
+                                        @ SymbolTable.STE
+                                        classname
+                                        (SymbolTable.ClassSTE
+                                           (let {
+                                              classScope :: SymbolTable.Scope
+                                              = SymbolTable.namedScopeLookup ww classname
+                                            } in
+                                            SymbolTable.$sinsert_$sgo10
+                                              @ SymbolTable.STE
+                                              methodname
+                                              (SymbolTable.MethodSTE
+                                                 (let {
+                                                    ds2 :: (SymbolTable.Scope, Util.TypeSig)
+                                                    = SymbolTable.namedScopeLookup'
+                                                        classScope
+                                                        methodname
+                                                  } in
+                                                  (case ds2 of wild3 { (,) methodScope tsig ->
+                                                   SymbolTable.$sinsert_$sgo10
+                                                     @ SymbolTable.STE
+                                                     w1
+                                                     (SymbolTable.VarSTE
+                                                        w2
+                                                        w1
+                                                        SymbolTable.insertParam1
+                                                        offset2)
+                                                     methodScope },
+                                                   case ds2 of wild3 { (,) methodScope tsig ->
+                                                   tsig })))
+                                              classScope))
+                                        ww)
+                                     (GHC.Types.:
+                                        @ GHC.Base.String
+                                        methodname
+                                        (GHC.Types.:
+                                           @ GHC.Base.String
+                                           classname
+                                           (GHC.Types.[] @ GHC.Base.String))),
+                                   offset2 #)
+                             : ipv ipv1
+                             -> case SymbolTable.insertParam2
+                                ret_ty (# SymbolTable.SymbolTable, GHC.Types.Int #)
+                                of {} } } }) -}
+53210e147459b2a51a3e565c8ab7d59b
+  $winsertParameters ::
+    SymbolTable.Scope
+    -> [GHC.Base.String]
+    -> GHC.Types.Int
+    -> [(GHC.Base.String, Util.Type)]
+    -> (# SymbolTable.Scope, [GHC.Base.String] #)
+  {- Arity: 4, Strictness: <L,U><L,U><L,1*U(U)><S,1*U>,
+     Inline: [0] -}
+dd273e4bff52c1c714b430cf1301df20
+  $wlookupParamOffset ::
+    SymbolTable.Scope
+    -> [GHC.Base.String] -> GHC.Base.String -> GHC.Types.Int
+  {- Arity: 3, Strictness: <S,U><S,1*U><S,U>, Inline: [0],
+     Unfolding: (\ (ww :: SymbolTable.Scope)
+                   (ww1 :: [GHC.Base.String])
+                   (w :: GHC.Base.String) ->
+                 case ww1 of wild {
+                   [] -> SymbolTable.lookupParamOffset3
+                   : methodname ds
+                   -> case ds of wild1 {
+                        [] -> SymbolTable.lookupParamOffset3
+                        : classname ds1
+                        -> case ds1 of wild2 {
+                             []
+                             -> case SymbolTable.namedScopeLookup'
+                                       (SymbolTable.namedScopeLookup ww classname)
+                                       methodname of wild3 { (,) methodScope tsig ->
+                                case SymbolTable.$slookup1
+                                       @ SymbolTable.STE
+                                       w
+                                       methodScope of wild4 {
+                                  GHC.Base.Nothing
+                                  -> SymbolTable.lookupParamOffset2 classname methodname w
+                                  GHC.Base.Just ds2
+                                  -> case ds2 of wild5 {
+                                       DEFAULT -> SymbolTable.lookupParamOffset1 wild5
+                                       SymbolTable.VarSTE vartype name base offset -> offset } } }
+                             : ipv ipv1 -> SymbolTable.lookupParamOffset3 } } }) -}
+b38e61232c4e84c5f8347c515962373b
+  $wlookupParamType ::
+    SymbolTable.Scope
+    -> [GHC.Base.String] -> GHC.Base.String -> Util.Type
+  {- Arity: 3, Strictness: <S,U><S,1*U><S,U>, Inline: [0],
+     Unfolding: (\ (ww :: SymbolTable.Scope)
+                   (ww1 :: [GHC.Base.String])
+                   (w :: GHC.Base.String) ->
+                 case ww1 of wild {
+                   [] -> SymbolTable.lookupParamType3
+                   : methodname ds
+                   -> case ds of wild1 {
+                        [] -> SymbolTable.lookupParamType3
+                        : classname rest
+                        -> case SymbolTable.namedScopeLookup'
+                                  (SymbolTable.namedScopeLookup ww classname)
+                                  methodname of wild2 { (,) methodScope tsig ->
+                           case SymbolTable.$slookup1
+                                  @ SymbolTable.STE
+                                  w
+                                  methodScope of wild3 {
+                             GHC.Base.Nothing
+                             -> SymbolTable.lookupParamType2 classname methodname w
+                             GHC.Base.Just ds1
+                             -> case ds1 of wild4 {
+                                  DEFAULT -> SymbolTable.lookupParamType1 wild4
+                                  SymbolTable.VarSTE vartype name base offset
+                                  -> vartype } } } } }) -}
+289194c5a44146020b4533b9cae7aabe
+  $wpoly_go10 ::
+    GHC.Prim.Int#
+    -> Data.Map.Base.Map GHC.Base.String a
+    -> [(GHC.Base.String, a)]
+    -> Data.Map.Base.Map GHC.Base.String a
+  {- Arity: 3, Strictness: <L,U><S,1*U><S,1*U>, Inline: [0] -}
+a759599db969b35484ce6a9f163595a2
+  data STE
+    = ClassSTE SymbolTable.Scope
+    | MethodSTE (SymbolTable.Scope, Util.TypeSig)
+    | VarSTE Util.Type GHC.Base.String GHC.Types.Int GHC.Types.Int
+a759599db969b35484ce6a9f163595a2
+  type Scope = Data.Map.Base.Map GHC.Base.String SymbolTable.STE
+8e86e5b3dc08c88d59b8ccc5a39fa69b
+  data SymbolTable = SymTab SymbolTable.Scope [GHC.Base.String]
+e923afe84036da3d880a08510b66249c
+  checkDoubleDef ::
+    SymbolTable.Scope -> GHC.Base.String -> GHC.Types.Bool
+  {- Arity: 2, Strictness: <S,1*U><S,1*U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (outer :: SymbolTable.Scope) (name :: GHC.Base.String) ->
+                 case SymbolTable.$slookup1 @ SymbolTable.STE name outer of wild {
+                   GHC.Base.Nothing -> GHC.Types.False
+                   GHC.Base.Just ds
+                   -> case ds of wild1 {
+                        DEFAULT -> SymbolTable.checkDoubleDef1 wild1
+                        SymbolTable.MethodSTE inner -> GHC.Types.True } }) -}
+3eba019f1fda96b08b4b2abc7d26019d
+  checkDoubleDef1 :: SymbolTable.STE -> GHC.Types.Bool
+  {- Arity: 1, Strictness: <B,1*U>x -}
+1a1cfb82b0f79a28c0ccaeabf71a7fb5
+  checkExpect ::
+    (GHC.Classes.Eq a, GHC.Show.Show a) => a -> a -> GHC.Base.String
+  {- Arity: 4,
+     Strictness: <S(LC(C(S))),1*U(A,1*C1(C1(U)))><L,U(A,C(U),A)><L,U><L,U>,
+     Unfolding: (\ @ a
+                   ($dEq :: GHC.Classes.Eq a)
+                   ($dShow :: GHC.Show.Show a)
+                   (check :: a)
+                   (expect :: a) ->
+                 case GHC.Classes./= @ a $dEq check expect of wild {
+                   GHC.Types.False -> SymbolTable.checkExpect1
+                   GHC.Types.True
+                   -> GHC.CString.unpackAppendCString#
+                        "checkExpect FAILED, got: "#
+                        (GHC.Base.++
+                           @ GHC.Types.Char
+                           (GHC.Show.show @ a $dShow check)
+                           (GHC.CString.unpackAppendCString#
+                              ", expected: "#
+                              (GHC.Show.show @ a $dShow expect))) }) -}
+9ab932eb7d063947f745c9f3a11c2118
+  checkExpect1 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "checkExpect PASSED"#) -}
+3809e8c9883cea1b66df01a8efc3c549
+  emptyScope :: SymbolTable.Scope
+  {- Unfolding: (SymbolTable.$sfromList
+                   @ SymbolTable.STE
+                   (GHC.Types.[] @ (GHC.Base.String, SymbolTable.STE))) -}
+a999f739b1326da15a61b13b07ecd9c8
+  emptySymTab :: SymbolTable.SymbolTable
+  {- Strictness: m,
+     Unfolding: (SymbolTable.SymTab
+                   SymbolTable.emptyScope
+                   (GHC.Types.[] @ GHC.Base.String)) -}
+a56aafa95d8fc1c86c619ba5888a7f17
+  getReturn :: SymbolTable.SymbolTable -> Util.Type
+  {- Arity: 1, Strictness: <S(SS),1*U(U,1*U)>, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: SymbolTable.SymbolTable) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 SymbolTable.$wgetReturn ww1 ww2 }) -}
+0c9c79521cd86e31c587adcace60f78a
+  getReturn1 :: Util.Type
+  {- Strictness: x -}
+59443a27c9481e44fbafaad1c259f0ec
+  insertClass ::
+    SymbolTable.SymbolTable
+    -> GHC.Base.String -> SymbolTable.SymbolTable
+  {- Arity: 2, Strictness: <S,1*U(1*U,U)><L,1*U>m,
+     Unfolding: InlineRule (2, True, False)
+                (\ (ds :: SymbolTable.SymbolTable)
+                   (classname :: GHC.Base.String) ->
+                 case ds of wild { SymbolTable.SymTab scope nesting ->
+                 SymbolTable.SymTab
+                   (SymbolTable.$sinsert_$sgo10
+                      @ SymbolTable.STE
+                      classname
+                      SymbolTable.insertClass1
+                      scope)
+                   nesting }) -}
+eaba4df815672ca8a6b24a1ab2e7e712
+  insertClass1 :: SymbolTable.STE
+  {- Strictness: m1,
+     Unfolding: (SymbolTable.ClassSTE SymbolTable.emptyScope) -}
+96ace9d5be4bbe39f7ffdf53f67e6135
+  insertMethod ::
+    SymbolTable.SymbolTable
+    -> GHC.Base.String -> Util.TypeSig -> SymbolTable.SymbolTable
+  {- Arity: 3, Strictness: <S(SS),1*U(U,1*U)><S,U><S(SL),1*U(U,U)>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: SymbolTable.SymbolTable)
+                   (w1 :: GHC.Base.String)
+                   (w2 :: Util.TypeSig) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 case w2 of ww3 { Util.TS ww4 ww5 ->
+                 case SymbolTable.$winsertMethod
+                        ww1
+                        ww2
+                        w1
+                        ww4
+                        ww5 of ww6 { (#,#) ww7 ww8 ->
+                 SymbolTable.SymTab ww7 ww8 } } }) -}
+8a992ab1aca7ef927899b7a30a2de25c
+  insertMethod1 :: GHC.Base.String -> SymbolTable.SymbolTable
+  {- Arity: 1, Strictness: <L,U>x -}
+e44754cb0cd7dc4bea63e92df24212e0
+  insertMethod2 :: SymbolTable.STE -> GHC.Types.Bool
+  {- Arity: 1, Strictness: <L,U>x -}
+9742ec27d76c6230a14c68ceb3905ee7
+  insertMethod3 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 2#) -}
+aff446ddef7f2444d4490ba599d225c4
+  insertMethod4 :: (SymbolTable.Scope)
+  {- Strictness: x -}
+dc7acb43a4fd9bd264cb67ed4b0927b6
+  insertMethod5 :: SymbolTable.SymbolTable
+  {- Strictness: x -}
+7c7880607502988d99ad0c23a10dfdb7
+  insertParam ::
+    SymbolTable.SymbolTable
+    -> GHC.Types.Int
+    -> GHC.Base.String
+    -> Util.Type
+    -> (SymbolTable.SymbolTable, GHC.Types.Int)
+  {- Arity: 4, Strictness: <S(LS),1*U(U,1*U)><L,1*U(U)><L,U><L,U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (4, True, False)
+                (\ (w :: SymbolTable.SymbolTable)
+                   (w1 :: GHC.Types.Int)
+                   (w2 :: GHC.Base.String)
+                   (w3 :: Util.Type) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 case SymbolTable.$winsertParam
+                        ww1
+                        ww2
+                        w1
+                        w2
+                        w3 of ww3 { (#,#) ww4 ww5 ->
+                 (ww4, ww5) } }) -}
+d3b4b759a2620cd9dc8e1d81b021c090
+  insertParam1 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# -1#) -}
+3c3f18ff46847f963e862264729d03e1
+  insertParam2 :: (SymbolTable.SymbolTable, GHC.Types.Int)
+  {- Strictness: x -}
+b42aa590abe75156b765b7a6086fcece
+  insertParameters ::
+    SymbolTable.SymbolTable
+    -> GHC.Types.Int
+    -> [(GHC.Base.String, Util.Type)]
+    -> SymbolTable.SymbolTable
+  {- Arity: 3, Strictness: <S,1*U(U,U)><L,1*U(U)><S,1*U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: SymbolTable.SymbolTable)
+                   (w1 :: GHC.Types.Int)
+                   (w2 :: [(GHC.Base.String, Util.Type)]) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 case SymbolTable.$winsertParameters
+                        ww1
+                        ww2
+                        w1
+                        w2 of ww3 { (#,#) ww4 ww5 ->
+                 SymbolTable.SymTab ww4 ww5 } }) -}
+db0a4f91537fffac386fb08f6ab33144
+  lookupParamOffset ::
+    SymbolTable.SymbolTable -> GHC.Base.String -> GHC.Types.Int
+  {- Arity: 2, Strictness: <S(SS),1*U(U,1*U)><S,U>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: SymbolTable.SymbolTable) (w1 :: GHC.Base.String) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 SymbolTable.$wlookupParamOffset ww1 ww2 w1 }) -}
+260858f0901cb4de2b5ed02f7105a671
+  lookupParamOffset1 :: SymbolTable.STE -> GHC.Types.Int
+  {- Arity: 1, Strictness: <L,U>x -}
+1403914c481ace2530c301e62f9987af
+  lookupParamOffset2 ::
+    GHC.Base.String
+    -> GHC.Base.String -> GHC.Base.String -> GHC.Types.Int
+  {- Arity: 3, Strictness: <L,U><L,U><L,U>x -}
+943cdfd0aae67cdd445024ae49cbac40
+  lookupParamOffset3 :: GHC.Types.Int
+  {- Strictness: x -}
+678b9121c6c8ecfde7dd9aad1f56a9ee
+  lookupParamType ::
+    SymbolTable.SymbolTable -> GHC.Base.String -> Util.Type
+  {- Arity: 2, Strictness: <S(SS),1*U(U,1*U)><S,U>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: SymbolTable.SymbolTable) (w1 :: GHC.Base.String) ->
+                 case w of ww { SymbolTable.SymTab ww1 ww2 ->
+                 SymbolTable.$wlookupParamType ww1 ww2 w1 }) -}
+7692598b3bd000df6f7ae8b11f876af1
+  lookupParamType1 :: SymbolTable.STE -> Util.Type
+  {- Arity: 1, Strictness: <L,U>x -}
+e3c34cdf1359ce161221355e801e94da
+  lookupParamType2 ::
+    GHC.Base.String -> GHC.Base.String -> GHC.Base.String -> Util.Type
+  {- Arity: 3, Strictness: <L,U><L,U><L,U>x -}
+129c3ac0f5a422062876d15910037e42
+  lookupParamType3 :: Util.Type
+  {- Strictness: x -}
+7d1f12d582d29ab48f50ff403a5a1ace
+  lookupReturn ::
+    SymbolTable.SymbolTable
+    -> GHC.Base.String -> GHC.Base.String -> Util.Type
+  {- Arity: 3, Strictness: <S(SL),1*U(U,A)><S,U><S,U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (st :: SymbolTable.SymbolTable)
+                   (classname :: GHC.Base.String)
+                   (methodname :: GHC.Base.String) ->
+                 case st of wild { SymbolTable.SymTab progScope stack ->
+                 case SymbolTable.namedScopeLookup'
+                        (SymbolTable.namedScopeLookup progScope classname)
+                        methodname of wild1 { (,) methodScope tsig ->
+                 case tsig of wild2 { Util.TS params returnType ->
+                 returnType } } }) -}
+9116ce4e9ab33670b1ca8ce8a4f164f9
+  lookupTypeSig ::
+    SymbolTable.SymbolTable
+    -> GHC.Base.String -> GHC.Base.String -> Util.TypeSig
+  {- Arity: 3, Strictness: <S(SL),1*U(U,A)><S,U><S,U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ds :: SymbolTable.SymbolTable)
+                   (classname :: GHC.Base.String)
+                   (methodname :: GHC.Base.String) ->
+                 case ds of wild { SymbolTable.SymTab progScope stack ->
+                 case SymbolTable.namedScopeLookup'
+                        (SymbolTable.namedScopeLookup progScope classname)
+                        methodname of wild1 { (,) methodScope tsig ->
+                 tsig } }) -}
+70863fa2f8e570ea403bbf4c262e2f97
+  namedScopeLookup ::
+    SymbolTable.Scope -> GHC.Base.String -> SymbolTable.Scope
+  {- Arity: 2, Strictness: <S,U><S,U>,
+     Unfolding: (\ (outer :: SymbolTable.Scope)
+                   (name :: GHC.Base.String) ->
+                 case SymbolTable.$slookup1 @ SymbolTable.STE name outer of wild {
+                   GHC.Base.Nothing -> SymbolTable.namedScopeLookup2 name outer
+                   GHC.Base.Just ds
+                   -> case ds of wild1 {
+                        DEFAULT -> SymbolTable.namedScopeLookup1 wild1
+                        SymbolTable.ClassSTE inner -> inner } }) -}
+3d586044ee8294121ae14e9a59757d63
+  namedScopeLookup' ::
+    SymbolTable.Scope
+    -> GHC.Base.String -> (SymbolTable.Scope, Util.TypeSig)
+  {- Arity: 2, Strictness: <S,U><S,U>,
+     Unfolding: (\ (outer :: SymbolTable.Scope)
+                   (name :: GHC.Base.String) ->
+                 case SymbolTable.$slookup1 @ SymbolTable.STE name outer of wild {
+                   GHC.Base.Nothing -> SymbolTable.namedScopeLookup'2 name outer
+                   GHC.Base.Just ds
+                   -> case ds of wild1 {
+                        DEFAULT -> SymbolTable.namedScopeLookup'1 wild1
+                        SymbolTable.MethodSTE inner -> inner } }) -}
+47fdf1220e1da90c388caa7740d2486c
+  namedScopeLookup'1 ::
+    SymbolTable.STE -> (SymbolTable.Scope, Util.TypeSig)
+  {- Arity: 1, Strictness: <L,U>x -}
+fad66e9aa720105e0b0967ab26592e3f
+  namedScopeLookup'2 ::
+    GHC.Base.String
+    -> SymbolTable.Scope -> (SymbolTable.Scope, Util.TypeSig)
+  {- Arity: 2, Strictness: <B,1*U><B,1*U>x -}
+19c71205197bd716f67a75cafca35f61
+  namedScopeLookup1 :: SymbolTable.STE -> SymbolTable.Scope
+  {- Arity: 1, Strictness: <L,U>x -}
+5c5cf713ac7fb7fde211249bc795ac51
+  namedScopeLookup2 ::
+    GHC.Base.String -> SymbolTable.Scope -> SymbolTable.Scope
+  {- Arity: 2, Strictness: <B,1*U><B,1*U>x -}
+2d2b4312dc5456c6758da373bee3b506
+  popScope :: SymbolTable.SymbolTable -> SymbolTable.SymbolTable
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(LS),1*U(U,1*U)>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: SymbolTable.SymbolTable) ->
+                 case ds of wild { SymbolTable.SymTab progScope ds1 ->
+                 case ds1 of wild1 {
+                   [] -> SymbolTable.SymTab progScope (GHC.Types.[] @ GHC.Base.String)
+                   : curr nesting -> SymbolTable.SymTab progScope nesting } }) -}
+85518b141e07ca4962860b0d1b41ba82
+  pushScope ::
+    SymbolTable.SymbolTable
+    -> GHC.Base.String -> SymbolTable.SymbolTable
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U(U,U)><L,U>m,
+     Unfolding: InlineRule (2, True, False)
+                (\ (ds :: SymbolTable.SymbolTable)
+                   (scopename :: GHC.Base.String) ->
+                 case ds of wild { SymbolTable.SymTab progScope nesting ->
+                 SymbolTable.SymTab
+                   progScope
+                   (GHC.Types.: @ GHC.Base.String scopename nesting) }) -}
+d2a0079e5d163368b60beffb614e14e2
+  setProgScope :: SymbolTable.SymbolTable -> SymbolTable.SymbolTable
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U(U,A)>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: SymbolTable.SymbolTable) ->
+                 case ds of wild { SymbolTable.SymTab scope list ->
+                 SymbolTable.SymTab scope (GHC.Types.[] @ GHC.Base.String) }) -}
+9e832882bb6c4e931756b69129c069a1
+  typeToBytes :: Util.Type -> GHC.Types.Int
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (t :: Util.Type) ->
+                 case t of wild {
+                   DEFAULT -> SymbolTable.typeToBytes1
+                   Util.IntType -> SymbolTable.insertMethod3 }) -}
+79dcf25dbaa9a0d0f137e514b8321cc2
+  typeToBytes1 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 1#) -}
+instance [safe] GHC.Classes.Eq [SymbolTable.STE]
+  = SymbolTable.$fEqSTE
+instance [safe] GHC.Classes.Eq [SymbolTable.SymbolTable]
+  = SymbolTable.$fEqSymbolTable
+instance [safe] GHC.Show.Show [SymbolTable.STE]
+  = SymbolTable.$fShowSTE
+instance [safe] GHC.Show.Show [SymbolTable.SymbolTable]
+  = SymbolTable.$fShowSymbolTable
+"SPEC/SymbolTable fromList @ String _" [ALWAYS] forall @ a
+                                                       ($dOrd :: GHC.Classes.Ord GHC.Base.String)
+  Data.Map.Base.fromList @ [GHC.Types.Char] @ a $dOrd
+  = SymbolTable.$sfromList @ a
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+

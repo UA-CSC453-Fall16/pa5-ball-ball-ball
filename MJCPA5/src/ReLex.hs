@@ -28,7 +28,7 @@ tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenButton,(_,_)):r
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenTone,(_,_)):rest)   = (TokenMeggyToneType, (r1,c1)):(tokenSimplifier rest)
 
 --PA5 Relex
-tokenSimplifier ((TokenDot, (r1,c1)):(TookenLength,(_,_)):rest) = (TokenDotLength, (r1,c1)):(tokenSimplifier rest)
+tokenSimplifier ((TokenDot, (r1,c1)):(TokenLength,(_,_)):rest) = (TokenDotLength, (r1,c1)):(tokenSimplifier rest)
 tokenSimplifier ((TokenInt, (r1,c1)):(TokenLeftBracket,(_,_)):(TokenRightBracket,(_,_)):rest) = (TokenIntArrayType, (r1,c1)):(tokenSimplifier rest)
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):
                  (TokenDot,(_,_)):

@@ -586,7 +586,7 @@ first_Type t =
         TokenMeggyButtonType -> True
         TokenMeggyColorType  -> True
         TokenMeggyToneType   -> True
-        TokenIntArrayType 	 -> True
+        TokenIntArrayType    -> True
         TokenColorArrayType  -> True
         _ -> False
 

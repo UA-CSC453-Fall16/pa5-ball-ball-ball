@@ -1,0 +1,129 @@
+
+==================== FINAL INTERFACE ====================
+2016-12-01 05:12:40.191804563 UTC
+
+interface main@main:Dot 8001
+  interface hash: edaeafee832c30318aa1a61a9815340c
+  ABI hash: f55edbd226e6b2b070cd9cbb70dfb5f9
+  export-list hash: ba03f7aae79420c35d1b679332427461
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 6ea86ecbb747c8bfd1b624d46b10840a
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Dot.astdotviz_rec
+  Dot.genDot
+  Dot.visitChildren
+module dependencies: Util
+package dependencies: base-4.9.0.0* ghc-prim-0.5.0.0
+                      integer-gmp-1.0.0.1
+orphans: base-4.9.0.0:GHC.Base base-4.9.0.0:GHC.Float
+family instance modules: base-4.9.0.0:Control.Applicative
+                         base-4.9.0.0:Data.Either base-4.9.0.0:Data.Functor.Const
+                         base-4.9.0.0:Data.Monoid base-4.9.0.0:Data.Type.Equality
+                         base-4.9.0.0:GHC.Generics base-4.9.0.0:GHC.IO.Exception
+                         base-4.9.0.0:GHC.TypeLits
+import  -/  base-4.9.0.0:GHC.Base 8ed3be81c0707b322f975a84ae1bb816
+import  -/  base-4.9.0.0:GHC.Num 48f506a8f4ecf06285d0a0706594dcc0
+import  -/  base-4.9.0.0:GHC.Show 952347a6ab730bcb25c0854d8bc6ca51
+import  -/  base-4.9.0.0:Prelude b9bddb97799837fe67a8d00939a5b6c3
+import  -/  Util 8289d5fba27cd9a7e4a3433d9fbc0162
+  exports: 3eb83b1dfe1a017918c549046bcbf987
+  AST 0922ba89a2bf8d0d1eaf0fa9b00bd723
+  Add 515f69eb4472a971ced18ff0f48f3794
+  Body eddbe3a9df01a05af6ea92e4cb4839f5
+  Boolean e2891a9846a2a21f293b72bd4dfb34b2
+  ButtonLiteral 9c9f6854fff4e9415910775f82d35538
+  ByteCast ac3eea579fcde6d8c8c959e0e4ad0e07
+  CheckButton 47daa56f84afe656ea297c20137651d9
+  Class e84484e29a7277ca76a45ebc7077c13b
+  ColorLiteral 9d411226df9c53891036aae224c2dd17
+  Delay 843bc012ec3eaa2f87319779ccf3cecb
+  Epsilon 38d8f7196927c99ef03bb34a8df88b91
+  GetPixel ecf43aaa0a1a6547b3b8d9de7a1facb4
+  Identifier 5e3bc4a7903a5a841cef3e52e96f9fce
+  If b98e10f1d130320e3861be519c83419b
+  Instance 6342d3e34b7f30df051e39bae5d22315
+  IntLiteral 26cab683dd4e6999a067cd3d327cafed
+  Invoke 7dd0040a7a76a6ff0ea4de299c589bb9
+  LessThan 00f27da42fb577db713b38ac4b8affc8
+  LogicalAnd dfe304d12d1ab6af8ae84b6a337fe9e7
+  LogicalEqual bbddc98664e4f93df3650ed87de26644
+  LogicalNot fb176bd1fca803e74294b51e99fdaa89
+  MainClass 73a984d48280a59b690f6f989bab7bcb
+  Method cd446c762db4b62d61687f44decb8eb2
+  Mul 245e66c045a4042451fbb3f863dea4d3
+  ParenExp 16b9861566fb16c2a1be163550ce7c6b
+  Prog 2222df4cb20b83d0437a5eff78700ea9
+  Return 9be576aa84c82f264789dc7c28fffca0
+  SetPixel 9e46826c901dc53f166e4ec4cb4b2236
+  Sub cff6141839bc15187b084949f607568d
+  ToneLiteral 361684a0b010a1e88375abb9b57665e7
+  ToneStart 77e3f73c2eddef19c6c3fa971572ca20
+  UnaryMinus 803a20cfb8893ffdd30438d2d5d1b9b7
+  While e7a47a398bdcaaaae9609a347e2c82a6
+b5125bc0f4d5b30f9876bc1289845996
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module Dot.$trModule2 Dot.$trModule1) -}
+0d8ef118f5c38588888d2064d96dd300
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "Dot"#) -}
+0cddc2ebea3d782ba6571656ae38e6c6
+  $trModule2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "main"#) -}
+5b02360a90d41f368a8ccf977f92e39b
+  $wastdotviz_rec ::
+    GHC.Types.Int -> Util.AST -> (# GHC.Types.Int, GHC.Base.String #)
+  {- Arity: 2, Strictness: <L,U(U)><S,1*U>, Inline: [0] -}
+ae68f72132c4c54d515b7f6466a61c0d
+  $wvisitChildren ::
+    GHC.Types.Int
+    -> GHC.Types.Int
+    -> [Util.AST]
+    -> (# GHC.Types.Int, GHC.Base.String #)
+  {- Arity: 3, Strictness: <L,U(U)><L,U(U)><S,1*U>, Inline: [0] -}
+62bd8cbcceacaabdefd38d2e7529e86c
+  astdotviz_rec ::
+    GHC.Types.Int
+    -> GHC.Types.Int -> Util.AST -> (GHC.Types.Int, GHC.Base.String)
+  {- Arity: 3, Strictness: <L,A><L,U(U)><S,1*U>m, Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: GHC.Types.Int) (w1 :: GHC.Types.Int) (w2 :: Util.AST) ->
+                 case Dot.$wastdotviz_rec w1 w2 of ww { (#,#) ww1 ww2 ->
+                 (ww1, ww2) }) -}
+5e4b4c96c054a13a2592dcd6e85c8d07
+  genDot :: Util.AST -> GHC.Base.String
+  {- Arity: 1, Strictness: <L,1*U>,
+     Unfolding: (\ (ast :: Util.AST) ->
+                 GHC.CString.unpackAppendCString#
+                   "digraph {\n"#
+                   (case Dot.$wastdotviz_rec Dot.genDot2 ast of ww { (#,#) ww1 ww2 ->
+                    GHC.Base.++ @ GHC.Types.Char ww2 Dot.genDot1 })) -}
+e94e7d9569fa0e2b3a7d3cf7195b98f5
+  genDot1 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "}"#) -}
+83caa1b605b585d3996b17ce8643c09d
+  genDot2 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 1#) -}
+3e0e5f431fef5e602c8c8855d99a32c9
+  visitChildren ::
+    GHC.Types.Int
+    -> GHC.Types.Int -> [Util.AST] -> (GHC.Types.Int, GHC.Base.String)
+  {- Arity: 3, Strictness: <L,U(U)><L,U(U)><S,1*U>m,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: GHC.Types.Int) (w1 :: GHC.Types.Int) (w2 :: [Util.AST]) ->
+                 case Dot.$wvisitChildren w w1 w2 of ww { (#,#) ww1 ww2 ->
+                 (ww1, ww2) }) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+
