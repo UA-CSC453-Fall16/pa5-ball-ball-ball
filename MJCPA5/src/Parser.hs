@@ -10,6 +10,7 @@ module Parser where
 
 import Lexer
 import Util
+import Debug.Trace
 
 -- entry point
 genAST :: [(Token, (Int,Int))] -> AST
@@ -510,6 +511,14 @@ parseL ((TokenMeggyButton, (row,col)):(TokenButtonValue x, (r1,c1)):rest) = (But
 parseL ((TokenMeggyTone, (row,col))  :(TokenToneValue x, (r1,c1)):rest)   = (ToneLiteral x, rest)
 parseL ((TokenTrue, (row,col)):rest)   = (Boolean True, rest)
 parseL ((TokenFalse, (row,col)):rest)  = (Boolean False, rest)
+
+parseL ((TokenID id, (row,col)):(TokenDotLength, (_,_)):rest) = (ArrayLength (Identifier id), rest)
+parseL ((TokenID id, (row,col)):(TokenLeftBracket, (_,_)):rest) = 
+    let
+        (exp, ts1) = parseE rest
+        ts2 = match ts1 TokenRightBracket
+    in
+        (ArrayAccess (Identifier id) exp, ts2)
 parseL ((TokenID id, (row,col)):rest)  = (Identifier id, rest)
 
 --More Complicated expressions
@@ -564,11 +573,11 @@ parseB ((TokenLeftBracket, (row,col)):rest) array =
     in
         (ArrayAccess array index, ts2)
 
-parseB ((TokenDot, (row, col)):rest) array = 
-    let
-        ts1 = match rest TokenLength
-    in
-        (ArrayLength array, ts1)
+parseB ((TokenDotLength, (row, col)):rest) array = (ArrayLength array, rest)
+
+parseB ((t, (row,col)):rest) _ =
+    error ("ERR: (Parser - ParseB) Invalid token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "] expected '[' or '.length'\n")
+
 
 -- Method Invocation Grammar
 parseInvoke :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
@@ -739,6 +748,8 @@ follow_E  t =
         TokenRightParen -> True
         TokenSemiColon  -> True
         TokenRightBracket -> True
+        TokenDotLength -> True
+        TokenLeftBracket -> True
         _  -> False
 
 follow_F' :: Token -> Bool
@@ -751,4 +762,4 @@ follow_H' :: Token -> Bool
 follow_H' t = (follow_G' t) || t == TokenLessThan
 
 follow_I' :: Token -> Bool
-follow_I' t = (follow_H' t) || t == TokenAdd || t == TokenSub
+follow_I' t = (follow_H' t) || t == TokenAdd || t == TokenSub 
