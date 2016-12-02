@@ -29,11 +29,11 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "/p3/hb/benjaminshields/453/PA5/pa5-ball-ball-ball/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/bin"
-libdir     = "/p3/hb/benjaminshields/453/PA5/pa5-ball-ball-ball/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/lib/x86_64-linux-ghc-8.0.1/MJCPA5-0.1.0.0"
-datadir    = "/p3/hb/benjaminshields/453/PA5/pa5-ball-ball-ball/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/share/x86_64-linux-ghc-8.0.1/MJCPA5-0.1.0.0"
-libexecdir = "/p3/hb/benjaminshields/453/PA5/pa5-ball-ball-ball/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/libexec"
-sysconfdir = "/p3/hb/benjaminshields/453/PA5/pa5-ball-ball-ball/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/etc"
+bindir     = "/p3/ht/theodorejsackos/CS453/PA5/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/bin"
+libdir     = "/p3/ht/theodorejsackos/CS453/PA5/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/lib/x86_64-linux-ghc-8.0.1/MJCPA5-0.1.0.0"
+datadir    = "/p3/ht/theodorejsackos/CS453/PA5/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/share/x86_64-linux-ghc-8.0.1/MJCPA5-0.1.0.0"
+libexecdir = "/p3/ht/theodorejsackos/CS453/PA5/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/libexec"
+sysconfdir = "/p3/ht/theodorejsackos/CS453/PA5/MJCPA5/.stack-work/install/x86_64-linux/lts-7.11/8.0.1/etc"
 
 getBinDir, getLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "MJCPA5_bindir") (\_ -> return bindir)
