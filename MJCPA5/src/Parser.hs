@@ -474,7 +474,7 @@ parseP ((TokenInt, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     in
         (IntArrayInstance capacity, ts2)
 
-parseP ((TokenColor, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
+parseP ((TokenMeggyColorType, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     let
         (capacity, ts1) = parseE rest
         ts2 = match ts1 TokenRightBracket
