@@ -1,9 +1,9 @@
 
 ==================== FINAL INTERFACE ====================
-2016-12-01 05:16:44.098576528 UTC
+2016-12-02 01:13:28.364192621 UTC
 
 interface main@main:Main 8001
-  interface hash: 6662cad33ec953b3309d2912e3a8b0a9
+  interface hash: 1ed7b6aa65bf80b0b7470e6f0f237f9a
   ABI hash: 28b0d900ae765b2d9614bb9f9f0a4336
   export-list hash: 97640e67d74da9156ef20ad719c48983
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
@@ -39,27 +39,27 @@ import  -/  base-4.9.0.0:Prelude b9bddb97799837fe67a8d00939a5b6c3
 import  -/  base-4.9.0.0:System.Environment ee0914a962f5508d0fd404c89ee4999b
 import  -/  base-4.9.0.0:System.IO eb1d40aa793a4047069a5023f2ebcfe3
 import  -/  ghc-prim-0.5.0.0:GHC.Types 7378e41b7749213c8c88ceb6b0665d4c
-import  -/  AVRGen f150f932d111b86d5fc7208641880b38
+import  -/  AVRGen b33ac6ff15e5dbe07854d3876e5fce4b
   exports: fbcf6dba1a337f26b0d11621d5814113
-  avrCodeGen 1aa3185b83da28fb7f34a071e98e5b6d
-import  -/  BuildST b7f7b37fafcdfcc11f24faf01e599695
+  avrCodeGen d88db7f7c0806550e325da326931553e
+import  -/  BuildST 6283611e89c78cfca88f34370c3e3d4e
   exports: 1a141c93dfe39f8e2cef12ccfadd8e9f
-  genSymbolTable 5deeade403425e180eb5b17beab9fce3
-import  -/  Dot f55edbd226e6b2b070cd9cbb70dfb5f9
+  genSymbolTable 038d802c214bd39bdd6f2db9ce33d293
+import  -/  Dot 6dd555ded35e89b7f87445468ab860aa
   exports: ba03f7aae79420c35d1b679332427461
-  genDot 5e4b4c96c054a13a2592dcd6e85c8d07
+  genDot 22a87af2c7f72b5e6be8978908dc8d18
 import  -/  Lexer ba2bc94142bdc1c134083511bd0f019b
   exports: 85d7c38f12e022923f1a05eb06ba6a89
   lexer 5a08f4ec0fe3c3ed6272e1a45b4ab895
-import  -/  Parser ccdc633fcbc7cdeb914c1406d40c5881
-  exports: f9fc9c550e078d8c57f7c8a1cc4d48d0
-  genAST 7177a24c9c1d3c1f1ed6379bbc64fdff
+import  -/  Parser 117615ae5a33b3021f9299e5e575f2f8
+  exports: 8f36138a96c1bc5730de9fbae50ad4c1
+  genAST 65fff3d3e14859e5ad3d9b59ace9b037
 import  -/  ReLex d7f51314d9c6049a9de3545f15462854
   exports: 68318aac8f31d9d16966e6edf64afc31
   tokenSimplifier c35b720e2a147686b29e58d25f70b372
-import  -/  TypeCheck 1a9269d52d12920af15a144477aba775
+import  -/  TypeCheck 5e431c127d35de3b7ed8eef8b47ba496
   exports: cd233e695f946e972b45b525ef28d4a0
-  typeCheck 2ba2f79f5bc15621ba37d0780164717f
+  typeCheck 3068de6814a2ebf4d99b1e1e142150a8
 d6831ef04cb9301b090dfae6f7bb7ec7
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,

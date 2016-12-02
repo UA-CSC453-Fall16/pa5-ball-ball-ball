@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2016-12-01 06:06:04.45602868 UTC
+2016-12-02 01:11:47.305735405 UTC
 
 interface main@main:TypeCheck 8001
-  interface hash: b17f3ae61b37dcae39ccfd8add97df7a
-  ABI hash: 1a9269d52d12920af15a144477aba775
+  interface hash: 8f35fdee261d28349db0dbc3dfd1e474
+  ABI hash: 5e431c127d35de3b7ed8eef8b47ba496
   export-list hash: cd233e695f946e972b45b525ef28d4a0
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 6ea86ecbb747c8bfd1b624d46b10840a
@@ -38,60 +38,60 @@ import  -/  base-4.9.0.0:GHC.Err 3bba35a16538d33d424682ce66876cdd
 import  -/  base-4.9.0.0:GHC.Show 952347a6ab730bcb25c0854d8bc6ca51
 import  -/  base-4.9.0.0:Prelude b9bddb97799837fe67a8d00939a5b6c3
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
-import  -/  SymbolTable d23a60d8b7f5d4c4a5976c5077e50e04
+import  -/  SymbolTable b90fb4c94fd358f974b00611e879e3b3
   exports: 5fca622cbe27c3102def4ca0ee895dcb
-  SymTab 7d7251913b95eb034f02a8ee13297fe0
-  SymbolTable 8e86e5b3dc08c88d59b8ccc5a39fa69b
-  getReturn a56aafa95d8fc1c86c619ba5888a7f17
-  lookupParamType 678b9121c6c8ecfde7dd9aad1f56a9ee
-  lookupTypeSig 9116ce4e9ab33670b1ca8ce8a4f164f9
-  popScope 2d2b4312dc5456c6758da373bee3b506
-  pushScope 85518b141e07ca4962860b0d1b41ba82
-  setProgScope d2a0079e5d163368b60beffb614e14e2
-import  -/  Util 8289d5fba27cd9a7e4a3433d9fbc0162
-  exports: 3eb83b1dfe1a017918c549046bcbf987
-  AST 0922ba89a2bf8d0d1eaf0fa9b00bd723
-  Add 515f69eb4472a971ced18ff0f48f3794
-  Body eddbe3a9df01a05af6ea92e4cb4839f5
-  Boolean e2891a9846a2a21f293b72bd4dfb34b2
-  BooleanType cf03760e3b2165174f2f5855eafed2b6
-  ButtonLiteral 9c9f6854fff4e9415910775f82d35538
-  ByteCast ac3eea579fcde6d8c8c959e0e4ad0e07
-  ByteType 14e15c9fa66d466dcc83a3da6ad80657
-  CheckButton 47daa56f84afe656ea297c20137651d9
-  Class e84484e29a7277ca76a45ebc7077c13b
-  ColorLiteral 9d411226df9c53891036aae224c2dd17
-  Delay 843bc012ec3eaa2f87319779ccf3cecb
-  Epsilon 38d8f7196927c99ef03bb34a8df88b91
-  GetPixel ecf43aaa0a1a6547b3b8d9de7a1facb4
-  Identifier 5e3bc4a7903a5a841cef3e52e96f9fce
-  If b98e10f1d130320e3861be519c83419b
-  Instance 6342d3e34b7f30df051e39bae5d22315
-  IntLiteral 26cab683dd4e6999a067cd3d327cafed
-  IntType 21e4510bfd39bc0c74f42b840453825b
-  Invoke 7dd0040a7a76a6ff0ea4de299c589bb9
-  LessThan 00f27da42fb577db713b38ac4b8affc8
-  LogicalAnd dfe304d12d1ab6af8ae84b6a337fe9e7
-  LogicalEqual bbddc98664e4f93df3650ed87de26644
-  LogicalNot fb176bd1fca803e74294b51e99fdaa89
-  MainClass 73a984d48280a59b690f6f989bab7bcb
-  MeggyButtonType 59b3c4af1819867e29cc2fa3433c20b1
-  MeggyColorType 7e123fff91debb659f2953c68a1538a0
-  MeggyToneType 85b91a25efdb4fa33a5435414b0ba407
-  Method cd446c762db4b62d61687f44decb8eb2
-  Mul 245e66c045a4042451fbb3f863dea4d3
-  ParenExp 16b9861566fb16c2a1be163550ce7c6b
-  Prog 2222df4cb20b83d0437a5eff78700ea9
-  Return 9be576aa84c82f264789dc7c28fffca0
-  SetPixel 9e46826c901dc53f166e4ec4cb4b2236
-  Sub cff6141839bc15187b084949f607568d
-  TS 1f65413cd086a2bb7ca29e0abb58494b
-  ToneLiteral 361684a0b010a1e88375abb9b57665e7
-  ToneStart 77e3f73c2eddef19c6c3fa971572ca20
-  Type 216c38e075746053d42eb4f61425ba46
-  UnaryMinus 803a20cfb8893ffdd30438d2d5d1b9b7
-  VoidType b518a11a63ca951d702e23efc6143ce0
-  While e7a47a398bdcaaaae9609a347e2c82a6
+  SymTab c65c491812df1aea296ace50350f3071
+  SymbolTable d92ad99340eafabd98bc2c924485b05f
+  getReturn f719f38690a2689a61971504ed1c0889
+  lookupParamType d3b1859bb161d424d9fca28844b7bf74
+  lookupTypeSig 098638e55d8771e0d162a6a86d8b771a
+  popScope 51a115c819ed44a7f1f386f664da0edc
+  pushScope d17c24900a5da636e56d039308b8dc7a
+  setProgScope 7696ad981d4b72d6273e3be73da01cc4
+import  -/  Util 584e30b3c8003828425244522b124edd
+  exports: 6ebad5c4a934f78d2a8da097b4f64c2d
+  AST 88b1d8d104bedf4e10abe56758f4c48a
+  Add db81475a2c126d7c611d0f8b2e4f7f52
+  Body d153fc4cffa24358844f2c9d3923ca5d
+  Boolean e739b86a037718e2330f9cdaaafce984
+  BooleanType 661eea5c4b454ea3ccf4a04e40879c26
+  ButtonLiteral 4ad405580f89d5ea0c4b62a058c49b6a
+  ByteCast cb6fb553e8a5070eabaff85fc6f90aba
+  ByteType 2dbfbae615c60d81b613b3a7182ee089
+  CheckButton 53ed53cdc30dd0aa807c1a76fb02f9f6
+  Class a29d9e4aa2277ed1177c891a7d9c6fa2
+  ColorLiteral a09646b113ce60663aec427bcb52f846
+  Delay 5b82435487e812bf6960759028ebb880
+  Epsilon 0e2368b12583e00d4e901fa8122311bd
+  GetPixel 208060c1089d54665dccfbbb8d583336
+  Identifier f478eb751275069f15e7e4de47d2d2da
+  If e27db102bf0056b79af21adde1bf36ce
+  Instance 1f8b789ceb1dc9c8b52369069df392c1
+  IntLiteral 144ca1c2ffe233b0c950c624e8c02dcb
+  IntType f24052e5e6d03b5090f1567cdf154497
+  Invoke 394424b76f631cbc504d27941f93f06d
+  LessThan 04de00e6959fa80e021133802ba7d0a3
+  LogicalAnd f1b595ca577ba5d451a0424a7ce6f3c7
+  LogicalEqual ca207935a5bed546edc0c82892c1b286
+  LogicalNot f72502ca7b096bc637bacc2d6d74d751
+  MainClass c643e2cf340b183c486690155e63d5b6
+  MeggyButtonType 6ff0ae99e7fe6491ef79c0a62e153f7f
+  MeggyColorType 73f19f4b58afeeb85f71476c58ea1009
+  MeggyToneType 5b7ccae6bfc86776e91c142a0625023e
+  Method e89e84b8d9a0031f06f1abb3017f45ad
+  Mul 732a40472d91b8d45034e578d3314e1f
+  ParenExp 86473db8b42f2e0d4008971bbffc96bb
+  Prog 05b8d730c89ff5259eebdd22d173c52a
+  Return c9835deb9c6b930c6065b5d2934971ae
+  SetPixel 5c654e2487eb0cc6617806266d24b80d
+  Sub e11a71115abf5a41f92f1cadd41f310a
+  TS 17e2bdd4b8adc4f87694194faae61e6b
+  ToneLiteral 808f067228df16294222666189597a3a
+  ToneStart fc7760204e63c5e8b6673dfbf71619c0
+  Type b11fd09e544b732e5075f4cb20dd6d55
+  UnaryMinus 6ddef5ed6239e224ccba8881f3a776f9
+  VoidType bb628c644700193b80f763345c48d96e
+  While 89f69faf2123b482645b8da033ba9438
 81b15953ea173fedcbf73c9806fa5372
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
@@ -106,24 +106,26 @@ import  -/  Util 8289d5fba27cd9a7e4a3433d9fbc0162
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-cdae83038b24e0e70b7fdb100f9cd1da
+4b37f7b60f2cc4e1ea3b86e0976b6e51
   $wtCheck :: Util.AST -> SymbolTable.SymbolTable -> Util.Type
   {- Arity: 2, Strictness: <S,1*U><L,U(U,U)>, Inline: [0] -}
-d6ea282bc9c04c32e431e528a6b90e06
+b1d104c0e61687f09ae1e30842014064
   $wtypeCheck ::
     Util.AST -> SymbolTable.SymbolTable -> GHC.Types.Bool
   {- Arity: 2, Strictness: <S,1*U><L,U(U,U)>, Inline: [0],
      Unfolding: (\ (ww :: Util.AST) (ww1 :: SymbolTable.SymbolTable) ->
                  case TypeCheck.$wtCheck ww ww1 of wild {
-                   Util.BooleanType -> TypeCheck.typeCheck7
-                   Util.ByteType -> TypeCheck.typeCheck6
-                   Util.IntType -> TypeCheck.typeCheck5
+                   Util.BooleanType -> TypeCheck.typeCheck9
+                   Util.ByteType -> TypeCheck.typeCheck8
+                   Util.IntType -> TypeCheck.typeCheck7
                    Util.VoidType -> GHC.Types.True
-                   Util.MeggyColorType -> TypeCheck.typeCheck4
-                   Util.MeggyButtonType -> TypeCheck.typeCheck3
-                   Util.MeggyToneType -> TypeCheck.typeCheck2
+                   Util.MeggyColorType -> TypeCheck.typeCheck6
+                   Util.MeggyButtonType -> TypeCheck.typeCheck5
+                   Util.MeggyToneType -> TypeCheck.typeCheck4
+                   Util.IntArrayType -> TypeCheck.typeCheck3
+                   Util.ColorArrayType -> TypeCheck.typeCheck2
                    Util.Error -> TypeCheck.typeCheck1 }) -}
-f0b2aae6e8245f19d9c0bffbbb62c59a
+41e5f3ba8a7b49fe763b340e73000a5f
   $wtypeCheckInvoke ::
     [Util.AST]
     -> [(GHC.Base.String, Util.Type)]
@@ -133,21 +135,21 @@ f0b2aae6e8245f19d9c0bffbbb62c59a
     -> Util.Type
   {- Arity: 5, Strictness: <S,1*U><S,U><S,1*U><L,U><L,U(U,U)>,
      Inline: [0] -}
-6070346883c87a59fb89b769dd1712b8
+e3c561b95dea53e6229f0ae088528bc4
   isReturn :: Util.AST -> GHC.Types.Bool
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Util.AST) ->
                  case ds of wild {
                    DEFAULT -> GHC.Types.False Util.Return ds1 -> GHC.Types.True }) -}
-01ab408dfa4b1d54f00e84132b495793
+30b67dc4bab039696e2a7b376fb25ec0
   tCheck :: (Util.AST, SymbolTable.SymbolTable) -> Util.Type
   {- Arity: 1, Strictness: <S(SL),1*U(1*U,U(U,U))>,
      Inline: INLINE[0],
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: (Util.AST, SymbolTable.SymbolTable)) ->
                  case w of ww { (,) ww1 ww2 -> TypeCheck.$wtCheck ww1 ww2 }) -}
-2ba2f79f5bc15621ba37d0780164717f
+3068de6814a2ebf4d99b1e1e142150a8
   typeCheck :: (Util.AST, SymbolTable.SymbolTable) -> GHC.Types.Bool
   {- Arity: 1, Strictness: <S(SL),1*U(1*U,U(U,U))>,
      Inline: INLINE[0],
@@ -175,7 +177,13 @@ d34d6aba8f02f904250ea83a7e4c754c
 2e6affb3b4eef9653294f8899137900d
   typeCheck7 :: GHC.Types.Bool
   {- Strictness: x -}
-2814b1c3d54bee63dadaaf4a4ac0b4df
+87b2967db1a74ff2a59cfe45d02b86ab
+  typeCheck8 :: GHC.Types.Bool
+  {- Strictness: x -}
+45fba0974e904a3f9906b1dc3f6d1807
+  typeCheck9 :: GHC.Types.Bool
+  {- Strictness: x -}
+f312eb3f05f9705c57c3ae0769761c3b
   typeCheckInvoke ::
     ([Util.AST], [(GHC.Base.String, Util.Type)], Util.Type)
     -> GHC.Base.String -> SymbolTable.SymbolTable -> Util.Type

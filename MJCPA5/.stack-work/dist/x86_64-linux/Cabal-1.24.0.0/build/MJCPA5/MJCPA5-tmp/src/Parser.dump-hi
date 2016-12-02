@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2016-12-01 06:50:38.206390596 UTC
+2016-12-02 01:16:50.414984225 UTC
 
 interface main@main:Parser 8001
-  interface hash: 8732bd60f8822d8d217b1d5e9a90fa98
-  ABI hash: ccdc633fcbc7cdeb914c1406d40c5881
-  export-list hash: f9fc9c550e078d8c57f7c8a1cc4d48d0
+  interface hash: a4bfa110fc7faa7a3cb38710c2d7f893
+  ABI hash: 117615ae5a33b3021f9299e5e575f2f8
+  export-list hash: 8f36138a96c1bc5730de9fbae50ad4c1
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 6ea86ecbb747c8bfd1b624d46b10840a
   sig of: Nothing
@@ -43,6 +43,7 @@ exports:
   Parser.parseL
   Parser.parseMC
   Parser.parseMD
+  Parser.parseP
   Parser.parseParam
   Parser.parseParamDecl
   Parser.parseProg
@@ -51,6 +52,7 @@ exports:
   Parser.parseStm
   Parser.parseU
   Parser.parseV
+  Parser.parseVD
   Parser.parseX
   Parser.parseY
   Parser.parseZ
@@ -78,6 +80,7 @@ import  -/  Lexer ba2bc94142bdc1c134083511bd0f019b
   TokenByte 7f34ecbf17c1c70333051ee6ae217ccc
   TokenByteCast 807460654ec622e687171bc7000dccc2
   TokenClass e7192e046e3fced4e9e76b447510805a
+  TokenColor bb149da5942f69df86b8091df29a2148
   TokenColorArrayType 5dbff86423780f2717631dae01df418b
   TokenColorValue 370707c23a8c1fff5cc4738fd59d0920
   TokenComma a193c0eb01de5a68f487e030ed24ab3d
@@ -126,50 +129,55 @@ import  -/  Lexer ba2bc94142bdc1c134083511bd0f019b
   TokenVoid c06305f856b46d5e6cd1448d7568499a
   TokenWhile 65a8c6fa94a996ea8217d6733d8b180b
   UnexpectedEOF 9c6d09aabf6b06a680d644ad1fb9dda5
-import  -/  Util 8289d5fba27cd9a7e4a3433d9fbc0162
-  exports: 3eb83b1dfe1a017918c549046bcbf987
-  AST 0922ba89a2bf8d0d1eaf0fa9b00bd723
-  Add 515f69eb4472a971ced18ff0f48f3794
-  Body eddbe3a9df01a05af6ea92e4cb4839f5
-  Boolean e2891a9846a2a21f293b72bd4dfb34b2
-  BooleanType cf03760e3b2165174f2f5855eafed2b6
-  ButtonLiteral 9c9f6854fff4e9415910775f82d35538
-  ByteCast ac3eea579fcde6d8c8c959e0e4ad0e07
-  ByteType 14e15c9fa66d466dcc83a3da6ad80657
-  CheckButton 47daa56f84afe656ea297c20137651d9
-  Class e84484e29a7277ca76a45ebc7077c13b
-  ColorLiteral 9d411226df9c53891036aae224c2dd17
-  Delay 843bc012ec3eaa2f87319779ccf3cecb
-  Epsilon 38d8f7196927c99ef03bb34a8df88b91
-  GetPixel ecf43aaa0a1a6547b3b8d9de7a1facb4
-  Identifier 5e3bc4a7903a5a841cef3e52e96f9fce
-  If b98e10f1d130320e3861be519c83419b
-  Instance 6342d3e34b7f30df051e39bae5d22315
-  IntLiteral 26cab683dd4e6999a067cd3d327cafed
-  IntType 21e4510bfd39bc0c74f42b840453825b
-  Invoke 7dd0040a7a76a6ff0ea4de299c589bb9
-  LessThan 00f27da42fb577db713b38ac4b8affc8
-  LogicalAnd dfe304d12d1ab6af8ae84b6a337fe9e7
-  LogicalEqual bbddc98664e4f93df3650ed87de26644
-  LogicalNot fb176bd1fca803e74294b51e99fdaa89
-  MainClass 73a984d48280a59b690f6f989bab7bcb
-  MeggyButtonType 59b3c4af1819867e29cc2fa3433c20b1
-  MeggyColorType 7e123fff91debb659f2953c68a1538a0
-  MeggyToneType 85b91a25efdb4fa33a5435414b0ba407
-  Method cd446c762db4b62d61687f44decb8eb2
-  Mul 245e66c045a4042451fbb3f863dea4d3
-  ParenExp 16b9861566fb16c2a1be163550ce7c6b
-  Prog 2222df4cb20b83d0437a5eff78700ea9
-  Return 9be576aa84c82f264789dc7c28fffca0
-  SetPixel 9e46826c901dc53f166e4ec4cb4b2236
-  Sub cff6141839bc15187b084949f607568d
-  TS 1f65413cd086a2bb7ca29e0abb58494b
-  ToneLiteral 361684a0b010a1e88375abb9b57665e7
-  ToneStart 77e3f73c2eddef19c6c3fa971572ca20
-  Type 216c38e075746053d42eb4f61425ba46
-  UnaryMinus 803a20cfb8893ffdd30438d2d5d1b9b7
-  VoidType b518a11a63ca951d702e23efc6143ce0
-  While e7a47a398bdcaaaae9609a347e2c82a6
+import  -/  Util 584e30b3c8003828425244522b124edd
+  exports: 6ebad5c4a934f78d2a8da097b4f64c2d
+  AST 88b1d8d104bedf4e10abe56758f4c48a
+  Add db81475a2c126d7c611d0f8b2e4f7f52
+  Body d153fc4cffa24358844f2c9d3923ca5d
+  Boolean e739b86a037718e2330f9cdaaafce984
+  BooleanType 661eea5c4b454ea3ccf4a04e40879c26
+  ButtonLiteral 4ad405580f89d5ea0c4b62a058c49b6a
+  ByteCast cb6fb553e8a5070eabaff85fc6f90aba
+  ByteType 2dbfbae615c60d81b613b3a7182ee089
+  CheckButton 53ed53cdc30dd0aa807c1a76fb02f9f6
+  Class a29d9e4aa2277ed1177c891a7d9c6fa2
+  ColorArrayInstance 654b1165242232670ae823c5716bff16
+  ColorArrayType f5a02761ecf6ff782008d0e9b4b7a94f
+  ColorLiteral a09646b113ce60663aec427bcb52f846
+  Delay 5b82435487e812bf6960759028ebb880
+  Epsilon 0e2368b12583e00d4e901fa8122311bd
+  GetPixel 208060c1089d54665dccfbbb8d583336
+  Identifier f478eb751275069f15e7e4de47d2d2da
+  If e27db102bf0056b79af21adde1bf36ce
+  Instance 1f8b789ceb1dc9c8b52369069df392c1
+  IntArrayInstance 09dd4ca0ae569aa29e841aff794cbfbf
+  IntArrayType 94fa9ac378756e4f357d4b585dc400a7
+  IntLiteral 144ca1c2ffe233b0c950c624e8c02dcb
+  IntType f24052e5e6d03b5090f1567cdf154497
+  Invoke 394424b76f631cbc504d27941f93f06d
+  LessThan 04de00e6959fa80e021133802ba7d0a3
+  LogicalAnd f1b595ca577ba5d451a0424a7ce6f3c7
+  LogicalEqual ca207935a5bed546edc0c82892c1b286
+  LogicalNot f72502ca7b096bc637bacc2d6d74d751
+  MainClass c643e2cf340b183c486690155e63d5b6
+  MeggyButtonType 6ff0ae99e7fe6491ef79c0a62e153f7f
+  MeggyColorType 73f19f4b58afeeb85f71476c58ea1009
+  MeggyToneType 5b7ccae6bfc86776e91c142a0625023e
+  Method e89e84b8d9a0031f06f1abb3017f45ad
+  Mul 732a40472d91b8d45034e578d3314e1f
+  ParenExp 86473db8b42f2e0d4008971bbffc96bb
+  Prog 05b8d730c89ff5259eebdd22d173c52a
+  Return c9835deb9c6b930c6065b5d2934971ae
+  SetPixel 5c654e2487eb0cc6617806266d24b80d
+  Sub e11a71115abf5a41f92f1cadd41f310a
+  TS 17e2bdd4b8adc4f87694194faae61e6b
+  ToneLiteral 808f067228df16294222666189597a3a
+  ToneStart fc7760204e63c5e8b6673dfbf71619c0
+  Type b11fd09e544b732e5075f4cb20dd6d55
+  UnaryMinus 6ddef5ed6239e224ccba8881f3a776f9
+  Variable 7cf625bd6bdccb494cae9d480eb3c408
+  VoidType bb628c644700193b80f763345c48d96e
+  While 89f69faf2123b482645b8da033ba9438
 f0a0f59f5f25fe61cacd5ca0b1e46baa
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
@@ -184,67 +192,67 @@ f0a0f59f5f25fe61cacd5ca0b1e46baa
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-4141fc72e1870414ac7bb9da27c3f535
+0811e74b847bef36762697d26f9904e0
   $wparseA ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-b4c82a5680642c708f47198057e3b741
+d40537776c23283f2632d5c6243cd4dc
   $wparseE ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-fbc42808afd6eb720e5445a4779cbe69
+3e15b1cf9f5ff4202a38afb822cb47d9
   $wparseE' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 2, Strictness: <S,1*U><L,U>, Inline: [0] -}
-3ce172da6a897280965278805c35f584
+54c9e08d2b2d2dde806f0116296b4c12
   $wparseF ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-736acc9bf8ce5cdf3ac1a84d31557cf6
+759d45a3600a0f8d1ad29837333d6ad6
   $wparseF' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 2, Strictness: <S,1*U><L,U>, Inline: [0] -}
-034548f00eb25035a8b4874fd75279c3
+1df2aa2a7a92d0e318d67c0b6133d016
   $wparseG ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-8ba76c9996a4c10d2f90098d5b219eac
+304dc945b90896daed98c56c032977d8
   $wparseG' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 2, Strictness: <S,1*U><L,U>, Inline: [0] -}
-d55172802c016c2f5f420e119bd470c4
+d4caa4ea2c2640a64b0bf9a77d82f037
   $wparseH ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-3bcb18729c3072f03a6d22992d8db088
+c13851525c60a9a7f9b73dfb326bb36d
   $wparseH' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 2, Strictness: <S,1*U><L,U>, Inline: [0] -}
-f4b61910369be5cb164d2326e0233851
+80cccb7fc182ef84269be5e3d6131fa4
   $wparseI ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-7de4eed2ec008553ec3f2f5d5d522b04
+0fe5f7f85762fea928d2b401df4d7443
   $wparseI' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 2, Strictness: <S,1*U><L,U>, Inline: [0] -}
-920f2e492f8a797e364f9bc3b90fbcb8
+7e228c231363ecde16602d336e152785
   $wparseInvoke ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
@@ -278,22 +286,22 @@ f4b61910369be5cb164d2326e0233851
                            } in
                            (# Util.Invoke (case ds3 of wild4 { (,) params ts2 -> params }) id,
                               case ds3 of wild4 { (,) params ts2 -> ts2 } #) } } } }) -}
-86acacec566346a0df20ebc32d12ac20
+f915a019229d964aa5d17881e8c54d03
   $wparseJ ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-933eba2a83d97f51c1f445ad9a054f57
+1b635429e7f850711737c818609c768e
   $wparseK ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-4a96308596b0408995ee91759393c05f
+43947a4772f9d3f8fa06ed06fe1a8862
   $wparseL ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-7b481b51226562e7fd7aa4de3735bbc6
+c0ac264feb17ab0d9ebb89c89d2699e4
   $wparseMC ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
@@ -374,48 +382,177 @@ f4b61910369be5cb164d2326e0233851
                                         Parser.match
                                           (Parser.match remainingTokens Lexer.TokenRightCurly)
                                           Lexer.TokenRightCurly } #) } } } } } } } }) -}
-54a81d149ee41652f804dcec6f7546b3
+00b794224438b1c1cdbb4a952fa6ca39
   $wparseMD ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# [Util.AST],
           [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-ed2e6879e8292a27f249ff742e290166
+47d07803b2e82602bdd3b0df80f99501
+  $wparseP ::
+    [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+    -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+  {- Arity: 1, Strictness: <S,1*U>, Inline: [0],
+     Unfolding: (\ (w :: [(Lexer.Token,
+                           (GHC.Types.Int, GHC.Types.Int))]) ->
+                 case w of wild {
+                   []
+                   -> case Parser.parseP1
+                      ret_ty (# Util.AST,
+                                [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+                      of {}
+                   : ds ds1
+                   -> case ds of wild1 { (,) ds2 ds3 ->
+                      case ds2 of wild2 {
+                        DEFAULT
+                        -> case Parser.parseP1
+                           ret_ty (# Util.AST,
+                                     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+                           of {}
+                        Lexer.TokenColor
+                        -> case ds3 of wild3 { (,) r1 c1 ->
+                           case ds1 of wild4 {
+                             []
+                             -> case Parser.parseP1
+                                ret_ty (# Util.AST,
+                                          [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+                                of {}
+                             : ds4 rest
+                             -> case ds4 of wild5 { (,) ds5 ds6 ->
+                                case ds5 of wild6 {
+                                  DEFAULT
+                                  -> case Parser.parseP1
+                                     ret_ty (# Util.AST,
+                                               [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+                                     of {}
+                                  Lexer.TokenLeftBracket
+                                  -> case ds6 of wild7 { (,) r2 c2 ->
+                                     let {
+                                       ds7 :: (Util.AST,
+                                               [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+                                       = case Parser.$wparseE rest of ww { (#,#) ww1 ww2 ->
+                                         (ww1, ww2) }
+                                     } in
+                                     (# Util.ColorArrayInstance
+                                          (case ds7 of wild8 { (,) capacity ts1 -> capacity }),
+                                        case ds7 of wild8 { (,) capacity ts1 ->
+                                        Parser.match ts1 Lexer.TokenRightBracket } #) } } } } }
+                        Lexer.TokenID id
+                        -> case ds3 of wild3 { (,) r1 c1 ->
+                           case ds1 of wild4 {
+                             []
+                             -> case Parser.parseP1
+                                ret_ty (# Util.AST,
+                                          [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+                                of {}
+                             : ds4 ds5
+                             -> case ds4 of wild5 { (,) ds6 ds7 ->
+                                case ds6 of wild6 {
+                                  DEFAULT
+                                  -> case Parser.parseP1
+                                     ret_ty (# Util.AST,
+                                               [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+                                     of {}
+                                  Lexer.TokenLeftParen
+                                  -> case ds7 of wild7 { (,) r2 c2 ->
+                                     case ds5 of wild8 {
+                                       []
+                                       -> case Parser.parseP1
+                                          ret_ty (# Util.AST,
+                                                    [(Lexer.Token,
+                                                      (GHC.Types.Int, GHC.Types.Int))] #)
+                                          of {}
+                                       : ds8 rest
+                                       -> case ds8 of wild9 { (,) ds9 ds10 ->
+                                          case ds9 of wild10 {
+                                            DEFAULT
+                                            -> case Parser.parseP1
+                                               ret_ty (# Util.AST,
+                                                         [(Lexer.Token,
+                                                           (GHC.Types.Int, GHC.Types.Int))] #)
+                                               of {}
+                                            Lexer.TokenRightParen
+                                            -> case ds10 of wild11 { (,) r3 c3 ->
+                                               let {
+                                                 ds11 :: (Util.AST,
+                                                          [(Lexer.Token,
+                                                            (GHC.Types.Int, GHC.Types.Int))])
+                                                 = case Parser.$wparseL
+                                                          rest of ww { (#,#) ww1 ww2 ->
+                                                   (ww1, ww2) }
+                                               } in
+                                               (# Util.Instance
+                                                    (case ds11 of wild12 { (,) invocation ts1 ->
+                                                     invocation })
+                                                    id,
+                                                  case ds11 of wild12 { (,) invocation ts1 ->
+                                                  ts1 } #) } } } } } } } } }
+                        Lexer.TokenInt
+                        -> case ds3 of wild3 { (,) r1 c1 ->
+                           case ds1 of wild4 {
+                             []
+                             -> case Parser.parseP1
+                                ret_ty (# Util.AST,
+                                          [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+                                of {}
+                             : ds4 rest
+                             -> case ds4 of wild5 { (,) ds5 ds6 ->
+                                case ds5 of wild6 {
+                                  DEFAULT
+                                  -> case Parser.parseP1
+                                     ret_ty (# Util.AST,
+                                               [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
+                                     of {}
+                                  Lexer.TokenLeftBracket
+                                  -> case ds6 of wild7 { (,) r2 c2 ->
+                                     let {
+                                       ds7 :: (Util.AST,
+                                               [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+                                       = case Parser.$wparseE rest of ww { (#,#) ww1 ww2 ->
+                                         (ww1, ww2) }
+                                     } in
+                                     (# Util.IntArrayInstance
+                                          (case ds7 of wild8 { (,) capacity ts1 -> capacity }),
+                                        case ds7 of wild8 { (,) capacity ts1 ->
+                                        Parser.match
+                                          ts1
+                                          Lexer.TokenRightBracket } #) } } } } } } } }) -}
+ea18499a1d34df982bbc8d7886f7a308
   $wparseParam ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# [Util.AST],
           [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-df8ab3f6aba16afd9e62040caf2783be
+581d30ab8168121ecdce37d2502eb0f2
   $wparseParamDecl ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# [(GHC.Base.String, Util.Type)],
           [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-bab577213cc14b2ea1e40855734ea63a
+02d70571cb5dc7d00e4bb71d93654f8c
   $wparseSL' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# [Util.AST],
           [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-ad7555ff8d73b41436c065aee56b2523
+257a4c0283fd466268b5eec6e8036ab9
   $wparseStm ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-a9c22cba9ecad331cdad0359e33070bc
+5dc257bb64213dfe1f0639512418ff46
   $wparseV ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# [(GHC.Base.String, Util.Type)],
           [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-f79b9123e8d65bf932135561adabc04f
+fa2c4a625c985749851f57110231109b
   $wparseY ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# [Util.AST],
           [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
   {- Arity: 1, Strictness: <S,1*U>, Inline: [0] -}
-f7e1a313b805a5029c447023dbd95fd0
+dd310baac9eabe8dcbd20c2c9f1487b1
   $wparseZ ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (# Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] #)
@@ -653,7 +790,7 @@ d056ec19a667f0c04e431b5d178cc034
                         Lexer.UnexpectedEOF a1 -> $j GHC.Prim.void#
                         Lexer.TokenUnknown a1 -> $j GHC.Prim.void# }
                    GHC.Types.True -> GHC.Types.True }) -}
-7177a24c9c1d3c1f1ed6379bbc64fdff
+65fff3d3e14859e5ad3d9b59ace9b037
   genAST ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] -> Util.AST
   {- Arity: 1, Strictness: <S,1*U>,
@@ -684,14 +821,14 @@ e2eb43bacdef642b54d41d421f7643c3
     ((Lexer.Token, (GHC.Types.Int, GHC.Types.Int)),
      [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
   {- Strictness: x -}
-60d1453e7c2f515a3c73419be739ab64
+35c97e54f95be56a3deb7876049ae28f
   genAST2 ::
     (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
   {- Strictness: x -}
-d794a4a82d80800bcff22242d3628e46
+9fd7329104453b1b4c291485285dfe8f
   genAST3 :: Util.AST
   {- Strictness: x -}
-0b755c2c74972ec84e6cbd3eb7fbd948
+e35f4ea769b03666b34efa951231a3b2
   grab_Type :: Lexer.Token -> Util.Type
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: (\ (t :: Lexer.Token) ->
@@ -703,8 +840,10 @@ d794a4a82d80800bcff22242d3628e46
                    Lexer.TokenBoolean -> Util.BooleanType
                    Lexer.TokenMeggyColorType -> Util.MeggyColorType
                    Lexer.TokenMeggyButtonType -> Util.MeggyButtonType
-                   Lexer.TokenMeggyToneType -> Util.MeggyToneType }) -}
-13eab6cec3c2e1f4c03ce8a2d7275ebb
+                   Lexer.TokenMeggyToneType -> Util.MeggyToneType
+                   Lexer.TokenIntArrayType -> Util.IntArrayType
+                   Lexer.TokenColorArrayType -> Util.ColorArrayType }) -}
+df75752250fd1ab2db8e16e86508d49a
   grab_Type1 :: Lexer.Token -> Util.Type
   {- Arity: 1, Strictness: <L,U>x -}
 7b4909b23174c6d495c1dab5d8ef5f23
@@ -751,7 +890,7 @@ c12560d022f53498e9c77212f0f4cbbd
 8b1c80b9cac4822253df2118e35726f8
   match3 :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
   {- Strictness: x -}
-2bb09708d3201362927fb66b3ca6abdc
+16e313c0b96f009a05ba157d7e6390d4
   parseA ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -759,11 +898,11 @@ c12560d022f53498e9c77212f0f4cbbd
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseA w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-8dc12b9927bd82caee8052acbb17a7ab
+0ff89e3bd26ee19cb30da109da5a5979
   parseCD ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] -> [Util.AST]
   {- Arity: 1, Strictness: <S,1*U> -}
-76c3b60b059228212c0e4b33bb40addb
+fad8a59db4bb8a407665527597841c24
   parseE ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -771,7 +910,7 @@ c12560d022f53498e9c77212f0f4cbbd
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseE w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-49b5cee3494e81cbd630a78d440225fc
+72c3ac89ddc19acd717ddbf37f07d3a5
   parseE' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
@@ -782,7 +921,7 @@ c12560d022f53498e9c77212f0f4cbbd
                    (w1 :: Util.AST) ->
                  case Parser.$wparseE' w w1 of ww { (#,#) ww1 ww2 ->
                  (ww1, ww2) }) -}
-013ae4eae68f0fd67ae99fb378f64121
+4c5d1a0c5c0503d3947ff30e687b11bd
   parseF ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -790,7 +929,7 @@ c12560d022f53498e9c77212f0f4cbbd
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseF w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-f23f7439ee8d4480c64191c673f6945d
+d535cdbe5df299bd1d13901b7cc2f4df
   parseF' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
@@ -801,7 +940,7 @@ f23f7439ee8d4480c64191c673f6945d
                    (w1 :: Util.AST) ->
                  case Parser.$wparseF' w w1 of ww { (#,#) ww1 ww2 ->
                  (ww1, ww2) }) -}
-8eb9b4564aa2727059f0942835d9eda3
+4fd60f259d412e12cc3517916ce5f95f
   parseG ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -809,7 +948,7 @@ f23f7439ee8d4480c64191c673f6945d
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseG w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-94706cfabfdf6da7aeaf773e3fc1f60b
+258b792e8cc1ac0a0719b34fcac8002a
   parseG' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
@@ -820,7 +959,7 @@ f23f7439ee8d4480c64191c673f6945d
                    (w1 :: Util.AST) ->
                  case Parser.$wparseG' w w1 of ww { (#,#) ww1 ww2 ->
                  (ww1, ww2) }) -}
-51bcb8aa85c87a91cef235311f73865c
+5d29068acb16ef856f6598ae5ca6018b
   parseH ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -828,7 +967,7 @@ f23f7439ee8d4480c64191c673f6945d
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseH w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-e0813f811250b64f679e46fa4af35e5f
+1be8d6fef866af61b3d3ea1a5675138d
   parseH' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
@@ -839,7 +978,7 @@ e0813f811250b64f679e46fa4af35e5f
                    (w1 :: Util.AST) ->
                  case Parser.$wparseH' w w1 of ww { (#,#) ww1 ww2 ->
                  (ww1, ww2) }) -}
-fbe4dc82acf8d1e629a08119b3ada3e6
+0e3dda1d4554220456176a30a9700998
   parseI ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -847,7 +986,7 @@ fbe4dc82acf8d1e629a08119b3ada3e6
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseI w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-1267e11590d9fff47433e5664aa27adc
+196113d7eddb6b191bd5654e188bd284
   parseI' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> Util.AST
@@ -858,7 +997,7 @@ fbe4dc82acf8d1e629a08119b3ada3e6
                    (w1 :: Util.AST) ->
                  case Parser.$wparseI' w w1 of ww { (#,#) ww1 ww2 ->
                  (ww1, ww2) }) -}
-9cc85357ce6688a8767bdaa01c19572c
+d7af59ab8092ba6f252d2de924b46b3b
   parseInvoke ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -867,11 +1006,11 @@ fbe4dc82acf8d1e629a08119b3ada3e6
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseInvoke w of ww { (#,#) ww1 ww2 ->
                  (ww1, ww2) }) -}
-a09794f3af737c7530b3f905ac0a508e
+f16bffa15c0e33cf354c5b70da3e2fd0
   parseInvoke1 ::
     (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
   {- Strictness: x -}
-b22291c99467d07858cc71a2355b29c7
+bfab2442c4da5e1425fd760d82271d41
   parseJ ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -879,7 +1018,7 @@ b22291c99467d07858cc71a2355b29c7
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseJ w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-36acc4b13537ef3667854266656a43bd
+c4e71717f8c84fe8e0086c0fff496716
   parseK ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -887,7 +1026,7 @@ b22291c99467d07858cc71a2355b29c7
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseK w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-3c3fc45430ba2a7f91d120440ea67981
+acb357bb0f7b97ed60ce7b0165ff418c
   parseL ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -895,7 +1034,7 @@ b22291c99467d07858cc71a2355b29c7
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseL w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-affd62743d887b8760f95c3683538369
+373d62861d7df2ff80906f42b4115249
   parseMC ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -903,7 +1042,7 @@ affd62743d887b8760f95c3683538369
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseMC w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-2b1efab95a5c25a796328f9e6676155a
+4741e8f21ddd31d34c3e0f36c2fd22f2
   parseMD ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> ([Util.AST], [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -911,7 +1050,19 @@ affd62743d887b8760f95c3683538369
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseMD w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-672d18036b29ed77aff64d9cd577c573
+d9164e273741436b63ca60b90b3a117b
+  parseP ::
+    [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+    -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+  {- Arity: 1, Strictness: <S,1*U>m, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
+                 case Parser.$wparseP w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
+ad9fd1a9c9c719fa08a18a87cd606b5e
+  parseP1 ::
+    (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+  {- Strictness: x -}
+814a1269bc0c805557b7cc6a5658f9ad
   parseParam ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> ([Util.AST], [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -920,7 +1071,7 @@ affd62743d887b8760f95c3683538369
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseParam w of ww { (#,#) ww1 ww2 ->
                  (ww1, ww2) }) -}
-0f7db9930a2714b1c3e63e702ee247b8
+ba076ae4d1cd6a4b7cbfe37539e3efe2
   parseParamDecl ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> ([(GHC.Base.String, Util.Type)],
@@ -930,7 +1081,7 @@ affd62743d887b8760f95c3683538369
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseParamDecl w of ww { (#,#) ww1 ww2 ->
                  (ww1, ww2) }) -}
-4692af29d0bc6e8626c9e41139273d18
+28d02915208b4f5ac9f9395b97ae071f
   parseProg ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))] -> Util.AST
   {- Arity: 1, Strictness: <L,1*U>m1, Inline: INLINE[0],
@@ -945,7 +1096,7 @@ affd62743d887b8760f95c3683538369
                  Util.Prog
                    (case ds of wild { (,) main_class ts2 -> main_class })
                    (case ds of wild { (,) main_class ts2 -> Parser.parseCD ts2 })) -}
-bdd5ef374926bf13cbe16886fc4c8ced
+6ac0085e5748a43be981a4433bcc96a7
   parseSL ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -959,7 +1110,7 @@ bdd5ef374926bf13cbe16886fc4c8ced
                  } in
                  (Util.Body (case ds of wild { (,) sl remainingTokens -> sl }),
                   case ds of wild { (,) sl remainingTokens -> remainingTokens })) -}
-9b6702b7038600deda89d17fd7cb519a
+623f6f91523382ad86ee86979ad2d2fb
   parseSL' ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> ([Util.AST], [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -967,7 +1118,7 @@ bdd5ef374926bf13cbe16886fc4c8ced
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseSL' w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-a8cf159a7e3986ebcfd9048cc22a7da5
+20a703ac500de5cc95a52c943bd179b8
   parseStm ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -975,7 +1126,7 @@ a8cf159a7e3986ebcfd9048cc22a7da5
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseStm w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-8c38b8400e4eef9a3e9495dfd1080f2c
+39b02b68e11fcd14876a5d34593b9bd0
   parseU ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> ((GHC.Base.String, Util.Type),
@@ -984,7 +1135,7 @@ a8cf159a7e3986ebcfd9048cc22a7da5
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case w of wild {
-                   [] -> Parser.parseU5
+                   [] -> Parser.parseU3
                    : ds ds1
                    -> case ds of wild1 { (,) typeTok ds2 ->
                       case ds2 of wild2 { (,) row col ->
@@ -992,21 +1143,21 @@ a8cf159a7e3986ebcfd9048cc22a7da5
                         []
                         -> case col of ww { GHC.Types.I# ww1 ->
                            case row of ww2 { GHC.Types.I# ww3 ->
-                           Parser.parseU4 ww1 ww3 typeTok } }
+                           Parser.parseU2 ww1 ww3 typeTok } }
                         : ds3 rest
                         -> case ds3 of wild4 { (,) ds4 ds5 ->
                            case ds4 of wild5 {
                              DEFAULT
                              -> case col of ww { GHC.Types.I# ww1 ->
                                 case row of ww2 { GHC.Types.I# ww3 ->
-                                Parser.parseU4 ww1 ww3 typeTok } }
+                                Parser.parseU2 ww1 ww3 typeTok } }
                              Lexer.TokenID name
                              -> case ds5 of wild6 { (,) r1 c1 ->
                                 case typeTok of wild7 {
                                   DEFAULT
                                   -> case col of ww { GHC.Types.I# ww1 ->
                                      case row of ww2 { GHC.Types.I# ww3 ->
-                                     Parser.parseU3 ww1 ww3 wild7 } }
+                                     Parser.parseU1 ww1 ww3 wild7 } }
                                   Lexer.TokenVoid -> ((name, Util.VoidType), rest)
                                   Lexer.TokenByte -> ((name, Util.ByteType), rest)
                                   Lexer.TokenInt -> ((name, Util.IntType), rest)
@@ -1014,37 +1165,31 @@ a8cf159a7e3986ebcfd9048cc22a7da5
                                   Lexer.TokenMeggyColorType -> ((name, Util.MeggyColorType), rest)
                                   Lexer.TokenMeggyButtonType -> ((name, Util.MeggyButtonType), rest)
                                   Lexer.TokenMeggyToneType -> ((name, Util.MeggyToneType), rest)
-                                  Lexer.TokenIntArrayType -> ((name, Parser.parseU2), rest)
+                                  Lexer.TokenIntArrayType -> ((name, Util.IntArrayType), rest)
                                   Lexer.TokenColorArrayType
-                                  -> ((name, Parser.parseU1), rest) } } } } } } } }) -}
-9bedc1b719f3e753ef1edfae640846e8
-  parseU1 :: Util.Type
-  {- Strictness: x -}
-e63bd1fcddd93994592707110fc0fe8d
-  parseU2 :: Util.Type
-  {- Strictness: x -}
-cb1bb4cb30ee6a61dc8c7b009cca6a69
+                                  -> ((name, Util.ColorArrayType), rest) } } } } } } } }) -}
+4316a2edf9b9a213f5d29ebaee4355b3
+  parseU1 ::
+    GHC.Prim.Int#
+    -> GHC.Prim.Int#
+    -> Lexer.Token
+    -> ((GHC.Base.String, Util.Type),
+        [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+  {- Arity: 3, Strictness: <L,U><L,U><L,U>x -}
+a3a4e8d626f00a7f83fd2346786588e3
+  parseU2 ::
+    GHC.Prim.Int#
+    -> GHC.Prim.Int#
+    -> Lexer.Token
+    -> ((GHC.Base.String, Util.Type),
+        [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+  {- Arity: 3, Strictness: <L,U><L,U><L,U>x -}
+f88d6d6fba80485266598898252d743d
   parseU3 ::
-    GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> Lexer.Token
-    -> ((GHC.Base.String, Util.Type),
-        [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
-  {- Arity: 3, Strictness: <L,U><L,U><L,U>x -}
-4dc199981d3984d3c5bea1f1f6f3d2b6
-  parseU4 ::
-    GHC.Prim.Int#
-    -> GHC.Prim.Int#
-    -> Lexer.Token
-    -> ((GHC.Base.String, Util.Type),
-        [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
-  {- Arity: 3, Strictness: <L,U><L,U><L,U>x -}
-c8edc15c99f5a04cfa11c70288717eba
-  parseU5 ::
     ((GHC.Base.String, Util.Type),
      [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
   {- Strictness: x -}
-daa3b08c18b070b673dbf058d4a39923
+33bfb6c1422ba8bbed0a51e0b1741674
   parseV ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> ([(GHC.Base.String, Util.Type)],
@@ -1053,13 +1198,76 @@ daa3b08c18b070b673dbf058d4a39923
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseV w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-6690155f9e9ed37a24dd1b265bcf7fcc
+49c1629a5bccc4320aca8794a7d2fbf4
+  parseVD ::
+    [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
+    -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+  {- Arity: 1, Strictness: <L,1*U>m, Inline: INLINE[0],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
+                 let {
+                   ds :: (GHC.Base.String, Util.Type,
+                          [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+                   = case w of wild {
+                       []
+                       -> case Parser.parseU3
+                          ret_ty (GHC.Base.String, Util.Type,
+                                  [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+                          of {}
+                       : ds1 ds2
+                       -> case ds1 of wild1 { (,) typeTok ds3 ->
+                          case ds3 of wild2 { (,) row col ->
+                          case ds2 of wild3 {
+                            []
+                            -> case col of ww { GHC.Types.I# ww1 ->
+                               case row of ww2 { GHC.Types.I# ww3 ->
+                               case Parser.parseU2 ww1 ww3 typeTok
+                               ret_ty (GHC.Base.String, Util.Type,
+                                       [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+                               of {} } }
+                            : ds4 rest
+                            -> case ds4 of wild4 { (,) ds5 ds6 ->
+                               case ds5 of wild5 {
+                                 DEFAULT
+                                 -> case col of ww { GHC.Types.I# ww1 ->
+                                    case row of ww2 { GHC.Types.I# ww3 ->
+                                    case Parser.parseU2 ww1 ww3 typeTok
+                                    ret_ty (GHC.Base.String, Util.Type,
+                                            [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+                                    of {} } }
+                                 Lexer.TokenID name
+                                 -> case ds6 of wild6 { (,) r1 c1 ->
+                                    case typeTok of wild7 {
+                                      DEFAULT
+                                      -> case col of ww { GHC.Types.I# ww1 ->
+                                         case row of ww2 { GHC.Types.I# ww3 ->
+                                         case Parser.parseU1 ww1 ww3 wild7
+                                         ret_ty (GHC.Base.String, Util.Type,
+                                                 [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
+                                         of {} } }
+                                      Lexer.TokenVoid -> (name, Util.VoidType, rest)
+                                      Lexer.TokenByte -> (name, Util.ByteType, rest)
+                                      Lexer.TokenInt -> (name, Util.IntType, rest)
+                                      Lexer.TokenBoolean -> (name, Util.BooleanType, rest)
+                                      Lexer.TokenMeggyColorType -> (name, Util.MeggyColorType, rest)
+                                      Lexer.TokenMeggyButtonType
+                                      -> (name, Util.MeggyButtonType, rest)
+                                      Lexer.TokenMeggyToneType -> (name, Util.MeggyToneType, rest)
+                                      Lexer.TokenIntArrayType -> (name, Util.IntArrayType, rest)
+                                      Lexer.TokenColorArrayType
+                                      -> (name, Util.ColorArrayType, rest) } } } } } } } }
+                 } in
+                 (Util.Variable
+                    (case ds of ds1 { (,,) vname vtype ts2 -> vtype })
+                    (case ds of ds1 { (,,) vname vtype ts2 -> vname }),
+                  case ds of ds1 { (,,) vname vtype ts2 -> ts2 })) -}
+f1bff13261ed3563f408f415f5d8b810
   parseX ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
   {- Arity: 1, Strictness: <S,1*U>m,
      Unfolding: InlineRule (0, True, True) Parser.parseE -}
-ae1cbcfe8be56ac15f09680a10f60849
+73ad62fe59d87d0dc79a9fa12cad1479
   parseY ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> ([Util.AST], [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])
@@ -1067,7 +1275,7 @@ ae1cbcfe8be56ac15f09680a10f60849
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]) ->
                  case Parser.$wparseY w of ww { (#,#) ww1 ww2 -> (ww1, ww2) }) -}
-1ceca30a10b40edfe5944df364459c97
+7f9b18df13300bb638cbbde753d1d1fa
   parseZ ::
     [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))]
     -> (Util.AST, [(Lexer.Token, (GHC.Types.Int, GHC.Types.Int))])

@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2016-12-01 05:12:39.576973399 UTC
+2016-12-02 01:11:42.339988249 UTC
 
 interface main@main:Util 8001
-  interface hash: 889f908a7b4a02e64b5d095390feb60f
-  ABI hash: 8289d5fba27cd9a7e4a3433d9fbc0162
-  export-list hash: 3eb83b1dfe1a017918c549046bcbf987
+  interface hash: 38b4fdfd7749f18493ddb6641d0b80db
+  ABI hash: 584e30b3c8003828425244522b124edd
+  export-list hash: 6ebad5c4a934f78d2a8da097b4f64c2d
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 6ea86ecbb747c8bfd1b624d46b10840a
   sig of: Nothing
@@ -14,8 +14,8 @@ interface main@main:Util 8001
 exports:
   Util.footer
   Util.header
-  Util.AST{Util.Add Util.Body Util.Boolean Util.ButtonLiteral Util.ByteCast Util.CheckButton Util.Class Util.ColorLiteral Util.Delay Util.Epsilon Util.GetPixel Util.Identifier Util.If Util.Instance Util.IntLiteral Util.Invoke Util.LessThan Util.LogicalAnd Util.LogicalEqual Util.LogicalNot Util.MainClass Util.Method Util.Mul Util.ParenExp Util.Prog Util.Return Util.SetPixel Util.Sub Util.ToneLiteral Util.ToneStart Util.UnaryMinus Util.While}
-  Util.Type{Util.BooleanType Util.ByteType Util.Error Util.IntType Util.MeggyButtonType Util.MeggyColorType Util.MeggyToneType Util.VoidType}
+  Util.AST{Util.Add Util.ArrayAcess Util.ArrayAssignment Util.Assignment Util.Body Util.Boolean Util.ButtonLiteral Util.ByteCast Util.CheckButton Util.Class Util.ColorArrayInstance Util.ColorLiteral Util.Delay Util.Epsilon Util.GetPixel Util.Identifier Util.If Util.Instance Util.IntArrayInstance Util.IntLiteral Util.Invoke Util.LessThan Util.LogicalAnd Util.LogicalEqual Util.LogicalNot Util.MainClass Util.Method Util.Mul Util.ParenExp Util.Prog Util.Return Util.SetAuxLEDs Util.SetPixel Util.Sub Util.ToneLiteral Util.ToneStart Util.UnaryMinus Util.Variable Util.While}
+  Util.Type{Util.BooleanType Util.ByteType Util.ColorArrayType Util.Error Util.IntArrayType Util.IntType Util.MeggyButtonType Util.MeggyColorType Util.MeggyToneType Util.VoidType}
   Util.TypeSig{Util.TS}
 module dependencies:
 package dependencies: base-4.9.0.0* ghc-prim-0.5.0.0
@@ -30,12 +30,12 @@ import  -/  base-4.9.0.0:GHC.Base 8ed3be81c0707b322f975a84ae1bb816
 import  -/  base-4.9.0.0:GHC.Show 952347a6ab730bcb25c0854d8bc6ca51
 import  -/  base-4.9.0.0:Prelude b9bddb97799837fe67a8d00939a5b6c3
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   $fEqAST :: GHC.Classes.Eq Util.AST
   DFunId
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
      Unfolding: DFun:. @ Util.AST Util.$fEqAST_$c== Util.$fEqAST_$c/= -}
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   $fEqAST_$c/= :: Util.AST -> Util.AST -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
      Unfolding: InlineRule (2, True, False)
@@ -43,22 +43,22 @@ import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
                  case Util.$fEqAST_$c== a b of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   $fEqAST_$c== :: Util.AST -> Util.AST -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U> -}
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   $fEqType :: GHC.Classes.Eq Util.Type
   DFunId
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
      Unfolding: DFun:.
                   @ Util.Type Util.$fEqType_$c== Util.$fEqType_$c/= -}
-67ba545ae43e5b9360cc0d3a5ac3ea30
+c4c83d4e139c8707900b955f9fe431b6
   $fEqTypeSig :: GHC.Classes.Eq Util.TypeSig
   DFunId
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
      Unfolding: DFun:.
                   @ Util.TypeSig Util.$fEqTypeSig_$c== Util.$fEqTypeSig_$c/= -}
-67ba545ae43e5b9360cc0d3a5ac3ea30
+c4c83d4e139c8707900b955f9fe431b6
   $fEqTypeSig_$c/= :: Util.TypeSig -> Util.TypeSig -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs,
      Strictness: <S(SL),1*U(1*U,1*U)><S(SL),1*U(1*U,1*U)>,
@@ -67,7 +67,7 @@ import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
                  case Util.$fEqTypeSig_$c== a b of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-67ba545ae43e5b9360cc0d3a5ac3ea30
+c4c83d4e139c8707900b955f9fe431b6
   $fEqTypeSig_$c== :: Util.TypeSig -> Util.TypeSig -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs,
      Strictness: <S(SL),1*U(1*U,1*U)><S(SL),1*U(1*U,1*U)>,
@@ -77,7 +77,7 @@ import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
                  case w of ww { Util.TS ww1 ww2 ->
                  case w1 of ww3 { Util.TS ww4 ww5 ->
                  Util.$w$c== ww1 ww2 ww4 ww5 } }) -}
-dbe3f6b32022eabdf1973decb0fc74ad
+c5d46e9cb465761f1168046e47f827d5
   $fEqTypeSig_$s$fEq(,) ::
     GHC.Classes.Eq ([GHC.Types.Char], Util.Type)
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -93,7 +93,7 @@ dbe3f6b32022eabdf1973decb0fc74ad
                      @ Util.Type
                      GHC.Classes.$fEq[]_$s$fEq[]1
                      Util.$fEqType) -}
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   $fEqType_$c/= :: Util.Type -> Util.Type -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
      Unfolding: (\ (a :: Util.Type) (b :: Util.Type) ->
@@ -119,10 +119,16 @@ dbe3f6b32022eabdf1973decb0fc74ad
                    Util.MeggyToneType
                    -> case b of wild1 {
                         DEFAULT -> GHC.Types.True Util.MeggyToneType -> GHC.Types.False }
+                   Util.IntArrayType
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.True Util.IntArrayType -> GHC.Types.False }
+                   Util.ColorArrayType
+                   -> case b of wild1 {
+                        DEFAULT -> GHC.Types.True Util.ColorArrayType -> GHC.Types.False }
                    Util.Error
                    -> case b of wild1 {
                         DEFAULT -> GHC.Types.True Util.Error -> GHC.Types.False } }) -}
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   $fEqType_$c== :: Util.Type -> Util.Type -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
      Unfolding: (\ (ds :: Util.Type) (ds1 :: Util.Type) ->
@@ -148,10 +154,16 @@ dbe3f6b32022eabdf1973decb0fc74ad
                    Util.MeggyToneType
                    -> case ds1 of wild1 {
                         DEFAULT -> GHC.Types.False Util.MeggyToneType -> GHC.Types.True }
+                   Util.IntArrayType
+                   -> case ds1 of wild1 {
+                        DEFAULT -> GHC.Types.False Util.IntArrayType -> GHC.Types.True }
+                   Util.ColorArrayType
+                   -> case ds1 of wild1 {
+                        DEFAULT -> GHC.Types.False Util.ColorArrayType -> GHC.Types.True }
                    Util.Error
                    -> case ds1 of wild1 {
                         DEFAULT -> GHC.Types.False Util.Error -> GHC.Types.True } }) -}
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   $fShowAST :: GHC.Show.Show Util.AST
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -160,14 +172,14 @@ dbe3f6b32022eabdf1973decb0fc74ad
                   Util.$fShowAST_$cshowsPrec
                   Util.$fShowAST_$cshow
                   Util.$fShowAST_$cshowList -}
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   $fShowAST1 :: Util.AST -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (Util.$fShowAST_$cshowsPrec Util.$fShowAST2) -}
 f2d4b091ab4256516858629329217059
   $fShowAST2 :: GHC.Types.Int
   {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   $fShowAST_$cshow :: Util.AST -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
@@ -176,15 +188,15 @@ f2d4b091ab4256516858629329217059
                    GHC.Show.shows22
                    x
                    (GHC.Types.[] @ GHC.Types.Char)) -}
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   $fShowAST_$cshowList :: [Util.AST] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__ @ Util.AST Util.$fShowAST1) -}
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   $fShowAST_$cshowsPrec ::
     GHC.Types.Int -> Util.AST -> GHC.Show.ShowS
   {- Arity: 3, Strictness: <L,1*U(U)><S,1*U><L,U> -}
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   $fShowType :: GHC.Show.Show Util.Type
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -196,28 +208,34 @@ f2d4b091ab4256516858629329217059
 91a04fda41a1ea9b88e10fd86324fe38
   $fShowType1 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "Error"#) -}
-c938cbcdd01bae5a84a2bfed830fd1e3
-  $fShowType2 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "MeggyToneType"#) -}
-0d3a71647ebdb5951d486c047bfb0473
-  $fShowType3 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "MeggyButtonType"#) -}
-6c8a0782eeaffd7eebde8dc2a6b20e3c
-  $fShowType4 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "MeggyColorType"#) -}
-666120e1c7ee17014eb9423f5b37eb41
-  $fShowType5 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "VoidType"#) -}
-f688c29f1ad2eb28bc16e9e8d25070e2
-  $fShowType6 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "IntType"#) -}
-6be57d9b80a10cc7e4cc5950e4a13216
-  $fShowType7 :: [GHC.Types.Char]
-  {- Unfolding: (GHC.CString.unpackCString# "ByteType"#) -}
-4d1cea992e014a73855fef7151f06716
-  $fShowType8 :: [GHC.Types.Char]
+100a516a4c7aa38c8991c570e681449e
+  $fShowType10 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "BooleanType"#) -}
-67ba545ae43e5b9360cc0d3a5ac3ea30
+fe36487175d5a63f11da06e8103c031e
+  $fShowType2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "ColorArrayType"#) -}
+4624aebb1ca7291d0e22a108c252d29b
+  $fShowType3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "IntArrayType"#) -}
+2790421d000b613f2b7eff54f7261a81
+  $fShowType4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "MeggyToneType"#) -}
+8397cea1a0f88b381838a3118517e3af
+  $fShowType5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "MeggyButtonType"#) -}
+fe9625758c7fa577e5f196203076b893
+  $fShowType6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "MeggyColorType"#) -}
+c08c49d41a22f1db760c84344d34c6d3
+  $fShowType7 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "VoidType"#) -}
+ae191f6164e7069c81ccf924add49bfe
+  $fShowType8 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "IntType"#) -}
+ed15f4adae9c6aa57b56f93c916b8c8b
+  $fShowType9 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "ByteType"#) -}
+c4c83d4e139c8707900b955f9fe431b6
   $fShowTypeSig :: GHC.Show.Show Util.TypeSig
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -226,13 +244,13 @@ f688c29f1ad2eb28bc16e9e8d25070e2
                   Util.$fShowTypeSig_$cshowsPrec
                   Util.$fShowTypeSig_$cshow
                   Util.$fShowTypeSig_$cshowList -}
-67ba545ae43e5b9360cc0d3a5ac3ea30
+c4c83d4e139c8707900b955f9fe431b6
   $fShowTypeSig1 :: Util.TypeSig -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (\ (w :: Util.TypeSig) (w1 :: GHC.Base.String) ->
                  case w of ww { Util.TS ww1 ww2 ->
                  Util.$w$cshowsPrec1 0# ww1 ww2 w1 }) -}
-6eeb339fab755d985cb1043ddc21540a
+3d13e50bc16cd4036ce5bd04cc68715c
   $fShowTypeSig2 ::
     ([GHC.Types.Char], Util.Type)
     -> GHC.Base.String -> [GHC.Types.Char]
@@ -261,7 +279,7 @@ f688c29f1ad2eb28bc16e9e8d25070e2
 4c1b211b12cf1e5a002c8f537e293f3d
   $fShowTypeSig3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "TS "#) -}
-67ba545ae43e5b9360cc0d3a5ac3ea30
+c4c83d4e139c8707900b955f9fe431b6
   $fShowTypeSig_$cshow :: Util.TypeSig -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U(1*U,1*U)>,
      Unfolding: InlineRule (1, True, False)
@@ -270,13 +288,13 @@ f688c29f1ad2eb28bc16e9e8d25070e2
                    GHC.Show.shows22
                    x
                    (GHC.Types.[] @ GHC.Types.Char)) -}
-67ba545ae43e5b9360cc0d3a5ac3ea30
+c4c83d4e139c8707900b955f9fe431b6
   $fShowTypeSig_$cshowList :: [Util.TypeSig] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__
                    @ Util.TypeSig
                    Util.$fShowTypeSig1) -}
-67ba545ae43e5b9360cc0d3a5ac3ea30
+c4c83d4e139c8707900b955f9fe431b6
   $fShowTypeSig_$cshowsPrec ::
     GHC.Types.Int -> Util.TypeSig -> GHC.Show.ShowS
   {- Arity: 3, Strictness: <S(S),1*U(U)><S,1*U(1*U,1*U)><L,U>,
@@ -288,7 +306,7 @@ f688c29f1ad2eb28bc16e9e8d25070e2
                  case w of ww { GHC.Types.I# ww1 ->
                  case w1 of ww2 { Util.TS ww3 ww4 ->
                  Util.$w$cshowsPrec1 ww1 ww3 ww4 w2 } }) -}
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   $fShowType_$cshow :: Util.Type -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
@@ -297,11 +315,11 @@ f688c29f1ad2eb28bc16e9e8d25070e2
                    GHC.Show.shows22
                    x
                    (GHC.Types.[] @ GHC.Types.Char)) -}
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   $fShowType_$cshowList :: [Util.Type] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__ @ Util.Type Util.$w$cshowsPrec) -}
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   $fShowType_$cshowsPrec ::
     GHC.Types.Int -> Util.Type -> GHC.Show.ShowS
   {- Arity: 3, Strictness: <L,A><S,1*U><L,1*U>, Inline: INLINE[0],
@@ -322,6 +340,42 @@ f688c29f1ad2eb28bc16e9e8d25070e2
   $tc'Add1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "'Add"#) -}
+e1e1dd32c5b0f41a7eaf79c77f6c3c32
+  $tc'ArrayAcess :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   4985489497682202438##
+                   6715694272826077442##
+                   Util.$trModule
+                   Util.$tc'ArrayAcess1) -}
+213c662b0d667b45fe97d94a2cdacb8a
+  $tc'ArrayAcess1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'ArrayAcess"#) -}
+bab3817e8ea1de68809df89d525ff1b1
+  $tc'ArrayAssignment :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   16588407845135467704##
+                   10684984731548071953##
+                   Util.$trModule
+                   Util.$tc'ArrayAssignment1) -}
+e0dbe63ffa784ed4679a7f13276e685f
+  $tc'ArrayAssignment1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'ArrayAssignment"#) -}
+3799316e2c0cffb8c871dcc385bf23a9
+  $tc'Assignment :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   13252088880851161796##
+                   5729683421008790850##
+                   Util.$trModule
+                   Util.$tc'Assignment1) -}
+dffb9a52a47718087df4899977e1eeec
+  $tc'Assignment1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'Assignment"#) -}
 9363beb69000efb9f8e51bbc105cb350
   $tc'Body :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
@@ -418,6 +472,30 @@ d0e9bd3e71c0d2ea4a194e57ae165737
   $tc'Class1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "'Class"#) -}
+fa7d94eb61ea69bbfb6095ed2982b923
+  $tc'ColorArrayInstance :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12782579182330176819##
+                   9700825341973226522##
+                   Util.$trModule
+                   Util.$tc'ColorArrayInstance1) -}
+8133db453059dc099012827a73f76db8
+  $tc'ColorArrayInstance1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'ColorArrayInstance"#) -}
+b01c12ad02bea09f5e55da95ecbe89b8
+  $tc'ColorArrayType :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   13824870601210509426##
+                   1554768122608603364##
+                   Util.$trModule
+                   Util.$tc'ColorArrayType1) -}
+4373384ac10be96803e885c9e7368cff
+  $tc'ColorArrayType1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'ColorArrayType"#) -}
 3869e42c008fcdc13bd47721b7a36869
   $tc'ColorLiteral :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
@@ -514,6 +592,30 @@ d00c76c4c28071b793b8460c49d7250e
   $tc'Instance1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "'Instance"#) -}
+4069cbec2bee6bef79f9b31451c469d2
+  $tc'IntArrayInstance :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   12100305433382522567##
+                   4412249751100862874##
+                   Util.$trModule
+                   Util.$tc'IntArrayInstance1) -}
+262ae8887bed59eee18fb7c8ffca7977
+  $tc'IntArrayInstance1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'IntArrayInstance"#) -}
+4c9beed8742be3154086a54cf9090043
+  $tc'IntArrayType :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   9994325455838890594##
+                   17684516827121361677##
+                   Util.$trModule
+                   Util.$tc'IntArrayType1) -}
+5d9d4e3c1bda8bfcd3ae52ce44cc46d3
+  $tc'IntArrayType1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'IntArrayType"#) -}
 6a096aa7e7fe179f8d3b9dc688f3bafd
   $tc'IntLiteral :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
@@ -706,6 +808,18 @@ c21d883d2510f1b2460a05cb5480c4bb
   $tc'Return1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "'Return"#) -}
+6ab66e8200618cde44e50cf637e96054
+  $tc'SetAuxLEDs :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   14634848323379644677##
+                   16847658861688308521##
+                   Util.$trModule
+                   Util.$tc'SetAuxLEDs1) -}
+c3bd883cb4ea29bb3e8caeecc9475075
+  $tc'SetAuxLEDs1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'SetAuxLEDs"#) -}
 c3167fb35ed71bc2ee52a111a4d4418b
   $tc'SetPixel :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
@@ -778,6 +892,18 @@ a34e9c27aae93d22cf897f1e49546b29
   $tc'UnaryMinus1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "'UnaryMinus"#) -}
+e4d384a465263cfa81ffae19e8c1dacc
+  $tc'Variable :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   1468266672154634873##
+                   11639678499709766861##
+                   Util.$trModule
+                   Util.$tc'Variable1) -}
+459855c72a1cbc2035a6bcbb535a667e
+  $tc'Variable1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "'Variable"#) -}
 44e95acb8c4095eaf2509da0eb96c500
   $tc'VoidType :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
@@ -850,7 +976,7 @@ eeabc1dfdcd1953f77b648a70db68ee1
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-184a56b3a96e6bd46f9760c3c0447b1f
+dc3c8ae5d614ffaf998c52922f3ef7da
   $w$c== ::
     [(GHC.Base.String, Util.Type)]
     -> Util.Type
@@ -870,25 +996,29 @@ eeabc1dfdcd1953f77b648a70db68ee1
                         ww2 of wild {
                    GHC.Types.False -> GHC.Types.False
                    GHC.Types.True -> Util.$fEqType_$c== ww1 ww3 }) -}
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   $w$cshowsPrec :: Util.Type -> GHC.Base.String -> GHC.Base.String
   {- Arity: 2, Strictness: <S,1*U><L,1*U>, Inline: [0],
      Unfolding: (\ (w :: Util.Type) (w1 :: GHC.Base.String) ->
                  case w of wild {
                    Util.BooleanType
-                   -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType8 w1
-                   Util.ByteType -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType7 w1
-                   Util.IntType -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType6 w1
-                   Util.VoidType -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType5 w1
+                   -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType10 w1
+                   Util.ByteType -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType9 w1
+                   Util.IntType -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType8 w1
+                   Util.VoidType -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType7 w1
                    Util.MeggyColorType
-                   -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType4 w1
+                   -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType6 w1
                    Util.MeggyButtonType
-                   -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType3 w1
+                   -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType5 w1
                    Util.MeggyToneType
+                   -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType4 w1
+                   Util.IntArrayType
+                   -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType3 w1
+                   Util.ColorArrayType
                    -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType2 w1
                    Util.Error
                    -> GHC.Base.++ @ GHC.Types.Char Util.$fShowType1 w1 }) -}
-4a4a5e1a2355cbc5122d7f1d5ee517c8
+150e3b088d2ef0c906929f8269cf6282
   $w$cshowsPrec1 ::
     GHC.Prim.Int#
     -> [(GHC.Base.String, Util.Type)]
@@ -932,7 +1062,7 @@ eeabc1dfdcd1953f77b648a70db68ee1
                                  (Util.$w$cshowsPrec
                                     ww2
                                     (GHC.Types.: @ GHC.Types.Char GHC.Show.shows6 w))))) }) -}
-0922ba89a2bf8d0d1eaf0fa9b00bd723
+88b1d8d104bedf4e10abe56758f4c48a
   data AST
     = Prog Util.AST [Util.AST]
     | Class [Util.AST] GHC.Base.String
@@ -945,6 +1075,7 @@ eeabc1dfdcd1953f77b648a70db68ee1
     | GetPixel Util.AST Util.AST
     | CheckButton Util.AST
     | ToneStart Util.AST Util.AST
+    | SetAuxLEDs Util.AST
     | LogicalAnd Util.AST Util.AST
     | LogicalEqual Util.AST Util.AST
     | LogicalNot Util.AST
@@ -959,6 +1090,12 @@ eeabc1dfdcd1953f77b648a70db68ee1
     | ParenExp Util.AST
     | Instance Util.AST GHC.Base.String
     | Invoke [Util.AST] GHC.Base.String
+    | IntArrayInstance Util.AST
+    | ColorArrayInstance Util.AST
+    | Variable Util.Type GHC.Base.String
+    | Assignment Util.AST GHC.Base.String
+    | ArrayAssignment GHC.Base.String Util.AST Util.AST
+    | ArrayAcess Util.AST Util.AST
     | IntLiteral GHC.Types.Int
     | ColorLiteral GHC.Types.Int
     | ButtonLiteral GHC.Base.String
@@ -966,7 +1103,7 @@ eeabc1dfdcd1953f77b648a70db68ee1
     | Identifier GHC.Base.String
     | Boolean GHC.Types.Bool
     | Epsilon
-216c38e075746053d42eb4f61425ba46
+b11fd09e544b732e5075f4cb20dd6d55
   data Type
     = BooleanType
     | ByteType
@@ -975,8 +1112,10 @@ eeabc1dfdcd1953f77b648a70db68ee1
     | MeggyColorType
     | MeggyButtonType
     | MeggyToneType
+    | IntArrayType
+    | ColorArrayType
     | Error
-67ba545ae43e5b9360cc0d3a5ac3ea30
+c4c83d4e139c8707900b955f9fe431b6
   data TypeSig = TS [(GHC.Base.String, Util.Type)] Util.Type
 0ef4b2f963519743f3b4e54014026887
   footer :: [GHC.Types.Char]
