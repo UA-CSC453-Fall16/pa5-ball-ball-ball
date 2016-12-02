@@ -6,12 +6,16 @@ clear
 
 echo ""
 echo ""
+echo "Usage: bash run.sh <filename.java>"
 
-PARAM="$2"
-DIRPARAM="$1"
-DIR="test/sources/$DIRPARAM/"
+PARAM="$1"
+SOURCE="test/$PARAM"
 
-echo "Producing .s output - $DIR$PARAM"
+java -jar MJ.jar $SOURCE #INESRT SOURCE FILE NAME HERE 
 
-java -jar test/MJ.jar "$DIR$PARAM" #INESRT SOURCE FILE NAME HERE 
-
+#echo "producing AST"
+if [ $? == 0 ]; then
+    dot -Tpng "${SOURCE}.AST.dot" > "${SOURCE}.ref.png"
+else
+    echo "Skipping generating the dot file."
+fi
