@@ -59,6 +59,15 @@ parseMC ((TokenClass, (row,col)):(TokenID class_name, (row1,col1)):rest) =
     in
         (MainClass main_method, ts13)
 
+-- VariableDeclaration
+parseVD :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
+parseVD ts1 =
+    let
+        ((vname, vtype), ts2) = parseU ts1
+    in
+        (Variable vtype vname, ts2)
+
+
 -- ClassDeclaration
 parseCD :: [(Token, (Int,Int))] -> [AST]
 parseCD ((TokenEOF, (row,col)):rest) = []
@@ -232,23 +241,6 @@ parseStm ((TokenMeggyToneStart, (row,col)):rest) =
     in
         ((ToneStart exp1 exp2), ts6)
 
-parseStm ((TokenMeggySetAux, (row, col)):rest) = 
-    let
-        ts1 = match rest TokenLeftParen
-        (exp, ts2) = parseE rest
-        ts3 = match ts2  TokenRightParen
-        ts4 = match ts3  TokenSemiColon
-    in
-        ((SetAuxLEDs exp), ts4)
-
-parseStm ((TokenId id, (row,col)):rest) =
-    let
-        ts1 = match rest TokenAssign
-        (exp, ts2) = parseE ts1;
-        ts3 = match ts2  TokenSemiColon
-    in
-        ((Variable exp id), ts3)
-
 parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) = 
     let
         ts1 = match rest TokenLeftParen
@@ -257,7 +249,7 @@ parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) =
         (invocation, ts4) = parseInvoke ts3 --This should an invocation AST
         ts5          = match ts4 TokenSemiColon
     in
-        ((Instance invocation id), ts5)
+        (Instance invocation id, ts5)
 
 parseStm ((TokenThis, (row,col)):rest) = 
     let
@@ -410,13 +402,13 @@ parseI' ((t, (row,col)):rest) child =
     else
         error("ERR: (Parser - ParseI') Invalid expression near * on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
---J original
-parseJ  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
-parseJ ((TokenNew, (row,col)):(TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) = 
-    let
-        (invocation, ts1) = parseL rest
-    in
-        (Instance invocation id, ts1)
+-- --J original
+-- parseJ  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
+-- parseJ ((TokenNew, (row,col)):(TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) = 
+--     let
+--         (invocation, ts1) = parseL rest
+--     in
+--         (Instance invocation id, ts1)
 
 --J new
 parseJ  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
@@ -437,7 +429,7 @@ parseJ ((t, (row,col)):rest) =
 --P
 parseP :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
 parseP ((TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) =
-	let
+    let
         (invocation, ts1) = parseL rest
     in
         (Instance invocation id, ts1)
@@ -447,14 +439,14 @@ parseP ((TokenInt, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
 		(capacity, ts1) = parseE rest
 		ts2 = match ts1 TokenRightBracket
 	in
-		(IntArrayInstace capacity, ts2)
+		(IntArrayInstance capacity, ts2)
 
 parseP ((TokenColor, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
 	let
 		(capacity, ts1) = parseE rest
 		ts2 = match ts1 TokenRightBracket
 	in
-		(ColorArrayInstace capacity, ts2)	
+		(ColorArrayInstance capacity, ts2)	
 
 --K
 parseK  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
