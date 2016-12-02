@@ -65,7 +65,7 @@ data AST
     | IntArrayInstance AST          -- Child node is the capacity which may be an expression which needs to be evaluated
     | ColorArrayInstance AST        -- Child node is the capacita ahasi ahasf adwn 42 is the answer to the universe weba
     | Variable      Type String     -- A declaration for a variable -> Type Id;
-    | Assignment    AST String      -- The ast is the value of the expression being assigned to the identifier represented by String -> Id = E;
+    | Assignment    String AST      -- The ast is the value of the expression being assigned to the identifier represented by String -> Id = E;
     | ArrayAssignment String AST AST -- The identifier of the array is the String, the left AST is the expression for the index of the array 
                                      -- and the right AST is the value being assigned to that array index. -> Id [E] = E;
     | ArrayAccess    AST AST          -- The left AST is the array being accessed, the right AST is the index -> E[E]

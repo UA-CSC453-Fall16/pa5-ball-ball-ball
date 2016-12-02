@@ -275,6 +275,23 @@ parseStm ((TokenThis, (row,col)):rest) =
     in
         (Instance invocation "this", ts3)
 
+parseStm ((TokenID name, (r1,c1)):(TokenAssign, (r2,c2)):rest) =
+    let
+        (value, ts1) = parseE rest
+        ts2 = match ts1 TokenSemiColon
+    in
+        (Assignment name value, ts2)
+
+parseStm ((TokenID name, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
+    let
+        (index, ts1) = parseE rest
+        ts2 = match ts1 TokenRightBracket
+        ts3 = match ts2 TokenAssign
+        (value, ts4) = parseE ts3
+        ts5 = match ts4 TokenSemiColon
+    in
+        (ArrayAssignment name index value, ts5)
+
 parseStm ((t, (row,col)):rest) = 
     error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
