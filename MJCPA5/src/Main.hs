@@ -14,9 +14,9 @@ import Lexer
 import ReLex
 import Parser
 import Dot
-import BuildST
-import TypeCheck
-import AVRGen
+--import BuildST
+--import TypeCheck
+--import AVRGen
 
 
 main :: IO ()
@@ -47,12 +47,14 @@ main = do
     hClose out_file --AST Dot debug output
     putStrLn ("Checking Piazza... \n\t -> AST dot file generated")
 
+{- start of omit shit because we are testing" comment
+
     -- traverses AST and builds a symbol table (BuildST.hs)
     let symbol_table = genSymbolTable ast
 
     -- uses AST and symbol table to perform type checking (TypeCheck.hs)
     if typeCheck (ast, symbol_table) then
-        putStrLn ("Your MeggyJr must be so proud! :,-}\n\t -> Type Checking Passed.")
+        putStrLn ("Your MeggyJr must be so proud! :,-)\n\t -> Type Checking Passed.")
     else
         putStrLn ("Type Checking Failed - Be Better\n") --Should never execute if type checker throws error 
                                                       -- -> you and your code are beautiful. 
@@ -67,3 +69,6 @@ main = do
     hPutStrLn out_file avr_code
     hClose out_file
     putStrLn ("You win this time...\n\t -> AVR Code written to file: " ++ outf_name ++ "\nBye Weirdo!\n\n")
+
+
+    End of "omit shit because we are testing" comment -}
