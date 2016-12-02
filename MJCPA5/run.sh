@@ -18,5 +18,8 @@ stack build MJCPA5
 stack exec MJCPA5 "$SOURCE" #INESRT SOURCE FILE NAME HERE 
 
 #echo "producing AST"
-
-dot -Tpng "${SOURCE}.AST.dot" > "${SOURCE}.png"
+if [ $? == 0 ]; then
+    dot -Tpng "${SOURCE}.AST.dot" > "${SOURCE}.png"
+else
+    echo "Skipping generating the dot file."
+fi
