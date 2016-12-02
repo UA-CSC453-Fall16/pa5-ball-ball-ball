@@ -33,8 +33,8 @@ tokenSimplifier ((TokenBigMeggy, (r1,c1)):
                  (TokenRightBracket,(_,_)):rest) = (TokenColorArrayType, (r1,c1)):(tokenSimplifier rest)
 
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):
-		 (TokenDot,(_,_)):
-		 (TokenSetAuxLEDs,(_,_)):rest)   = (TokenMeggySetAux, (r1,c1)):(tokenSimplifier rest) 
+                (TokenDot,(_,_)):
+                (TokenSetAuxLEDs,(_,_)):rest)   = (TokenMeggySetAux, (r1,c1)):(tokenSimplifier rest) 
 
 tokenSimplifier ((TokenImport, (r1,c1)):
                  (TokenLittleMeggy, (_,_)):
