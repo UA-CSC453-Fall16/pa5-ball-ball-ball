@@ -291,6 +291,7 @@ final (row,col)  25  curTokStr  = (True, (TokenAdd, (row,col)))
 final (row,col)  26  curTokStr  = (True, (TokenMul, (row,col)))
 final (row,col)  27  curTokStr  = (True, (TokenLessThan, (row,col)))
 final (row,col)  28  curTokStr  = (True, (TokenNewLine, (row,col)))
+final (row,col)  29  curTokStr  = (True, (TokenAssign, (row,col)))
 
 final (row,col)  50  curTokStr  = (True, (TokenComment, (row,col)))
 
@@ -356,8 +357,8 @@ nextState (row,col) 32 c
     | otherwise  = ( (row,col + 1),  999, True)
 
 nextState (row,col) 33 c
-    | c == '='   = ( (row,col + 1),  23,  True)
-    | otherwise  = ( (row,col + 1),  999, True)
+    | c == '='   = ( (row,col + 1),  23, True)
+    | otherwise  = ( (row,col + 1),  29, True)
 
 nextState (row,col) 40 c -- for single line comments
     | c /= '\n'  = ( (row,col + 1),  40, True) -- ignore everything up to newline
