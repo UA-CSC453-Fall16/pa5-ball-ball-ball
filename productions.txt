@@ -17,3 +17,6 @@ VD -> Ɛ
  (for public, }, return, if, while, {, MeggySetPix, MeggyToneStart,
          MeggyDelay, MeggyAuxleds, new, byteCast, !, -, MeggyGetPix,
          MeggyCheckButton, dot, (, int, true, false, this, Id, ColorVal, ButtonVal, ToneVal)
+
+L -> E [ E ]
+   | E . TokenLength
