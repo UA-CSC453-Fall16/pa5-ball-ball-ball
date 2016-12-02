@@ -1,0 +1,45 @@
+digraph {
+5  [label = " Invoke test  "];
+4 -> 5
+4  [label = "Instance C  "];
+3 -> 4
+3  [label = "Body"];
+2 -> 3
+2  [label = "MainClass"];
+11  [label = "VariableDeclarations"];
+16  [label = " IntType var; "];
+15 -> 16
+15  [label = "VariableDeclarations"];
+18  [label = "Body"];
+14 -> 18
+14 -> 15
+14  [label = "Method test typesig: TS [] VoidType"];
+23  [label = " IntType var; "];
+24  [label = " ByteType variable; "];
+22 -> 24
+22 -> 23
+22  [label = "VariableDeclarations"];
+26  [label = "Body"];
+21 -> 26
+21 -> 22
+21  [label = "Method test2 typesig: TS [] VoidType"];
+31  [label = " IntType var; "];
+32  [label = " ByteType variable; "];
+30 -> 32
+30 -> 31
+30  [label = "VariableDeclarations"];
+34  [label = "Body"];
+29 -> 34
+29 -> 30
+29  [label = "Method test3 typesig: TS [] VoidType"];
+13 -> 29
+13 -> 21
+13 -> 14
+13  [label = "MethodDeclarations"];
+10 -> 13
+10 -> 11
+10  [label = "Class C"];
+1 -> 10
+1 -> 2
+1  [label = "Prog"];
+}

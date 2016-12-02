@@ -63,31 +63,34 @@ parseMC ((TokenClass, (row,col)):(TokenID class_name, (row1,col1)):rest) =
 parseVD :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
 parseVD ts1 = 
     let
-        (vars, ts2) = parseVD' ts2
+        (vars, ts2) = parseVD' ts1
     in
         (VarDecl vars, ts2)
+
 parseVD' :: [(Token, (Int,Int))] -> ([AST], [(Token, (Int,Int))])
-parseVD' ts1
-    | "FOLLOW" == vname && VoidType == vtype = ([], ts2)
+parseVD' ts
+    | "FOLLOW" == vname && VoidType == vtype = ([], ts1)
     | otherwise =
         let
+            var1 = Variable vtype vname
+            ts2  = match ts1 TokenSemiColon
             (var2, ts3) = parseVD' ts2
         in
             (var1:var2, ts3)
     where
-        ((vname, vtype), ts2) = parseU ts1
-        var1 = Variable vtype vname
-
+        ((vname, vtype), ts1) = parseU ts
+        
 -- ClassDeclaration
 parseCD :: [(Token, (Int,Int))] -> [AST]
 parseCD ((TokenEOF, (row,col)):rest) = []
 parseCD ((TokenClass, (row,col)):(TokenID class_name, (row1,col1)):rest) = 
     let
         ts1                    = match rest TokenLeftCurly
-        (list_of_methods, ts2) = parseMD ts1
-        ts3                    = match ts2 TokenRightCurly
+        (variableDecl, ts2)    = parseVD ts1
+        (list_of_methods, ts3) = parseMD ts2
+        ts4                    = match ts3 TokenRightCurly
     in
-        (Class list_of_methods class_name):(parseCD ts3)
+        (Class variableDecl (MethDecl list_of_methods) class_name):(parseCD ts4)
 parseCD ((t, (row,col)):rest) = error ("ERR: (Parser - ParseCD) Invalid class declaration on token " ++ show t ++ " near [" ++ show row ++ ", " ++ show col ++ "]\n")
 
 -- MethodDeclaration
@@ -105,11 +108,11 @@ parseMD ((TokenPublic, (row,col)):(return, (row1,col1)):(TokenID method_name, (r
     in
         if t == TokenPublic then
             let
-                (astList, stuff) = parseMD ts5
+                (astList, stuff) = parseMD ts6
             in
                 (((Method variableDecl methodBody method_name (TS params return_type)):astList), stuff)
         else
-            (((Method variableDecl methodBody method_name (TS params return_type)):[]), ts5)
+            (((Method variableDecl methodBody method_name (TS params return_type)):[]), ts6)
 
 parseMD ((notPublic, (row,col)):(return, (row1,col1)):(TokenID method_name, (row2,col2)):rest) =
     error ("ERR: (Parser - ParseMD) Public keyword not found for method starting, on token " ++ show notPublic ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")

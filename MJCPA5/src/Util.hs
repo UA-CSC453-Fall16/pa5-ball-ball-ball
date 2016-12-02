@@ -11,12 +11,13 @@ module Util where
 data AST
     -- Overall structure
     = Prog      AST [AST]           -- Program has a main class and list of classes
-    | Class     [AST] String        -- Class has a list of methods and a name
+    | Class     AST AST String        -- Class has a list of methods and a name
     | MainClass AST                 -- MainClass has only the main method
     | Method    AST AST String TypeSig  -- Method has a body of statements, method name, and type signature
     | Body      [AST]               -- An if statement, method, while loop etc. have a body of statements (These are blocks {...})
     | VarDecl   [AST]               -- A method and class can start with variable declarations. They will be stored in this list. Each method will
                                     -- have their left ast child be a VarDecl or Epsilon
+    | MethDecl  [AST]                    
     | Return    AST                 -- Return statements have return expressions, void methods don't have a Return AST
 
 {-

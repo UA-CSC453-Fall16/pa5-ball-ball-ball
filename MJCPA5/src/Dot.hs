@@ -36,9 +36,9 @@ astdotviz_rec _ myid astnode =
                 in 
                     (maxChild,subTreeStr++prefix++"Prog"++suffix)
 
-            (Class ast1 ast2) ->
+            (Class ast ast1 ast2) ->
                 let 
-                    (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1)
+                    (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast:ast1:[])
                 in 
                     (maxChild,subTreeStr++prefix++"Class " ++ ast2 ++suffix)
 
@@ -65,6 +65,12 @@ astdotviz_rec _ myid astnode =
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1)
                 in 
                     (maxChild,subTreeStr++prefix++"VariableDeclarations"++suffix)
+
+            (MethDecl ast1) ->
+                let 
+                    (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1)
+                in 
+                    (maxChild,subTreeStr++prefix++"MethodDeclarations"++suffix)
 
             (Return ast1) ->
                 let 
@@ -222,7 +228,7 @@ astdotviz_rec _ myid astnode =
                 in
                     (maxChild,subTreeStr++prefix++"ArrayAccess: left[right]"++suffix)
 
-            (Variable varType varId) -> (myid, prefix++" \"" ++ show varType ++ " " ++ varId ++ ";\" "++suffix)
+            (Variable varType varId) -> (myid, prefix++ " "  ++ show varType ++ " " ++ varId ++ "; "++suffix)
 
             (IntLiteral x) -> (myid, prefix++"IntLiteral "++(show x)++suffix)
 
