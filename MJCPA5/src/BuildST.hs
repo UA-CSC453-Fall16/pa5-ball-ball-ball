@@ -23,23 +23,40 @@ travisty (Prog main_class other_class, st) =  traverseClass (other_class, st)
 
 traverseClass :: ([AST], SymbolTable) -> SymbolTable
 traverseClass ([], st) = st
-traverseClass ((Class methods class_name):otherClasses, st) = 
+traverseClass ((Class variables methods class_name):otherClasses, st) = 
     let
         st0 = insertClass st class_name
         st1 = pushScope st0 class_name
-        st2 = traverseMethods (methods, st1)
-        st3 = popScope st2 
-        -- st4 = traverseClass ((Class rest class_name), st3)
+        st2 = traverseVariables (variables, st1)
+        st3 = traverseMethods (methods, st2)
+        st4 = popScope st2 
     in
-        traverseClass (otherClasses, st3)
+        traverseClass (otherClasses, st4)
 
-traverseMethods :: ([AST], SymbolTable) -> SymbolTable
-traverseMethods ([], st)            = st
-traverseMethods ((method:rest), st) = 
+traverseMethods :: (AST, SymbolTable) -> SymbolTable
+traverseMethods ((MethDecl methods), st) = traverseMethods' (methods, st)
+
+traverseMethods' :: ([AST], SymbolTable) -> SymbolTable
+traverseMethods' ([], st)            = st
+traverseMethods' ((method:rest), st) = 
     let
         st1 = traverseMethod (method, st)
     in 
-        traverseMethods ((rest), st1)
+        traverseMethods (rest, st1)
+
+traverseVariables :: (AST, SymbolTable) -> SymbolTable
+traverseVariables ((VarDecl variables), st) = traverseVariables' (variables, st)
+
+traverseVariables' :: ([AST], SymbolTable) -> SymbolTable
+traverseVariables' ([], st)            = st
+traverseVariables' ((variable:rest), st) = 
+    let
+        st1 = traverseVariable (variable, st)
+    in 
+        traverseVariables (rest, st1)
 
 traverseMethod :: (AST, SymbolTable) -> SymbolTable
-traverseMethod ((Method body method_name typesig), st) = insertMethod st method_name typesig
+traverseMethod ((Method _ _ method_name typesig), st) = insertMethod st method_name typesig
+
+traverseMethod :: (AST, SymbolTable) -> SymbolTable
+traverseMethod ((Variable typesig identifier), st) = insertVariable st identifier typesig
