@@ -210,7 +210,7 @@ astdotviz_rec _ myid astnode =
                 in
                     (maxChild,subTreeStr++prefix++"ColorArrayInstance"++suffix)
 
-            (Assignment ast id) ->
+            (Assignment id ast) ->
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast:[])
                 in
@@ -227,6 +227,12 @@ astdotviz_rec _ myid astnode =
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1:ast2:[])
                 in
                     (maxChild,subTreeStr++prefix++"ArrayAccess: left[right]"++suffix)
+
+            (ArrayLength ast1) ->
+                let 
+                    (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1:[])
+                in
+                    (maxChild,subTreeStr++prefix++"ArrayLength"++suffix)
 
             (Variable varType varId) -> (myid, prefix++ " "  ++ show varType ++ " " ++ varId ++ "; "++suffix)
 

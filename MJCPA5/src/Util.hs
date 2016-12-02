@@ -69,6 +69,7 @@ data AST
     | ArrayAssignment String AST AST -- The identifier of the array is the String, the left AST is the expression for the index of the array 
                                      -- and the right AST is the value being assigned to that array index. -> Id [E] = E;
     | ArrayAccess    AST AST          -- The left AST is the array being accessed, the right AST is the index -> E[E]
+    | ArrayLength    AST 
 
     --Literals
     | IntLiteral    Int

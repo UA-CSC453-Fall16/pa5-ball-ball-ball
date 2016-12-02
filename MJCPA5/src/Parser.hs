@@ -546,8 +546,29 @@ parseL ((TokenMeggyCheckButton, (row,col)):rest) =
     in
         (CheckButton exp, ts3)
 
-parseL ((t, (row,col)):rest) =
-    error("Parsing Error in parseL on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
+parseL ts@((t, (row,col)):rest) = 
+    if first_Expression t then
+        let
+            (exp, ts1) = parseE ts
+        in
+            parseB ts1 exp
+    else 
+        error("Parsing Error in parseL on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
+
+-- parseL is ambiguous between E[E] and E.length, 
+parseB ::  [(Token, (Int,Int))] -> AST -> (AST, [(Token, (Int,Int))])
+parseB ((TokenLeftBracket, (row,col)):rest) array = 
+    let
+        (index, ts1) = parseE rest
+        ts2        = match ts1 TokenRightBracket
+    in
+        (ArrayAccess array index, ts2)
+
+parseB ((TokenDot, (row, col)):rest) array = 
+    let
+        ts1 = match rest TokenLength
+    in
+        (ArrayLength array, ts1)
 
 -- Method Invocation Grammar
 parseInvoke :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
