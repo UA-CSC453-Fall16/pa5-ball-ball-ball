@@ -446,7 +446,7 @@ parseP ((TokenColor, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
 		(capacity, ts1) = parseE rest
 		ts2 = match ts1 TokenRightBracket
 	in
-		(ColorArrayInstance capacity, ts2)	
+		(ColorArrayInstance capacity, ts2)
 
 --K
 parseK  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
