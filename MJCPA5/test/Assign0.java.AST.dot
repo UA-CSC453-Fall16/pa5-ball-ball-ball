@@ -1,0 +1,113 @@
+digraph {
+5  [label = " Invoke test  "];
+4 -> 5
+4  [label = "Instance C  "];
+3 -> 4
+3  [label = "Body"];
+2 -> 3
+2  [label = "MainClass"];
+11  [label = "VariableDeclarations"];
+16  [label = " IntType i; "];
+17  [label = " ByteType b; "];
+18  [label = " BooleanType bb; "];
+19  [label = " MeggyColorType mc; "];
+20  [label = " MeggyToneType mt; "];
+21  [label = " MeggyButtonType mb; "];
+22  [label = " IntArrayType ia; "];
+23  [label = " ColorArrayType mca; "];
+15 -> 23
+15 -> 22
+15 -> 21
+15 -> 20
+15 -> 19
+15 -> 18
+15 -> 17
+15 -> 16
+15  [label = "VariableDeclarations"];
+27  [label = "IntLiteral 10"];
+26 -> 27
+26  [label = "Assignment: i = "];
+31  [label = " Id (i) "];
+30 -> 31
+30  [label = "ByteCast"];
+29 -> 30
+29  [label = "Assignment: b = "];
+35  [label = " Boolean (True) "];
+34 -> 35
+34  [label = "Assignment: bb = "];
+38  [label = "ColorLiteral 1"];
+37 -> 38
+37  [label = "Assignment: mc = "];
+41  [label = " ButtonLiteral (A) "];
+40 -> 41
+40  [label = "Assignment: mb = "];
+45  [label = "IntLiteral 2"];
+44 -> 45
+44  [label = "IntArrayInstance"];
+43 -> 44
+43  [label = "Assignment: ia = "];
+49  [label = "IntLiteral 0"];
+51  [label = " Id (i) "];
+52  [label = " Id (b) "];
+50 -> 52
+50 -> 51
+50  [label = "Add"];
+48 -> 50
+48 -> 49
+48  [label = "iaArray Assignment: [left] = right "];
+56  [label = "IntLiteral 1"];
+59  [label = " Id (ia) "];
+60  [label = "IntLiteral 0"];
+58 -> 60
+58 -> 59
+58  [label = "ArrayAccess: left[right]"];
+62  [label = "IntLiteral 3"];
+57 -> 62
+57 -> 58
+57  [label = "Mul"];
+55 -> 57
+55 -> 56
+55  [label = "iaArray Assignment: [left] = right "];
+67  [label = "IntLiteral 2"];
+66 -> 67
+66  [label = "ColorArrayInstance"];
+65 -> 66
+65  [label = "Assignment: mca = "];
+71  [label = "IntLiteral 0"];
+72  [label = " Id (mc) "];
+70 -> 72
+70 -> 71
+70  [label = "mcaArray Assignment: [left] = right "];
+75  [label = "IntLiteral 1"];
+77  [label = " Id (mca) "];
+78  [label = "IntLiteral 0"];
+76 -> 78
+76 -> 77
+76  [label = "ArrayAccess: left[right]"];
+74 -> 76
+74 -> 75
+74  [label = "mcaArray Assignment: [left] = right "];
+25 -> 74
+25 -> 70
+25 -> 65
+25 -> 55
+25 -> 48
+25 -> 43
+25 -> 40
+25 -> 37
+25 -> 34
+25 -> 29
+25 -> 26
+25  [label = "Body"];
+14 -> 25
+14 -> 15
+14  [label = "Method test typesig: TS [] VoidType"];
+13 -> 14
+13  [label = "MethodDeclarations"];
+10 -> 13
+10 -> 11
+10  [label = "Class C"];
+1 -> 10
+1 -> 2
+1  [label = "Prog"];
+}

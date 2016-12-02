@@ -29,10 +29,10 @@ class C{
 
 		ia = new int[2];
 		ia[0] = i + b;
-		ia[1] = ia[0]; // * 3;
+		ia[1] = ia[0] * 3;
 
 		mca = new Meggy.Color[2];
-		mca[0] = Meggy.Color.BLUE; // mc
-		mca[1] = mc;
+		mca[0] = mc; // mc
+		mca[1] = mca[0];
 	}
 }
