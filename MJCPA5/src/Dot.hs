@@ -36,11 +36,11 @@ astdotviz_rec _ myid astnode =
                 in 
                     (maxChild,subTreeStr++prefix++"Prog"++suffix)
 
-            (Class ast ast1 ast2) ->
+            (Class ast ast1 name) ->
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast:ast1:[])
                 in 
-                    (maxChild,subTreeStr++prefix++"Class " ++ ast2 ++suffix)
+                    (maxChild,subTreeStr++prefix++"Class " ++ id name ++suffix)
 
             (MainClass ast1) ->
                 let 
@@ -52,7 +52,7 @@ astdotviz_rec _ myid astnode =
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (vars:ast1:[])
                 in 
-                    (maxChild,subTreeStr++prefix++"Method " ++ str ++ " typesig: " ++ (show typesig) ++ suffix)
+                    (maxChild,subTreeStr++prefix++"Method " ++ id str ++ " typesig: " ++ (show typesig) ++ suffix)
 
             (Body ast1) ->
                 let 
@@ -186,17 +186,17 @@ astdotviz_rec _ myid astnode =
                 in
                     (maxChild,subTreeStr++prefix++"Mul"++suffix)
 
-            (Invoke ast1 ast2) ->
+            (Invoke ast1 name) ->
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1)
                 in
-                    (maxChild,subTreeStr++prefix++" Invoke " ++ ast2 ++ "  " ++suffix)
+                    (maxChild,subTreeStr++prefix++" Invoke " ++ id name ++ "  " ++suffix)
 
-            (Instance ast1 ast2) ->
+            (Instance ast1 name) ->
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1:[])
                 in
-                    (maxChild,subTreeStr++prefix++"Instance " ++ ast2 ++ "  " ++suffix)
+                    (maxChild,subTreeStr++prefix++"Instance " ++ id name ++ "  " ++suffix)
 
             (IntArrayInstance ast) ->
                 let 
@@ -210,17 +210,17 @@ astdotviz_rec _ myid astnode =
                 in
                     (maxChild,subTreeStr++prefix++"ColorArrayInstance"++suffix)
 
-            (Assignment id ast) ->
+            (Assignment ident ast) ->
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast:[])
                 in
-                    (maxChild,subTreeStr++prefix++ "Assignment: " ++ id ++ " = " ++suffix)
+                    (maxChild,subTreeStr++prefix++ "Assignment: " ++ id ident ++ " = " ++suffix)
 
-            (ArrayAssignment id index_ast exp_ast) ->
+            (ArrayAssignment ident index_ast exp_ast) ->
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (index_ast:exp_ast:[])
                 in
-                    (maxChild,subTreeStr++prefix++ id ++ "Array Assignment: [left] = right " ++suffix)
+                    (maxChild,subTreeStr++prefix++ id ident ++ "Array Assignment: [left] = right " ++suffix)
 
             (ArrayAccess ast1 ast2) ->
                 let 
@@ -244,9 +244,9 @@ astdotviz_rec _ myid astnode =
 
             (ToneLiteral x) -> (myid, prefix++" ToneLiteral (" ++ show x ++") "++suffix)
 
-            (ButtonLiteral x) -> (myid, prefix++" ButtonLiteral (" ++ show x ++") "++suffix)
+            (ButtonLiteral x) -> (myid, prefix++" ButtonLiteral (" ++ id x ++") "++suffix)
 
-            (Identifier x) -> (myid, prefix++" Id (" ++ show x ++") "++suffix)
+            (Identifier x) -> (myid, prefix++" Id (" ++ id x ++") "++suffix)
 
             (Epsilon) -> (myid, prefix++"(Epsilon - Ignore)"++suffix)
 
