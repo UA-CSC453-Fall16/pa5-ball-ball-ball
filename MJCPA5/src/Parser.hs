@@ -60,7 +60,7 @@ parseMC ((TokenClass, (row,col)):(TokenID class_name, (row1,col1)):rest) =
 		(MainClass main_method, ts13)
 
 -- VariableDeclaration
-parseVD :: [(Token, (Int,Int))] -> ([AST], [(Token, (Int,Int))])
+parseVD :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
 parseVD ts1 = 
 	let
 		(vars, ts2) = parseVD' ts2
