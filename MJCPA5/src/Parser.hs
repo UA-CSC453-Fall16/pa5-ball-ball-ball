@@ -80,16 +80,17 @@ parseMD ((TokenPublic, (row,col)):(return, (row1,col1)):(TokenID method_name, (r
         ts1                     = match rest TokenLeftParen
         (params, ts2)           = parseParamDecl ts1
         ts3                     = match ts2 TokenLeftCurly
-        (methodBody, ts4)       = parseSL ts3
-        ts5@((t, (row,col)):remain) = match ts4 TokenRightCurly
+        (variableDecl, ts4)     = parseVD ts3
+        (methodBody, ts5)       = parseSL ts4
+        ts6@((t, (row,col)):remain) = match ts5 TokenRightCurly
     in
         if t == TokenPublic then
             let
                 (astList, stuff) = parseMD ts5
             in
-                (((Method methodBody method_name (TS params return_type)):astList), stuff)
+                (((Method variableDecl methodBody method_name (TS params return_type)):astList), stuff)
         else
-            (((Method methodBody method_name (TS params return_type)):[]), ts5)
+            (((Method variableDecl methodBody method_name (TS params return_type)):[]), ts5)
 
 parseMD ((notPublic, (row,col)):(return, (row1,col1)):(TokenID method_name, (row2,col2)):rest) =
     error ("ERR: (Parser - ParseMD) Public keyword not found for method starting, on token " ++ show notPublic ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")

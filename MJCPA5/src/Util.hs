@@ -13,8 +13,10 @@ data AST
     = Prog      AST [AST]           -- Program has a main class and list of classes
     | Class     [AST] String        -- Class has a list of methods and a name
     | MainClass AST                 -- MainClass has only the main method
-    | Method    AST String TypeSig  -- Method has a body of statements, method name, and type signature
+    | Method    AST AST String TypeSig  -- Method has a body of statements, method name, and type signature
     | Body      [AST]               -- An if statement, method, while loop etc. have a body of statements (These are blocks {...})
+    | VarDecl   [AST]               -- A method and class can start with variable declarations. They will be stored in this list. Each method will
+                                    -- have their left ast child be a VarDecl or Epsilon
     | Return    AST                 -- Return statements have return expressions, void methods don't have a Return AST
 
 {-
@@ -65,7 +67,7 @@ data AST
     | Assignment    AST String      -- The ast is the value of the expression being assigned to the identifier represented by String -> Id = E;
     | ArrayAssignment String AST AST -- The identifier of the array is the String, the left AST is the expression for the index of the array 
                                      -- and the right AST is the value being assigned to that array index. -> Id [E] = E;
-    | ArrayAcess    AST AST          -- The left AST is the array being accessed, the right AST is the index -> E[E]
+    | ArrayAccess    AST AST          -- The left AST is the array being accessed, the right AST is the index -> E[E]
 
     --Literals
     | IntLiteral    Int

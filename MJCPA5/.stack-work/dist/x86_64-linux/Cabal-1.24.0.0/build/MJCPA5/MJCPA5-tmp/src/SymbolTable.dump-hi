@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2016-12-01 05:14:59.438172963 UTC
+2016-12-02 01:43:58.588169693 UTC
 
 interface main@main:SymbolTable 8001
-  interface hash: 0d1dcd44fc8bfdfc802e02e63a6cf660
-  ABI hash: d23a60d8b7f5d4c4a5976c5077e50e04
+  interface hash: 30778295c2f2933b41f3b19d29af3c3e
+  ABI hash: b90fb4c94fd358f974b00611e879e3b3
   export-list hash: 5fca622cbe27c3102def4ca0ee895dcb
   orphan hash: abc87357b4832885b7ae5eb685f13299
   flag hash: 6ea86ecbb747c8bfd1b624d46b10840a
@@ -58,13 +58,13 @@ import  -/  base-4.9.0.0:Prelude b9bddb97799837fe67a8d00939a5b6c3
 import  -/  containers-0.5.7.1@containers-0.5.7.1:Data.Map 24b19ef74cea78e4c18332bed9f0491d
 import  -/  containers-0.5.7.1@containers-0.5.7.1:Data.Map.Base 1e8d61dcc59a1a983b27bab6fd6bdcaf
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 0bdf3d057a415ec1b84a7b1994efbe47
-import  -/  Util 8289d5fba27cd9a7e4a3433d9fbc0162
-  exports: 3eb83b1dfe1a017918c549046bcbf987
-  IntType 21e4510bfd39bc0c74f42b840453825b
-  TS 1f65413cd086a2bb7ca29e0abb58494b
-  Type 216c38e075746053d42eb4f61425ba46
-  TypeSig 67ba545ae43e5b9360cc0d3a5ac3ea30
-a759599db969b35484ce6a9f163595a2
+import  -/  Util 9063300d15b2c7371482292d9478e37e
+  exports: f8edb7df0435a76d37658899418e4626
+  IntType f24052e5e6d03b5090f1567cdf154497
+  TS 17e2bdd4b8adc4f87694194faae61e6b
+  Type b11fd09e544b732e5075f4cb20dd6d55
+  TypeSig c4c83d4e139c8707900b955f9fe431b6
+bc985999be533747c524cac11d7cbbf0
   $fEqSTE :: GHC.Classes.Eq SymbolTable.STE
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -72,19 +72,20 @@ a759599db969b35484ce6a9f163595a2
                   @ SymbolTable.STE
                   SymbolTable.$fEqSTE_$c==
                   SymbolTable.$fEqSTE_$c/= -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   $fEqSTE_$c/= ::
     SymbolTable.STE -> SymbolTable.STE -> GHC.Types.Bool
   {- Arity: 2, Strictness: <S,1*U><S,1*U>,
-     Unfolding: (\ (a :: SymbolTable.STE) (b :: SymbolTable.STE) ->
+     Unfolding: InlineRule (2, True, False)
+                (\ (a :: SymbolTable.STE) (b :: SymbolTable.STE) ->
                  case SymbolTable.$fEqSTE_$c== a b of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   $fEqSTE_$c== ::
     SymbolTable.STE -> SymbolTable.STE -> GHC.Types.Bool
   {- Arity: 2, Strictness: <S,1*U><S,1*U> -}
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   $fEqSymbolTable :: GHC.Classes.Eq SymbolTable.SymbolTable
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -92,7 +93,7 @@ a759599db969b35484ce6a9f163595a2
                   @ SymbolTable.SymbolTable
                   SymbolTable.$fEqSymbolTable_$c==
                   SymbolTable.$fEqSymbolTable_$c/= -}
-9bbd77cf8f56ed6e5382efacc7becffb
+74ba2d3e45b72855d0845b59222a2e64
   $fEqSymbolTable1 ::
     Data.Map.Base.Map [GHC.Types.Char] SymbolTable.STE
     -> Data.Map.Base.Map [GHC.Types.Char] SymbolTable.STE
@@ -102,7 +103,7 @@ a759599db969b35484ce6a9f163595a2
                    @ SymbolTable.STE
                    GHC.Classes.$fEq[]_$s$fEq[]1
                    SymbolTable.$fEqSTE) -}
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   $fEqSymbolTable_$c/= ::
     SymbolTable.SymbolTable
     -> SymbolTable.SymbolTable -> GHC.Types.Bool
@@ -112,7 +113,7 @@ a759599db969b35484ce6a9f163595a2
                  case SymbolTable.$fEqSymbolTable_$c== a b of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   $fEqSymbolTable_$c== ::
     SymbolTable.SymbolTable
     -> SymbolTable.SymbolTable -> GHC.Types.Bool
@@ -124,7 +125,7 @@ a759599db969b35484ce6a9f163595a2
                  case w of ww { SymbolTable.SymTab ww1 ww2 ->
                  case w1 of ww3 { SymbolTable.SymTab ww4 ww5 ->
                  SymbolTable.$w$c== ww1 ww2 ww4 ww5 } }) -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   $fShowSTE :: GHC.Show.Show SymbolTable.STE
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -133,23 +134,23 @@ a759599db969b35484ce6a9f163595a2
                   SymbolTable.$fShowSTE_$cshowsPrec
                   SymbolTable.$fShowSTE_$cshow
                   SymbolTable.$fShowSTE_$cshowList -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   $fShowSTE1 :: SymbolTable.STE -> GHC.Show.ShowS
   {- Arity: 1,
      Unfolding: (\ (w :: SymbolTable.STE) ->
                  SymbolTable.$w$cshowsPrec 0# w) -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   $fShowSTE_$cshow :: SymbolTable.STE -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: (\ (x :: SymbolTable.STE) ->
                  SymbolTable.$w$cshowsPrec 0# x (GHC.Types.[] @ GHC.Types.Char)) -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   $fShowSTE_$cshowList :: [SymbolTable.STE] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__
                    @ SymbolTable.STE
                    SymbolTable.$fShowSTE1) -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   $fShowSTE_$cshowsPrec ::
     GHC.Types.Int -> SymbolTable.STE -> GHC.Show.ShowS
   {- Arity: 2, Strictness: <S(S),1*U(U)><S,1*U>, Inline: INLINE[0],
@@ -157,7 +158,7 @@ a759599db969b35484ce6a9f163595a2
                 (\ (w :: GHC.Types.Int) (w1 :: SymbolTable.STE) ->
                  case w of ww { GHC.Types.I# ww1 ->
                  SymbolTable.$w$cshowsPrec ww1 w1 }) -}
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   $fShowSymbolTable :: GHC.Show.Show SymbolTable.SymbolTable
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -166,7 +167,7 @@ a759599db969b35484ce6a9f163595a2
                   SymbolTable.$fShowSymbolTable_$cshowsPrec
                   SymbolTable.$fShowSymbolTable_$cshow
                   SymbolTable.$fShowSymbolTable_$cshowList -}
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   $fShowSymbolTable1 :: SymbolTable.SymbolTable -> GHC.Show.ShowS
   {- Arity: 1,
      Unfolding: (\ (w :: SymbolTable.SymbolTable) ->
@@ -175,7 +176,7 @@ a759599db969b35484ce6a9f163595a2
 6a6133e60f7cc6a92c16e6ce86f728ea
   $fShowSymbolTable2 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "SymTab "#) -}
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   $fShowSymbolTable_$cshow ::
     SymbolTable.SymbolTable -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U(1*U,1*U)>, Inline: INLINE[0],
@@ -183,14 +184,14 @@ a759599db969b35484ce6a9f163595a2
                 (\ (w :: SymbolTable.SymbolTable) ->
                  case w of ww { SymbolTable.SymTab ww1 ww2 ->
                  SymbolTable.$w$cshow ww1 ww2 }) -}
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   $fShowSymbolTable_$cshowList ::
     [SymbolTable.SymbolTable] -> GHC.Show.ShowS
   {- Arity: 2,
      Unfolding: (GHC.Show.showList__
                    @ SymbolTable.SymbolTable
                    SymbolTable.$fShowSymbolTable1) -}
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   $fShowSymbolTable_$cshowsPrec ::
     GHC.Types.Int -> SymbolTable.SymbolTable -> GHC.Show.ShowS
   {- Arity: 2, Strictness: <S(S),1*U(U)><S,1*U(1*U,U)>,
@@ -349,7 +350,7 @@ d0109e5a74022861680f8ea30e383131
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-54685386bcaf732dd86d40178f9304cd
+86089c7073428759feb10b5b195eab61
   $w$c== ::
     SymbolTable.Scope
     -> [GHC.Base.String]
@@ -364,7 +365,7 @@ d0109e5a74022861680f8ea30e383131
                  case SymbolTable.$fEqSymbolTable1 ww ww2 of wild {
                    GHC.Types.False -> GHC.Types.False
                    GHC.Types.True -> GHC.Classes.$fEq[]_$s$c==2 ww1 ww3 }) -}
-2ea0c2ff223fba3fd2808cf2f972c72d
+4408dd6367b2feb54626b0c8855a54f4
   $w$cshow ::
     SymbolTable.Scope -> [GHC.Base.String] -> GHC.Base.String
   {- Arity: 2, Strictness: <L,1*U><L,1*U>, Inline: [0],
@@ -388,10 +389,10 @@ d0109e5a74022861680f8ea30e383131
                             GHC.Show.shows_$cshowList
                             ww1
                             (GHC.Types.[] @ GHC.Types.Char))))) -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   $w$cshowsPrec :: GHC.Prim.Int# -> SymbolTable.STE -> GHC.Show.ShowS
   {- Arity: 2, Strictness: <S,U><S,1*U>, Inline: [0] -}
-e4ae6f7114b78830b4524558c9a93dd6
+795df8cea8697cadefdc691a2d6c399e
   $w$cshowsPrec1 ::
     GHC.Prim.Int#
     -> SymbolTable.Scope -> [GHC.Base.String] -> GHC.Show.ShowS
@@ -434,7 +435,7 @@ e4ae6f7114b78830b4524558c9a93dd6
                         @ GHC.Types.Char
                         GHC.Show.shows9
                         (p (GHC.Types.: @ GHC.Types.Char GHC.Show.shows6 x)) }) -}
-77135962b4181670fb0fbc838e9b133f
+50b1d9e0d6207993528d7a4f8f48c4b8
   $wgetReturn :: SymbolTable.Scope -> [GHC.Base.String] -> Util.Type
   {- Arity: 2, Strictness: <S,U><S,1*U>, Inline: [0],
      Unfolding: (\ (ww :: SymbolTable.Scope)
@@ -452,7 +453,7 @@ e4ae6f7114b78830b4524558c9a93dd6
                                        methodname of wild3 { (,) methodScope tsig ->
                                 case tsig of wild4 { Util.TS params returnType -> returnType } }
                              : ipv ipv1 -> SymbolTable.getReturn1 } } }) -}
-07690347000b9ea8513298000b85cc2c
+b58d66f8f8f9e7cecdfe18a998f294bd
   $winsertMethod ::
     SymbolTable.Scope
     -> [GHC.Base.String]
@@ -533,7 +534,7 @@ e4ae6f7114b78830b4524558c9a93dd6
                         -> case SymbolTable.insertMethod5
                            ret_ty (# SymbolTable.Scope, [GHC.Base.String] #)
                            of {} } }) -}
-a6d42fa88217b6d0d6be07da958b50d9
+0c9f0e6b2df08a77cee9d8cd5c69ddda
   $winsertParam ::
     SymbolTable.Scope
     -> [GHC.Base.String]
@@ -614,7 +615,7 @@ a6d42fa88217b6d0d6be07da958b50d9
                              -> case SymbolTable.insertParam2
                                 ret_ty (# SymbolTable.SymbolTable, GHC.Types.Int #)
                                 of {} } } }) -}
-53210e147459b2a51a3e565c8ab7d59b
+b57601c3d92563da9ad6e80aa3ee86d1
   $winsertParameters ::
     SymbolTable.Scope
     -> [GHC.Base.String]
@@ -623,7 +624,7 @@ a6d42fa88217b6d0d6be07da958b50d9
     -> (# SymbolTable.Scope, [GHC.Base.String] #)
   {- Arity: 4, Strictness: <L,U><L,U><L,1*U(U)><S,1*U>,
      Inline: [0] -}
-dd273e4bff52c1c714b430cf1301df20
+37a509353a6956cc6d5a241c7df5000d
   $wlookupParamOffset ::
     SymbolTable.Scope
     -> [GHC.Base.String] -> GHC.Base.String -> GHC.Types.Int
@@ -653,7 +654,7 @@ dd273e4bff52c1c714b430cf1301df20
                                        DEFAULT -> SymbolTable.lookupParamOffset1 wild5
                                        SymbolTable.VarSTE vartype name base offset -> offset } } }
                              : ipv ipv1 -> SymbolTable.lookupParamOffset3 } } }) -}
-b38e61232c4e84c5f8347c515962373b
+cd32eaa715bd86e092477b8eecb37e6b
   $wlookupParamType ::
     SymbolTable.Scope
     -> [GHC.Base.String] -> GHC.Base.String -> Util.Type
@@ -688,16 +689,16 @@ b38e61232c4e84c5f8347c515962373b
     -> [(GHC.Base.String, a)]
     -> Data.Map.Base.Map GHC.Base.String a
   {- Arity: 3, Strictness: <L,U><S,1*U><S,1*U>, Inline: [0] -}
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   data STE
     = ClassSTE SymbolTable.Scope
     | MethodSTE (SymbolTable.Scope, Util.TypeSig)
     | VarSTE Util.Type GHC.Base.String GHC.Types.Int GHC.Types.Int
-a759599db969b35484ce6a9f163595a2
+bc985999be533747c524cac11d7cbbf0
   type Scope = Data.Map.Base.Map GHC.Base.String SymbolTable.STE
-8e86e5b3dc08c88d59b8ccc5a39fa69b
+d92ad99340eafabd98bc2c924485b05f
   data SymbolTable = SymTab SymbolTable.Scope [GHC.Base.String]
-e923afe84036da3d880a08510b66249c
+a52106c19288e38c795391d7646aee50
   checkDoubleDef ::
     SymbolTable.Scope -> GHC.Base.String -> GHC.Types.Bool
   {- Arity: 2, Strictness: <S,1*U><S,1*U>,
@@ -709,7 +710,7 @@ e923afe84036da3d880a08510b66249c
                    -> case ds of wild1 {
                         DEFAULT -> SymbolTable.checkDoubleDef1 wild1
                         SymbolTable.MethodSTE inner -> GHC.Types.True } }) -}
-3eba019f1fda96b08b4b2abc7d26019d
+e44869ba8dd2c7abfd9cfafb61cf4c28
   checkDoubleDef1 :: SymbolTable.STE -> GHC.Types.Bool
   {- Arity: 1, Strictness: <B,1*U>x -}
 1a1cfb82b0f79a28c0ccaeabf71a7fb5
@@ -736,28 +737,28 @@ e923afe84036da3d880a08510b66249c
 9ab932eb7d063947f745c9f3a11c2118
   checkExpect1 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "checkExpect PASSED"#) -}
-3809e8c9883cea1b66df01a8efc3c549
+91288002f92550f7e8634aa93e143758
   emptyScope :: SymbolTable.Scope
   {- Unfolding: (SymbolTable.$sfromList
                    @ SymbolTable.STE
                    (GHC.Types.[] @ (GHC.Base.String, SymbolTable.STE))) -}
-a999f739b1326da15a61b13b07ecd9c8
+7e0ba2a930e67c694e3d91d4469d6125
   emptySymTab :: SymbolTable.SymbolTable
   {- Strictness: m,
      Unfolding: (SymbolTable.SymTab
                    SymbolTable.emptyScope
                    (GHC.Types.[] @ GHC.Base.String)) -}
-a56aafa95d8fc1c86c619ba5888a7f17
+f719f38690a2689a61971504ed1c0889
   getReturn :: SymbolTable.SymbolTable -> Util.Type
   {- Arity: 1, Strictness: <S(SS),1*U(U,1*U)>, Inline: INLINE[0],
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: SymbolTable.SymbolTable) ->
                  case w of ww { SymbolTable.SymTab ww1 ww2 ->
                  SymbolTable.$wgetReturn ww1 ww2 }) -}
-0c9c79521cd86e31c587adcace60f78a
+a452e7c860668d733e0a1394bc27eb77
   getReturn1 :: Util.Type
   {- Strictness: x -}
-59443a27c9481e44fbafaad1c259f0ec
+d55de0bd51164a4b59cc8f91e0af8f7c
   insertClass ::
     SymbolTable.SymbolTable
     -> GHC.Base.String -> SymbolTable.SymbolTable
@@ -773,11 +774,11 @@ a56aafa95d8fc1c86c619ba5888a7f17
                       SymbolTable.insertClass1
                       scope)
                    nesting }) -}
-eaba4df815672ca8a6b24a1ab2e7e712
+314c07d9a9ebf8516ec026cd8561a245
   insertClass1 :: SymbolTable.STE
   {- Strictness: m1,
      Unfolding: (SymbolTable.ClassSTE SymbolTable.emptyScope) -}
-96ace9d5be4bbe39f7ffdf53f67e6135
+ed3644cc840a44f4ccd6ad326bf0563d
   insertMethod ::
     SymbolTable.SymbolTable
     -> GHC.Base.String -> Util.TypeSig -> SymbolTable.SymbolTable
@@ -796,22 +797,22 @@ eaba4df815672ca8a6b24a1ab2e7e712
                         ww4
                         ww5 of ww6 { (#,#) ww7 ww8 ->
                  SymbolTable.SymTab ww7 ww8 } } }) -}
-8a992ab1aca7ef927899b7a30a2de25c
+40acadbac8be12d04913942bc784975b
   insertMethod1 :: GHC.Base.String -> SymbolTable.SymbolTable
   {- Arity: 1, Strictness: <L,U>x -}
-e44754cb0cd7dc4bea63e92df24212e0
+5d57bbb9eace70e85f6835fade77597d
   insertMethod2 :: SymbolTable.STE -> GHC.Types.Bool
   {- Arity: 1, Strictness: <L,U>x -}
 9742ec27d76c6230a14c68ceb3905ee7
   insertMethod3 :: GHC.Types.Int
   {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 2#) -}
-aff446ddef7f2444d4490ba599d225c4
+121960a465d9480872a650ecfe888f8b
   insertMethod4 :: (SymbolTable.Scope)
   {- Strictness: x -}
-dc7acb43a4fd9bd264cb67ed4b0927b6
+332b3ffd43901da522c3370954ca146d
   insertMethod5 :: SymbolTable.SymbolTable
   {- Strictness: x -}
-7c7880607502988d99ad0c23a10dfdb7
+c3b2b196e2a178f9d494d9503cd1c467
   insertParam ::
     SymbolTable.SymbolTable
     -> GHC.Types.Int
@@ -836,10 +837,10 @@ dc7acb43a4fd9bd264cb67ed4b0927b6
 d3b4b759a2620cd9dc8e1d81b021c090
   insertParam1 :: GHC.Types.Int
   {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# -1#) -}
-3c3f18ff46847f963e862264729d03e1
+c8e23fad96916c20e3dd1c29a0efbedf
   insertParam2 :: (SymbolTable.SymbolTable, GHC.Types.Int)
   {- Strictness: x -}
-b42aa590abe75156b765b7a6086fcece
+bd1174f89b81234e78d22c331ec5fdbf
   insertParameters ::
     SymbolTable.SymbolTable
     -> GHC.Types.Int
@@ -858,7 +859,7 @@ b42aa590abe75156b765b7a6086fcece
                         w1
                         w2 of ww3 { (#,#) ww4 ww5 ->
                  SymbolTable.SymTab ww4 ww5 } }) -}
-db0a4f91537fffac386fb08f6ab33144
+17ed12b6ec11a99e22a8d3d77f6b3d3d
   lookupParamOffset ::
     SymbolTable.SymbolTable -> GHC.Base.String -> GHC.Types.Int
   {- Arity: 2, Strictness: <S(SS),1*U(U,1*U)><S,U>,
@@ -867,7 +868,7 @@ db0a4f91537fffac386fb08f6ab33144
                 (\ (w :: SymbolTable.SymbolTable) (w1 :: GHC.Base.String) ->
                  case w of ww { SymbolTable.SymTab ww1 ww2 ->
                  SymbolTable.$wlookupParamOffset ww1 ww2 w1 }) -}
-260858f0901cb4de2b5ed02f7105a671
+4259de0195cbb90927590fcd1938c1b3
   lookupParamOffset1 :: SymbolTable.STE -> GHC.Types.Int
   {- Arity: 1, Strictness: <L,U>x -}
 1403914c481ace2530c301e62f9987af
@@ -878,7 +879,7 @@ db0a4f91537fffac386fb08f6ab33144
 943cdfd0aae67cdd445024ae49cbac40
   lookupParamOffset3 :: GHC.Types.Int
   {- Strictness: x -}
-678b9121c6c8ecfde7dd9aad1f56a9ee
+d3b1859bb161d424d9fca28844b7bf74
   lookupParamType ::
     SymbolTable.SymbolTable -> GHC.Base.String -> Util.Type
   {- Arity: 2, Strictness: <S(SS),1*U(U,1*U)><S,U>,
@@ -887,17 +888,17 @@ db0a4f91537fffac386fb08f6ab33144
                 (\ (w :: SymbolTable.SymbolTable) (w1 :: GHC.Base.String) ->
                  case w of ww { SymbolTable.SymTab ww1 ww2 ->
                  SymbolTable.$wlookupParamType ww1 ww2 w1 }) -}
-7692598b3bd000df6f7ae8b11f876af1
+f2fa29887a5320c2b0a1d7678895b8ab
   lookupParamType1 :: SymbolTable.STE -> Util.Type
   {- Arity: 1, Strictness: <L,U>x -}
-e3c34cdf1359ce161221355e801e94da
+0f11541bfbba691dac2a85faa98016bd
   lookupParamType2 ::
     GHC.Base.String -> GHC.Base.String -> GHC.Base.String -> Util.Type
   {- Arity: 3, Strictness: <L,U><L,U><L,U>x -}
-129c3ac0f5a422062876d15910037e42
+7507dc120b285596ce369d8301a541a5
   lookupParamType3 :: Util.Type
   {- Strictness: x -}
-7d1f12d582d29ab48f50ff403a5a1ace
+c5c75e581719b1f8c3dabeb892b36536
   lookupReturn ::
     SymbolTable.SymbolTable
     -> GHC.Base.String -> GHC.Base.String -> Util.Type
@@ -912,7 +913,7 @@ e3c34cdf1359ce161221355e801e94da
                         methodname of wild1 { (,) methodScope tsig ->
                  case tsig of wild2 { Util.TS params returnType ->
                  returnType } } }) -}
-9116ce4e9ab33670b1ca8ce8a4f164f9
+098638e55d8771e0d162a6a86d8b771a
   lookupTypeSig ::
     SymbolTable.SymbolTable
     -> GHC.Base.String -> GHC.Base.String -> Util.TypeSig
@@ -926,7 +927,7 @@ e3c34cdf1359ce161221355e801e94da
                         (SymbolTable.namedScopeLookup progScope classname)
                         methodname of wild1 { (,) methodScope tsig ->
                  tsig } }) -}
-70863fa2f8e570ea403bbf4c262e2f97
+77a0cc2cd15622ec1f50a6943f9955d1
   namedScopeLookup ::
     SymbolTable.Scope -> GHC.Base.String -> SymbolTable.Scope
   {- Arity: 2, Strictness: <S,U><S,U>,
@@ -938,7 +939,7 @@ e3c34cdf1359ce161221355e801e94da
                    -> case ds of wild1 {
                         DEFAULT -> SymbolTable.namedScopeLookup1 wild1
                         SymbolTable.ClassSTE inner -> inner } }) -}
-3d586044ee8294121ae14e9a59757d63
+3276c372aa3ac0edf798d41a2fff036b
   namedScopeLookup' ::
     SymbolTable.Scope
     -> GHC.Base.String -> (SymbolTable.Scope, Util.TypeSig)
@@ -951,23 +952,23 @@ e3c34cdf1359ce161221355e801e94da
                    -> case ds of wild1 {
                         DEFAULT -> SymbolTable.namedScopeLookup'1 wild1
                         SymbolTable.MethodSTE inner -> inner } }) -}
-47fdf1220e1da90c388caa7740d2486c
+7f156d558944dff31345605196bd686c
   namedScopeLookup'1 ::
     SymbolTable.STE -> (SymbolTable.Scope, Util.TypeSig)
   {- Arity: 1, Strictness: <L,U>x -}
-fad66e9aa720105e0b0967ab26592e3f
+ffa86e604560b9e587480d336e967141
   namedScopeLookup'2 ::
     GHC.Base.String
     -> SymbolTable.Scope -> (SymbolTable.Scope, Util.TypeSig)
   {- Arity: 2, Strictness: <B,1*U><B,1*U>x -}
-19c71205197bd716f67a75cafca35f61
+0dc61a38d7541b1cbd0fd2330d4f80ca
   namedScopeLookup1 :: SymbolTable.STE -> SymbolTable.Scope
   {- Arity: 1, Strictness: <L,U>x -}
-5c5cf713ac7fb7fde211249bc795ac51
+5f9ca5f5ebe8bc10f37663a8fbbc9c61
   namedScopeLookup2 ::
     GHC.Base.String -> SymbolTable.Scope -> SymbolTable.Scope
   {- Arity: 2, Strictness: <B,1*U><B,1*U>x -}
-2d2b4312dc5456c6758da373bee3b506
+51a115c819ed44a7f1f386f664da0edc
   popScope :: SymbolTable.SymbolTable -> SymbolTable.SymbolTable
   {- Arity: 1, HasNoCafRefs, Strictness: <S(LS),1*U(U,1*U)>m,
      Unfolding: InlineRule (1, True, False)
@@ -976,7 +977,7 @@ fad66e9aa720105e0b0967ab26592e3f
                  case ds1 of wild1 {
                    [] -> SymbolTable.SymTab progScope (GHC.Types.[] @ GHC.Base.String)
                    : curr nesting -> SymbolTable.SymTab progScope nesting } }) -}
-85518b141e07ca4962860b0d1b41ba82
+d17c24900a5da636e56d039308b8dc7a
   pushScope ::
     SymbolTable.SymbolTable
     -> GHC.Base.String -> SymbolTable.SymbolTable
@@ -988,14 +989,14 @@ fad66e9aa720105e0b0967ab26592e3f
                  SymbolTable.SymTab
                    progScope
                    (GHC.Types.: @ GHC.Base.String scopename nesting) }) -}
-d2a0079e5d163368b60beffb614e14e2
+7696ad981d4b72d6273e3be73da01cc4
   setProgScope :: SymbolTable.SymbolTable -> SymbolTable.SymbolTable
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U(U,A)>m,
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: SymbolTable.SymbolTable) ->
                  case ds of wild { SymbolTable.SymTab scope list ->
                  SymbolTable.SymTab scope (GHC.Types.[] @ GHC.Base.String) }) -}
-9e832882bb6c4e931756b69129c069a1
+32b6885a379fddd3f63e8a7413bdbc3b
   typeToBytes :: Util.Type -> GHC.Types.Int
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>m,
      Unfolding: InlineRule (1, True, False)
