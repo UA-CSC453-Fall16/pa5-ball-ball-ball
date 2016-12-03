@@ -50,6 +50,10 @@ tCheck ((Prog main [] ), st)
     where
         mainType  = tCheck (main, st)
 
+tCheck ((Class instVars methods class_name), st)
+    where
+        
+
 tCheck ((Class (child:rest) class_name), st)
     | classType  /= VoidType = error("Invalid type found in class " ++ class_name ++": " ++ (show classType))
     | otherwise   = tCheck ((Class rest class_name), st) 

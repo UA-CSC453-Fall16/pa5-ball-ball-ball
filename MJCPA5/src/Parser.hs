@@ -70,7 +70,8 @@ parseVD ts1 =
 
 parseVD' :: [(Token, (Int,Int))] -> ([AST], [(Token, (Int,Int))])
 parseVD' ts
-    | "FOLLOW" == vname && VoidType == vtype = ([], ts1)
+    | VoidType == vtype = error ("ERR: (Parser - ParseVD') Cannot have a void type vairable\n")
+    | "" == vname = ([], ts1)
     | otherwise =
         let
             var1 = Variable vtype vname
@@ -159,7 +160,7 @@ parseU ((typeTok, (row,col)):((TokenID name), (r1,c1)):rest) =
 
 parseU ts@((t, (row,col)):rest) =
     if follow_VD t then
-        (("FOLLOW", VoidType), ts)
+        (("", Error), ts)
     else
         error ("ERR: (Parser - ParseU) on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
