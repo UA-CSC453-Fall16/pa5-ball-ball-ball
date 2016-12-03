@@ -13,8 +13,13 @@ class C{
     D mine2;
 
     public int test0(){
-        return new int[6][0]; // make sure our parser doesn't accept the removal of these parentheses
-                              // OR we can just have type checking say, the child of an array access cannot be another array access
+        int val;
+		int[] arr;
+		val = (new int[6])[0]; // make sure our parser doesn't accept the removal of these parentheses
+							   // OR we can just have type checking say, the child of an array access cannot be another array access
+		//val = new int[6][0];   // the above should pass this should fail.
+		//arr = new int[5];
+		//val = arr[0][1]; //Should fail and does correctly
     }
 
     public int[] test2(){

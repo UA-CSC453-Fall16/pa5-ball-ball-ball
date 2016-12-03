@@ -10,7 +10,7 @@ module Parser where
 
 import Lexer
 import Util
-import Debug.Trace
+--import Debug.Trace
 
 -- entry point
 genAST :: [(Token, (Int,Int))] -> AST
@@ -70,7 +70,8 @@ parseVD ts1 =
 
 parseVD' :: [(Token, (Int,Int))] -> ([AST], [(Token, (Int,Int))])
 parseVD' ts
-    | "FOLLOW" == vname && VoidType == vtype = ([], ts1)
+    | VoidType == vtype = error ("ERR: (Parser - ParseVD') Cannot have a void type vairable\n")
+    | "" == vname = ([], ts1)
     | otherwise =
         let
             var1 = Variable vtype vname
@@ -159,7 +160,7 @@ parseU ((typeTok, (row,col)):((TokenID name), (r1,c1)):rest) =
 
 parseU ts@((t, (row,col)):rest) =
     if follow_VD t then
-        (("FOLLOW", VoidType), ts)
+        (("", Error), ts)
     else
         error ("ERR: (Parser - ParseU) on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
@@ -475,16 +476,24 @@ parseP ((TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3
 parseP ((TokenInt, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     let
         (capacity, ts1) = parseE rest
-        ts2             = match ts1 TokenRightBracket
+        ts2@((someToken, (x,y)):r) = match ts1 TokenRightBracket
     in
-        parsePostE ts2 (IntArrayInstance capacity)
+        -- If we find second array access it may be a 2d array or bad syntax for accessing the element of a newly instantiated array.
+        if someToken == TokenLeftBracket then 
+            error ("Parsing Error in parsePostE on token " ++ show someToken ++ " at [" ++ show x ++ ", " ++ show y ++ "]\n")
+        else
+            parsePostE ts2 (IntArrayInstance capacity)
 
 parseP ((TokenMeggyColorType, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     let
         (capacity, ts1) = parseE rest
-        ts2             = match ts1 TokenRightBracket
+        ts2@((someToken, (x,y)):r) = match ts1 TokenRightBracket
     in
-        parsePostE ts2 (ColorArrayInstance capacity)
+        -- If we find second array access it may be a 2d array or bad syntax for accessing the element of a newly instantiated array.
+        if someToken == TokenLeftBracket then 
+            error ("Parsing Error in parsePostE on token " ++ show someToken ++ " at [" ++ show x ++ ", " ++ show y ++ "]\n")
+        else
+            parsePostE ts2 (ColorArrayInstance capacity)
 
 --K
 parseK  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
@@ -559,8 +568,8 @@ parsePostE ((TokenDot, (row,col)):rest) receiver =
 parsePostE ((TokenLeftBracket, (row,col)):rest) receiver = 
     let
         (index, ts1) = parseE rest
-        ts2          = match ts1 TokenRightBracket
-    in
+        ts2 = match ts1 TokenRightBracket
+    in  
         (ArrayAccess receiver index, ts2)
 
 parsePostE all@((t, (row,col)):rest) ast =

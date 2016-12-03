@@ -1,6 +1,6 @@
 import meggy.Meggy;
 
-class Variable5{
+class Variable7{
 	public static void main(String[] args){
 		new C().test();
 	}

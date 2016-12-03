@@ -36,13 +36,13 @@ tCheck (Epsilon, st)               = VoidType
 {-
 ------- Top level n-ary AST nodes 
 -}
-tCheck ((Prog main ((Class methods class_name):other_classes) ), st)
+tCheck ((Prog main (aClass:other_classes) ), st)
     | mainType  /= VoidType = error("Invalid type found in main class: " ++ (show mainType))
     | childType /= VoidType = error("Invalid type found in class " ++ class_name ++ ": " ++ (show childType))
     | otherwise  = tCheck ((Prog Epsilon other_classes), st) 
     where
         mainType  = tCheck (main, st)
-        childType = tCheck ((Class methods class_name), st)
+        childType = tCheck (aClass, st)
 
 tCheck ((Prog main [] ), st)
     | mainType  /= VoidType = error("Invalid type found in main class: " ++ (show mainType))
@@ -50,15 +50,13 @@ tCheck ((Prog main [] ), st)
     where
         mainType  = tCheck (main, st)
 
-tCheck ((Class (child:rest) class_name), st)
+tCheck ((Class instVars methods class_name), st)
     | classType  /= VoidType = error("Invalid type found in class " ++ class_name ++": " ++ (show classType))
-    | otherwise   = tCheck ((Class rest class_name), st) 
+    | otherwise   = VoidType
     where
-        st1       = pushScope st class_name
-        classType = tCheck (child, st1)
-        st2       = popScope st1
-
-tCheck ((Class [] class_name), st) = VoidType
+        st1 = pushScope st class_name
+        classType = tCheck (methods, st1)
+        st2 = popScope st1
 
 tCheck ((MainClass child), st)
     | actual_type /= VoidType = error("Invalid type found in main: " ++ (show actual_type))
@@ -66,21 +64,32 @@ tCheck ((MainClass child), st)
     where
         actual_type = tCheck (child, st)
 
-tCheck ((Method child method_name (TS params return_type)), st)
+tCheck ((Method variables body method_name (TS params return_type)), st)
     | actual_type == ByteType && return_type == IntType = VoidType
     | actual_type /= return_type = error("Invalid type found in main: " ++ (show actual_type))
     | otherwise    = VoidType
     where
         st1         = pushScope st method_name
-        actual_type = tCheck (child, st1)
+        actual_type = tCheck (body, st1)
         st2         = popScope st1
 
 tCheck ((Body []), st)            = VoidType
 tCheck ((Body (Epsilon:[]) ), st) = VoidType
 tCheck ((Body ((Return ret_exp):[])), st) = tCheck ((Return ret_exp), st)
-tCheck ((Body (child:rest)), st) = tCheck ((Body rest), st) -- added this
-    -- | tCheck (child, st) /= VoidType = error ("Type check error in Body, found non-void type statement that wasn't a return expression")
-    -- | otherwise = tCheck ((Body rest), st)
+tCheck ((Body (child:rest)), st) 
+    let
+        typeBody = tCheck (child, st) 
+    in
+        tCheck ((Body rest), st)
+
+tCheck ((MethDecl []), st) = VoidType
+tCheck ((MethDecl (left:rest)), st)
+    | methodType /= TypeVoid = error ("Type check error, method with bad type\n")
+    | otherwise = tCheck ((MethDecl rest), st)
+    where
+        methodType = tCheck (left, st)
+
+tCheck (VarDecl _, st) = VoidType
 
 tCheck ((Return child), st@(SymTab scope [method_name,class_name])) = 
     let
@@ -136,6 +145,12 @@ tCheck ((ByteCast child), st)
 
 tCheck ((ParenExp child), st) 
     | expType  == VoidType = error("Parenthesis wrap unexpected type (usually statement type): " ++ (show expType))
+    | otherwise = expType
+    where
+        expType = tCheck (child, st)
+
+tCheck ((SetAuxLEDs child), st) 
+    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
     | otherwise = expType
     where
         expType = tCheck (child, st)
@@ -222,40 +237,50 @@ tCheck ((While child1 child2), st)
         exp1Type = tCheck (child1, st)
         exp2Type = tCheck (child2, st)
 
-tCheck ((Instance child class_name), st) = 
-    if class_name == "this" then
-            tCheck (child, st)
-    else
-        let 
-            st1 = setProgScope st
-            st2 = pushScope st1 class_name
-            return_type = tCheck (child, st2)
-            st3 = popScope st2
-        in
-            return_type
+tCheck ((Instance className), st) = ClassType className
 
---We can assume that the return type declared is the type of this expression or statement
+-- tCheck ((Invoke receiver params@(first:rest) method_name), st) = 
+--     let
+--         (ClassType class_name) = tCheck
+--     in
+
+
+
+
+-- tCheck ((Instance child class_name), st) = 
+--     if class_name == "this" then
+--             tCheck (child, st)
+--     else
+--         let 
+--             st1 = setProgScope st
+--             st2 = pushScope st1 class_name
+--             return_type = tCheck (child, st2)
+--             st3 = popScope st2
+--         in
+--             return_type
+
+-- --We can assume that the return type declared is the type of this expression or statement
 -- st -> (SymTab scope (firstThingInTheListWhichShouldBeTheMethodNameButWeAlreadyHaveThatFromTheLeftPatternMatch:class_name:emptyListHopefullyButInAnErrorCaseItMayNotBeTheEmptyListAndMayCauseAnErrorSoLetsHopeItIsJustTheEmptyList)) ) = 
-tCheck ((Invoke params@(param:rest) method_name), st@(SymTab scope (class_name:[])) ) = 
-    let
-        (TS expected_types ret_type) = lookupTypeSig st class_name method_name 
-    in
-        typeCheckInvoke (params, expected_types, ret_type) method_name st
+-- tCheck ((Invoke params@(param:rest) method_name), st@(SymTab scope (class_name:[])) ) = 
+    -- let
+    --     (TS expected_types ret_type) = lookupTypeSig st class_name method_name 
+    -- in
+    --     typeCheckInvoke (params, expected_types, ret_type) method_name st
 
-tCheck ((Invoke params@(param:rest) method_name), st@(SymTab scope (mname:class_name:[])) ) = 
-    let
-        (TS expected_types ret_type) = lookupTypeSig st class_name method_name 
-    in
-        typeCheckInvoke (params, expected_types, ret_type) method_name st
+-- tCheck ((Invoke params@(param:rest) method_name), st@(SymTab scope (mname:class_name:[])) ) = 
+--     let
+--         (TS expected_types ret_type) = lookupTypeSig st class_name method_name 
+--     in
+--         typeCheckInvoke (params, expected_types, ret_type) method_name st
 
-tCheck ((Invoke [] method_name), ts@(SymTab scope [class_name]) ) = 
-    let
-        (TS expected_types ret_type) = lookupTypeSig ts class_name method_name 
-    in
-        if length expected_types == 0 then
-            ret_type
-        else
-            error(method_name ++ " invocation error: insufficient number of parameters, requires: " ++ show expected_types)
+-- tCheck ((Invoke [] method_name), ts@(SymTab scope [class_name]) ) = 
+--     let
+--         (TS expected_types ret_type) = lookupTypeSig ts class_name method_name 
+--     in
+--         if length expected_types == 0 then
+--             ret_type
+--         else
+--             error(method_name ++ " invocation error: insufficient number of parameters, requires: " ++ show expected_types)
 
 
 {-
