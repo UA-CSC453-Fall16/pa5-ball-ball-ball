@@ -554,14 +554,8 @@ parsePostE ((TokenLeftBracket, (row,col)):rest) receiver =
     in
         (ArrayAccess receiver index, ts2)
 
---parsePostE all@((TokenSemiColon, (row, col)):rest) some_sort_of_expression_like_an_array_length_or_array_access_or_invocation = 
---    (some_sort_of_expression_like_an_array_length_or_array_access_or_invocation, all)
-
 parsePostE all@((t, (row,col)):rest) ast =
---    if follow_E t then
         (ast, all)
---    else 
---        error ("ERR: (Parser - ParsePostE) Invalid syntax following an expression [" ++ show row ++ ", " ++ show col ++ "]")
 
 
 -- Method Invocation Grammar
