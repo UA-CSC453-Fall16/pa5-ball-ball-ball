@@ -13,7 +13,8 @@ class C{
     D mine2;
 
     public int test0(){
-        return (new int[6])[0]; // make sure our parser doesn't accept the removal of these parentheses
+        return new int[6][0]; // make sure our parser doesn't accept the removal of these parentheses
+                              // OR we can just have type checking say, the child of an array access cannot be another array access
     }
 
     public int[] test2(){
@@ -38,7 +39,8 @@ class C{
         mine = new D();
         a = this.test3().init().length;
         // b = mine.vari; // MJ.jar doesn't like this
-        // c = this.mine.hard().vari; // MJ.jar doesn't like this
+        // c = mine.hard().vari; // MJ.jar and our compiler both report this error correctly
+        // c = this.mine.hard().vari; // MJ.jar and our compiler both report this error correctly
         d = this.test2()[a];
     }
 }
