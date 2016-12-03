@@ -276,36 +276,46 @@ parseStm ((TokenThis, (row,col)):rest) =
     in
         (Instance invocation "this", ts3)
 
+-- Id = E PostE ; 
 parseStm ((TokenID name, (r1,c1)):(TokenAssign, (r2,c2)):rest) =
     let
-        (value, ts1) = parseE rest
-        ts2 = match ts1 TokenSemiColon
+        (receiver, ts1) = parseE rest
+        (exp  , ts2) =    parsePostE ts1 receiver
+        ts3 = match ts2 TokenSemiColon
     in
-        (Assignment name value, ts2)
+        (Assignment name exp, ts3)
 
+-- Id [ E ] = E PostE ;
 parseStm ((TokenID name, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     let
         (index, ts1) = parseE rest
         ts2 = match ts1 TokenRightBracket
         ts3 = match ts2 TokenAssign
-        (value, ts4) = parseE ts3
-        ts5 = match ts4 TokenSemiColon
+        (receiver, ts4) = parseE ts3
+        (exp, ts5)      = parsePostE ts4 receiver
+        ts6 = match ts5 TokenSemiColon
     in
-        (ArrayAssignment name index value, ts5)
+        (ArrayAssignment name index exp, ts6)
 
 parseStm ((t, (row,col)):rest) = 
     error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
--- for .length and array access on the return value of invocation
-parseArr :: [(Token, (Int,Int))] -> (AST, [(Token), (Int,Int)])
-parseArr ts@((TokenSemiColon, (_,_)):rest) =
-    (Epsilon, ts)
+parsePostE ::
+parsePostE ((TokenDotLength, (row,col)):rest) receiver = (ArrayLength receiver, rest)
+parsePostE ((TokenDot, (row,col)):rest) receiver = 
+    let 
+        (new_receiver, ts1) = parseInvoke rest receiver
+    in 
+        parsePostE ts1 (Invoke new_receiver)
 
-parseArr ((TokenLength, (_,_)):rest) =
+parsePostE all@((TokenSemiColon, (row, col)):rest) some_sort_of_expression_like_an_array_length_or_array_access_or_invocation = 
+    (some_sort_of_expression_like_an_array_length_or_array_access_or_invocation, all)
 
+parsePostE ((t, (row,col)):rest) _ = 
+    error ("ERR: (Parser - ParsePostE) Invalid syntax following an expression, expected an array access, length expression or semicolon")
 
 -- for else body of if-else
-parseA  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
+parseA :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
 parseA ((TokenElse, (row,col)):rest) = 
     let
         (stmt, ts1)    = parseStm rest
@@ -573,11 +583,7 @@ parseB ((TokenLeftBracket, (row,col)):rest) array =
     in
         (ArrayAccess array index, ts2)
 
-parseB ((TokenDot, (row, col)):rest) array = 
-    let
-        ts1 = match rest TokenLength
-    in
-        (ArrayLength array, ts1)
+parseB ((TokenDotLength, (row, col)):rest) array = (ArrayLength array, rest)
 
 -- Method Invocation Grammar
 parseInvoke :: [(Token, (Int,Int))] -> AST -> (AST, [(Token, (Int,Int))])

@@ -52,7 +52,7 @@ astdotviz_rec _ myid astnode =
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (vars:ast1:[])
                 in 
-                    (maxChild,subTreeStr++prefix++"Method " ++ id str ++ " typesig: " ++ (show typesig) ++ suffix)
+                    (maxChild,subTreeStr++prefix++"Method " ++ id str ++ " typesig: " ++ (id $ show typesig) ++ suffix)
 
             (Body ast1) ->
                 let 
@@ -186,9 +186,9 @@ astdotviz_rec _ myid astnode =
                 in
                     (maxChild,subTreeStr++prefix++"Mul"++suffix)
 
-            (Invoke ast1 name) ->
+            (Invoke reciever ast1 name) ->
                 let 
-                    (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1)
+                    (maxChild,subTreeStr) = visitChildren myid (myid+1) (reciever:ast1)
                 in
                     (maxChild,subTreeStr++prefix++" Invoke " ++ id name ++ "  " ++suffix)
 
