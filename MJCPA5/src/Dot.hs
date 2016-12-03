@@ -52,7 +52,7 @@ astdotviz_rec _ myid astnode =
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (vars:ast1:[])
                 in 
-                    (maxChild,subTreeStr++prefix++"Method: public " ++ stripQuotes "\"" (show types) ++ " str ()" ++ suffix)
+                    (maxChild,subTreeStr++prefix++"Method: public " ++ stripQuotes "\"" (show types) ++ " " ++ str ++ "()" ++ suffix)
 
             (Body ast1) ->
                 let 

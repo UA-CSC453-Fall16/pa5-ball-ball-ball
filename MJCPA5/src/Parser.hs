@@ -258,6 +258,15 @@ parseStm ((TokenMeggyToneStart, (row,col)):rest) =
     in
         ((ToneStart exp1 exp2), ts6)
 
+parseStm ((TokenMeggySetAux, (row, col)):rest) = 
+    let
+        ts1 = match rest TokenLeftParen
+        (exp, ts2) = parseE ts1
+        ts3 = match ts2 TokenRightParen
+        ts4 = match ts3 TokenSemiColon
+    in
+        ((SetAuxLEDs exp), ts4)
+
 parseStm ts@((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) = 
     let
         (exp, ts1) = parseE ts
@@ -554,14 +563,8 @@ parsePostE ((TokenLeftBracket, (row,col)):rest) receiver =
     in
         (ArrayAccess receiver index, ts2)
 
---parsePostE all@((TokenSemiColon, (row, col)):rest) some_sort_of_expression_like_an_array_length_or_array_access_or_invocation = 
---    (some_sort_of_expression_like_an_array_length_or_array_access_or_invocation, all)
-
 parsePostE all@((t, (row,col)):rest) ast =
---    if follow_E t then
         (ast, all)
---    else 
---        error ("ERR: (Parser - ParsePostE) Invalid syntax following an expression [" ++ show row ++ ", " ++ show col ++ "]")
 
 
 -- Method Invocation Grammar
