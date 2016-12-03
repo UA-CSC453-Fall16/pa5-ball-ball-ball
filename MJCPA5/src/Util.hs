@@ -20,17 +20,6 @@ data AST
     | MethDecl  [AST]                    
     | Return    AST                 -- Return statements have return expressions, void methods don't have a Return AST
 
-{-
- _________    ___   ______      ___       
-|  _   _  | .'   `.|_   _ `.  .'   `.  _  
-|_/ | | \_|/  .-.  \ | | `. \/  .-.  \(_) 
-    | |    | |   | | | |  | || |   | | _          We need to change MD and CD so that they have an extra AST for all of the variable declarations. 
-   _| |_   \  `-'  /_| |_.' /\  `-'  /(_)         This gon' funk up the parser
-  |_____|   `.___.'|______.'  `.___.'  
-
--}
-
-
     -- Library Methods
     | SetPixel      AST AST AST     -- A set pixel call has two byte params and a color
     | Delay         AST
@@ -60,8 +49,8 @@ data AST
     -- | Instance      AST String      -- new XYZ() creates an instance AST which has a class name and 
     --                                 -- a child that should be invoke
     -- | Invoke        [AST] String    -- invoke is the child of an instance, it has a method name and a list of expression parameters as children
-    | Instance      String      -- new XYZ() creates an instance AST which has a class name
-    | Invoke        AST [AST] String    -- invoke is the parent of an instance, it has a receiver (left), list of expression parameters, and method name as children
+    | Instance      String             -- new XYZ() creates an instance AST which has a class name
+    | Invoke        AST [AST] String   -- invoke is the parent of an instance, it has a receiver (left), list of expression parameters, and method name as children
 
     -- PA5 Stuff
     | IntArrayInstance AST          -- Child node is the capacity which may be an expression which needs to be evaluated
@@ -93,6 +82,7 @@ data Type
     | MeggyToneType
     | IntArrayType
     | ColorArrayType
+    | ClassType String
     | Error
     deriving (Show,Eq)
 

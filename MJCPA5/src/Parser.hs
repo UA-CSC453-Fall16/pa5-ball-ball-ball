@@ -10,6 +10,7 @@ module Parser where
 
 import Lexer
 import Util
+import Debug.Trace
 
 -- entry point
 genAST :: [(Token, (Int,Int))] -> AST
@@ -257,8 +258,9 @@ parseStm ((TokenMeggyToneStart, (row,col)):rest) =
     in
         ((ToneStart exp1 exp2), ts6)
 
-parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) = 
+parseStm ts@((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) = 
     let
+-- <<<<<<< HEAD
         ts1 = match rest TokenLeftParen
         ts2 = match ts1  TokenRightParen
         ts3 = match ts2  TokenDot
@@ -266,12 +268,22 @@ parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) =
         ts5          = match ts4 TokenSemiColon
     in
         (Instance invocation id, ts5)
+-- =======
+--         (exp, ts1) = parseE ts
+--         ts2 = match ts1 TokenSemiColon
+--     in
+--         (exp, ts2)
+-- >>>>>>> 0b524dccda2bdbd2e6365f8e5a136c6ace10f7cb
 
 parseStm ((TokenThis, (row,col)):rest) = 
     let
         ts1 = match rest TokenDot
+-- <<<<<<< HEAD
         (invocation, ts2) = parseInvoke ts1 --This should an invocation AST
 
+-- =======
+--         (invocation, ts2) = parseInvoke ts1 (Instance "this")
+-- >>>>>>> 0b524dccda2bdbd2e6365f8e5a136c6ace10f7cb
         ts3 = match ts2 TokenSemiColon
     in
         (Instance invocation "this", ts3)
@@ -297,6 +309,7 @@ parseStm ((TokenID name, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     in
         (ArrayAssignment name index exp, ts6)
 
+-- <<<<<<< HEAD
 parseStm ((t, (row,col)):rest) = 
     error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
@@ -307,12 +320,17 @@ parsePostE ((TokenDot, (row,col)):rest) receiver =
         (new_receiver, ts1) = parseInvoke rest receiver
     in 
         parsePostE ts1 (Invoke new_receiver)
+-- =======
+-- parseStm all@((TokenID name, (r1,c1)):(TokenDot, (r2,c2)):rest) =
+--     let
+--         (ast, ts1) = parseE all
+--         ts2        = match ts1 TokenSemiColon
+--     in
+--         (ast, ts2)
+-- >>>>>>> 0b524dccda2bdbd2e6365f8e5a136c6ace10f7cb
 
-parsePostE all@((TokenSemiColon, (row, col)):rest) some_sort_of_expression_like_an_array_length_or_array_access_or_invocation = 
-    (some_sort_of_expression_like_an_array_length_or_array_access_or_invocation, all)
-
-parsePostE ((t, (row,col)):rest) _ = 
-    error ("ERR: (Parser - ParsePostE) Invalid syntax following an expression, expected an array access, length expression or semicolon")
+parseStm ((t, (row,col)):rest) = 
+    error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
 -- for else body of if-else
 parseA :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
@@ -334,7 +352,11 @@ parseE ((t, (row,col)):rest) =
     if first_Expression t then
         let
             (f_ast, ts1) = parseF ((t, (row,col)):rest)
+-- <<<<<<< HEAD
         in
+-- =======
+--         in 
+-- >>>>>>> 0b524dccda2bdbd2e6365f8e5a136c6ace10f7cb
             parseE' ts1 f_ast
     else
         error ("ERR: (Parser - ParseE) Invalid expression on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
@@ -454,14 +476,6 @@ parseI' ((t, (row,col)):rest) child =
     else
         error("ERR: (Parser - ParseI') Invalid expression near * on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
--- --J original
--- parseJ  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
--- parseJ ((TokenNew, (row,col)):(TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) = 
---     let
---         (invocation, ts1) = parseL rest
---     in
---         (Instance invocation id, ts1)
-
 --J new
 parseJ  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
 parseJ ((TokenNew, (row,col)):rest) = parseP rest
@@ -480,25 +494,30 @@ parseJ ((t, (row,col)):rest) =
 
 --P
 parseP :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
+-- <<<<<<< HEAD
 parseP ((TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) =
     let
         (invocation, ts1) = parseL rest
     in
         (Instance invocation id, ts1)
+-- =======
+-- parseP ((TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) = 
+--     parsePostE rest (Instance id)        
+-- >>>>>>> 0b524dccda2bdbd2e6365f8e5a136c6ace10f7cb
 
 parseP ((TokenInt, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     let
         (capacity, ts1) = parseE rest
-        ts2 = match ts1 TokenRightBracket
+        ts2             = match ts1 TokenRightBracket
     in
-        (IntArrayInstance capacity, ts2)
+        parsePostE ts2 (IntArrayInstance capacity)
 
 parseP ((TokenMeggyColorType, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     let
         (capacity, ts1) = parseE rest
-        ts2 = match ts1 TokenRightBracket
+        ts2             = match ts1 TokenRightBracket
     in
-        (ColorArrayInstance capacity, ts2)
+        parsePostE ts2 (ColorArrayInstance capacity)
 
 --K
 parseK  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
@@ -529,21 +548,25 @@ parseL ((TokenMeggyButton, (row,col)):(TokenButtonValue x, (r1,c1)):rest) = (But
 parseL ((TokenMeggyTone, (row,col))  :(TokenToneValue x, (r1,c1)):rest)   = (ToneLiteral x, rest)
 parseL ((TokenTrue, (row,col)):rest)   = (Boolean True, rest)
 parseL ((TokenFalse, (row,col)):rest)  = (Boolean False, rest)
-parseL ((TokenID id, (row,col)):rest)  = (Identifier id, rest)
+parseL ((TokenID id, (row,col)):rest)  = parsePostE rest (Identifier id)
 
 --More Complicated expressions
+-- <<<<<<< HEAD
 parseL ((TokenThis, (row,col)):rest) =
     let
         (invocation, ts1) = parseL(rest)
     in
         (Instance invocation "this", ts1)
+-- =======
+-- parseL ((TokenThis, (row,col)):rest) = parsePostE rest (Instance "this")
+-- >>>>>>> 0b524dccda2bdbd2e6365f8e5a136c6ace10f7cb
 
 parseL ((TokenLeftParen, (row,col)):rest) = 
     let
         (exp, ts1)       = parseE rest
         ts2              = match ts1 TokenRightParen
     in
-        (ParenExp exp, ts2)
+        parsePostE ts2 (ParenExp exp)
 
 parseL ((TokenDot, (row,col)):rest) = parseInvoke rest
 
@@ -584,6 +607,31 @@ parseB ((TokenLeftBracket, (row,col)):rest) array =
         (ArrayAccess array index, ts2)
 
 parseB ((TokenDotLength, (row, col)):rest) array = (ArrayLength array, rest)
+
+parsePostE :: [(Token, (Int,Int))] -> AST -> (AST, [(Token, (Int,Int))])
+parsePostE ((TokenDotLength, (row,col)):rest) receiver = (ArrayLength receiver, rest)
+parsePostE ((TokenDot, (row,col)):rest) receiver = 
+    let 
+        (new_receiver, ts1) = parseInvoke rest receiver
+    in 
+        parsePostE ts1 new_receiver 
+
+parsePostE ((TokenLeftBracket, (row,col)):rest) receiver = 
+    let
+        (index, ts1) = parseE rest
+        ts2          = match ts1 TokenRightBracket
+    in
+        (ArrayAccess receiver index, ts2)
+
+--parsePostE all@((TokenSemiColon, (row, col)):rest) some_sort_of_expression_like_an_array_length_or_array_access_or_invocation = 
+--    (some_sort_of_expression_like_an_array_length_or_array_access_or_invocation, all)
+
+parsePostE all@((t, (row,col)):rest) ast =
+--    if follow_E t then
+        (ast, all)
+--    else 
+--        error ("ERR: (Parser - ParsePostE) Invalid syntax following an expression [" ++ show row ++ ", " ++ show col ++ "]")
+
 
 -- Method Invocation Grammar
 parseInvoke :: [(Token, (Int,Int))] -> AST -> (AST, [(Token, (Int,Int))])
@@ -661,46 +709,35 @@ first_Stm t =
         _                   -> first_K t
 
 
+-- tokens in FIRST(E) are tokens in ( TokenNew U TokenByteCast U FIRST(K) U FIRST(L) ) 
 first_Expression :: Token -> Bool
 first_Expression t = 
-    case t of 
-        TokenMeggyColor       -> True
-        TokenMeggyButton      -> True
-        TokenMeggyTone        -> True
-        TokenMeggyGetPix      -> True
-        TokenMeggyCheckButton -> True
-        TokenDot       -> True
-        TokenLeftParen -> True
-        TokenNum _     -> True
-        TokenTrue      -> True
-        TokenFalse     -> True
-        TokenThis      -> True
-        TokenID _      -> True
-        TokenNot       -> True
-        TokenSub       -> True
-        TokenNew       -> True
-        TokenByteCast  -> True
-        _ -> False
+    let
+        inK = first_K t
+    in 
+        if inK then
+            inK
+        else
+            case t of 
+                TokenNew       -> True
+                TokenByteCast  -> True
+                _ -> False
 
+-- tokens in FIRST(K) are ( TokenNot U TokenSub U FIRST(L) ) 
 first_K :: Token -> Bool
 first_K t =
-    case t of 
-        TokenMeggyColor  -> True
-        TokenMeggyButton -> True
-        TokenMeggyTone   -> True
-        TokenMeggyGetPix -> True
-        TokenMeggyCheckButton -> True
-        TokenDot              -> True
-        TokenLeftParen        -> True
-        TokenNum _ -> True
-        TokenTrue  -> True
-        TokenFalse -> True
-        TokenThis  -> True
-        TokenID _  -> True
-        TokenNot   -> True
-        TokenSub   -> True
-        _ -> False
+    let
+        inL = first_L t
+    in
+        if inL then
+            inL
+        else
+            case t of 
+                TokenNot   -> True
+                TokenSub   -> True
+                _ -> False
 
+-- tokens in FIRST(L) are:
 first_L :: Token -> Bool
 first_L t =
     case t of 
@@ -710,7 +747,6 @@ first_L t =
         TokenMeggyGetPix -> True
         TokenMeggyCheckButton -> True
         TokenLeftParen        -> True
-        TokenDot   -> True
         TokenNum _ -> True
         TokenTrue  -> True
         TokenFalse -> True
@@ -730,6 +766,7 @@ first_Type t =
         TokenMeggyToneType   -> True
         TokenIntArrayType    -> True
         TokenColorArrayType  -> True
+        TokenID _            -> True -- A class name can be a type
         _ -> False
 
 grab_Type :: Token -> Type
@@ -744,13 +781,13 @@ grab_Type t =
         TokenMeggyToneType   -> MeggyToneType
         TokenIntArrayType    -> IntArrayType
         TokenColorArrayType  -> ColorArrayType
+        TokenID class_name   -> ClassType class_name --Violates the pattern we had used for Types, but I think we need the name of the class here?
         _ -> error ("ERR: (Parser - grab_Type) Did not expect " ++ show t ++ "as a type \n")
 
 follow_E :: Token -> Bool
 follow_E  t = 
     case t of 
         TokenComma -> True
-        TokenDot   -> True
         TokenRightParen -> True
         TokenSemiColon  -> True
         TokenRightBracket -> True
