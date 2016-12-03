@@ -27,36 +27,42 @@ traverseClass ((Class variables methods class_name):otherClasses, st) =
     let
         st0 = insertClass st class_name
         st1 = pushScope st0 class_name
-        st2 = traverseVariables (variables, st1)
-        st3 = traverseMethods (methods, st2)
-        st4 = popScope st2 
+        st2 = traverseAllVariables (variables, st1)
+        st3 = traverseAllMethods (methods, st2)
+        st4 = popScope st3
     in
         traverseClass (otherClasses, st4)
 
-traverseMethods :: (AST, SymbolTable) -> SymbolTable
-traverseMethods ((MethDecl methods), st) = traverseMethods' (methods, st)
+traverseAllMethods :: (AST, SymbolTable) -> SymbolTable
+traverseAllMethods ((MethDecl methods), st) = traverseAllMethods' (methods, st)
 
-traverseMethods' :: ([AST], SymbolTable) -> SymbolTable
-traverseMethods' ([], st)            = st
-traverseMethods' ((method:rest), st) = 
+traverseAllMethods' :: ([AST], SymbolTable) -> SymbolTable
+traverseAllMethods' ([], st)            = st
+traverseAllMethods' ((method:rest), st) = 
     let
         st1 = traverseMethod (method, st)
     in 
-        traverseMethods' (rest, st1)
+        traverseAllMethods' (rest, st1)
 
-traverseVariables :: (AST, SymbolTable) -> SymbolTable
-traverseVariables ((VarDecl variables), st) = traverseVariables' (variables, st)
+traverseMethod :: (AST, SymbolTable) -> SymbolTable
+traverseMethod ((Method localvars _ method_name typesig), st) =
+    let
+        st1 = insertMethod st method_name typesig
+        st2 = pushScope st1 method_name
+        st3 = traverseAllVariables (localvars, st2)
+    in
+        popScope st3
 
-traverseVariables' :: ([AST], SymbolTable) -> SymbolTable
-traverseVariables' ([], st) = st
-traverseVariables' ((variable:rest), st) = 
+traverseAllVariables :: (AST, SymbolTable) -> SymbolTable
+traverseAllVariables ((VarDecl variables), st) = traverseAllVariables' (variables, st)
+
+traverseAllVariables' :: ([AST], SymbolTable) -> SymbolTable
+traverseAllVariables' ([], st) = st
+traverseAllVariables' ((variable:rest), st) = 
     let
         st1 = traverseVariable (variable, st)
     in 
-        traverseVariables' (rest, st1)
-
-traverseMethod :: (AST, SymbolTable) -> SymbolTable
-traverseMethod ((Method _ _ method_name typesig), st) = insertMethod st method_name typesig
+        traverseAllVariables' (rest, st1)
 
 traverseVariable :: (AST, SymbolTable) -> SymbolTable
 traverseVariable ((Variable vtype vname), st) = insertVariable st vname vtype
