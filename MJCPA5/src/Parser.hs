@@ -152,6 +152,7 @@ parseParamDecl ts@((t, (row,col)):rest) =
         error ("ERR: (Parser - ParseParamDecl) Invalid prameter declaration in method on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
 parseU :: [(Token, (Int,Int))] -> ((String, Type), [(Token, (Int,Int))])
+parseU all@((TokenPublic, (row, col)):rest) = (("", Error), all)
 parseU ((typeTok, (row,col)):((TokenID name), (r1,c1)):rest) =
     if first_Type typeTok then
         ((name, (grab_Type typeTok)), rest)

@@ -239,11 +239,15 @@ tCheck ((While child1 child2), st)
 
 tCheck ((Instance className), st) = ClassType className
 
--- tCheck ((Invoke receiver params@(first:rest) method_name), st) = 
---     let
---         (ClassType class_name) = tCheck
---     in
+tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mname:class_name:[]))) = 
+    | return
+    |
+    where
+        receiver_returnType   = tCheck (receiver, st)
+        (TS expectedType ret_type) = lookupTypeSig st class_name method_name
 
+-- I'm lost. 
+-- Check that method_name belongs to the receiver_returnType class otherwise report error. 
 
 
 
