@@ -2,7 +2,7 @@ import meggy.Meggy;
 
 class Access0{
     public static void main(String[] args){
-        new C().test();
+        Meggy.delay(new C().test0());
     }
 }
 
@@ -11,6 +11,10 @@ class C{
     int[] deep;
     D mine;
     D mine2;
+
+    public int test0(){
+        return (new int[6])[0];
+    }
 
     public int[] test2(){
         deep = new int[5];
@@ -30,12 +34,12 @@ class C{
         int d;
 
         //this.test2();
-        deep[1] = 4; // MJ.jar doesn't like this
-        mine = new D();
-        a = this.test3().init().length;
-        //b = mine.vari; // MJ.jar doesn't like this
+        deep[1] = 4;
+        // mine = new D();
+        // a = this.test3().init().length;
+        // b = mine.vari; // MJ.jar doesn't like this
         // c = this.mine.hard().vari; // MJ.jar doesn't like this
-        d = this.test2()[0];
+        // d = this.test2()[0];
     }
 }
 
