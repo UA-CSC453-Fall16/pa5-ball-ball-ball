@@ -60,7 +60,7 @@ data AST
     -- | Instance      AST String      -- new XYZ() creates an instance AST which has a class name and 
     --                                 -- a child that should be invoke
     -- | Invoke        [AST] String    -- invoke is the child of an instance, it has a method name and a list of expression parameters as children
-    | Instance      AST String      -- new XYZ() creates an instance AST which has a class name
+    | Instance      String      -- new XYZ() creates an instance AST which has a class name
     | Invoke        AST [AST] String    -- invoke is the parent of an instance, it has a receiver (left), list of expression parameters, and method name as children
 
     -- PA5 Stuff
