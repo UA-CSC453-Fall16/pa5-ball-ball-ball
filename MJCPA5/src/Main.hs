@@ -14,7 +14,8 @@ import Lexer
 import ReLex
 import Parser
 import Dot
---import BuildST
+import BuildST
+import SymbolTable
 --import TypeCheck
 --import AVRGen
 
@@ -48,8 +49,9 @@ main = do
     putStrLn ("Checking Piazza... \n\t -> AST dot file generated")
 
     -- traverses AST and builds a symbol table (BuildST.hs)
-    --let symbol_table = genSymbolTable ast
-    --putStrLn ("Here is our book of secrets... \n\n" ++ show symbol_table)
+    let symbol_table = genSymbolTable ast
+    putStrLn ("Here is our book of secrets... \n\n" ++ (symTabToString symbol_table 0))
+    -- putStrLn ("Here is our book of secrets... \n\n" ++ show symbol_table)
 
 {- start of omit shit because we are testing" comment
 
