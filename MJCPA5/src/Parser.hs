@@ -262,28 +262,26 @@ parseStm ((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) =
         ts1 = match rest TokenLeftParen
         ts2 = match ts1  TokenRightParen
         ts3 = match ts2  TokenDot
-        (invocation, ts4) = parseInvoke ts3 --This should an invocation AST
+        (invocation, ts4) = parseInvoke ts3 (Instance id) --This should an invocation AST
         ts5          = match ts4 TokenSemiColon
     in
-        (Instance invocation id, ts5)
+        (invocation, ts5)
 
 parseStm ((TokenThis, (row,col)):rest) = 
     let
         ts1 = match rest TokenDot
-        (invocation, ts2) = parseInvoke ts1 --This should an invocation AST
-
+        (invocation, ts2) = parseInvoke ts1 (Instance "this")--This should an invocation AST
         ts3 = match ts2 TokenSemiColon
     in
-        (Instance invocation "this", ts3)
+        (invocation, ts3)
 
 -- Id = E PostE ; 
 parseStm ((TokenID name, (r1,c1)):(TokenAssign, (r2,c2)):rest) =
     let
-        (receiver, ts1) = parseE rest
-        (exp  , ts2) =    parsePostE ts1 receiver
-        ts3 = match ts2 TokenSemiColon
+        (exp, ts1) = parseE rest
+        ts2 = match ts1 TokenSemiColon
     in
-        (Assignment name exp, ts3)
+        (Assignment name exp, ts2)
 
 -- Id [ E ] = E PostE ;
 parseStm ((TokenID name, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
@@ -291,11 +289,10 @@ parseStm ((TokenID name, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
         (index, ts1) = parseE rest
         ts2 = match ts1 TokenRightBracket
         ts3 = match ts2 TokenAssign
-        (receiver, ts4) = parseE ts3
-        (exp, ts5)      = parsePostE ts4 receiver
-        ts6 = match ts5 TokenSemiColon
+        (exp, ts4) = parseE ts3
+        ts5 = match ts4 TokenSemiColon
     in
-        (ArrayAssignment name index exp, ts6)
+        (ArrayAssignment name index exp, ts5)
 
 parseStm ((t, (row,col)):rest) = 
     error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
@@ -306,7 +303,14 @@ parsePostE ((TokenDot, (row,col)):rest) receiver =
     let 
         (new_receiver, ts1) = parseInvoke rest receiver
     in 
-        parsePostE ts1 (Invoke new_receiver)
+        parsePostE ts1 new_receiver 
+
+parsePostE ((TokenLeftBracket, (row,col)):rest) receiver = 
+    let
+        (index, ts1) = parseE rest
+        ts2          = match ts1 TokenRightBracket
+    in
+        (ArrayAccess receiver index, ts2)
 
 parsePostE all@((TokenSemiColon, (row, col)):rest) some_sort_of_expression_like_an_array_length_or_array_access_or_invocation = 
     (some_sort_of_expression_like_an_array_length_or_array_access_or_invocation, all)
@@ -334,8 +338,9 @@ parseE ((t, (row,col)):rest) =
     if first_Expression t then
         let
             (f_ast, ts1) = parseF ((t, (row,col)):rest)
+            (e'_ast, ts2) = parseE' ts1 f_ast
         in
-            parseE' ts1 f_ast
+            parsePostE ts2 e'_ast 
     else
         error ("ERR: (Parser - ParseE) Invalid expression on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
@@ -480,11 +485,13 @@ parseJ ((t, (row,col)):rest) =
 
 --P
 parseP :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])
-parseP ((TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) =
-    let
-        (invocation, ts1) = parseL rest
-    in
-        (Instance invocation id, ts1)
+-- parseP ((TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) =
+--     let
+--         (invocation, ts1) = parseL rest
+--     in
+--         (Instance invocation id, ts1)
+
+parseP ((TokenID id, (r1,c1)):(TokenLeftParen, (r2,c2)):(TokenRightParen, (r3,c3)):rest) = (Instance id, rest)        
 
 parseP ((TokenInt, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
     let
@@ -532,11 +539,7 @@ parseL ((TokenFalse, (row,col)):rest)  = (Boolean False, rest)
 parseL ((TokenID id, (row,col)):rest)  = (Identifier id, rest)
 
 --More Complicated expressions
-parseL ((TokenThis, (row,col)):rest) =
-    let
-        (invocation, ts1) = parseL(rest)
-    in
-        (Instance invocation "this", ts1)
+parseL ((TokenThis, (row,col)):rest) = (Instance "this", rest)
 
 parseL ((TokenLeftParen, (row,col)):rest) = 
     let
@@ -544,8 +547,6 @@ parseL ((TokenLeftParen, (row,col)):rest) =
         ts2              = match ts1 TokenRightParen
     in
         (ParenExp exp, ts2)
-
-parseL ((TokenDot, (row,col)):rest) = parseInvoke rest
 
 parseL ((TokenMeggyGetPix, (row,col)):rest) = 
     let
@@ -566,34 +567,17 @@ parseL ((TokenMeggyCheckButton, (row,col)):rest) =
         (CheckButton exp, ts3)
 
 parseL ts@((t, (row,col)):rest) = 
-    if first_Expression t then
-        let
-            (exp, ts1) = parseE ts
-        in
-            parseB ts1 exp
-    else 
-        error("Parsing Error in parseL on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
-
--- parseL is ambiguous between E[E] and E.length, 
-parseB ::  [(Token, (Int,Int))] -> AST -> (AST, [(Token, (Int,Int))])
-parseB ((TokenLeftBracket, (row,col)):rest) array = 
-    let
-        (index, ts1) = parseE rest
-        ts2        = match ts1 TokenRightBracket
-    in
-        (ArrayAccess array index, ts2)
-
-parseB ((TokenDotLength, (row, col)):rest) array = (ArrayLength array, rest)
+    error("Parsing Error in parseL on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
 -- Method Invocation Grammar
 parseInvoke :: [(Token, (Int,Int))] -> AST -> (AST, [(Token, (Int,Int))])
-parseInvoke ((TokenID mname, (row,col)):rest) child = 
+parseInvoke ((TokenID mname, (row,col)):rest) receiver = 
     let
         ts1 = match rest TokenLeftParen
-        (params, ts2) = parseParam ts1
+        (params, ts2@((tok, (_,_)):rest)) = parseParam ts1
         -- TokenRightParen matched by parseParam
     in
-        (Invoke child params mname, ts2)
+        (Invoke receiver params mname, ts2)
 
 parseParam :: [(Token, (Int,Int))] -> ([AST], [(Token, (Int,Int))])
 parseParam ((t, (row,col)):rest) =
