@@ -258,6 +258,15 @@ parseStm ((TokenMeggyToneStart, (row,col)):rest) =
     in
         ((ToneStart exp1 exp2), ts6)
 
+parseStm ((TokenMeggySetAux, (row, col)):rest) = 
+    let
+        ts1 = match rest TokenLeftParen
+        (exp, ts2) = parseE ts1
+        ts3 = match ts2 TokenRightParen
+        ts4 = match ts3 TokenSemiColon
+    in
+        ((SetAuxLEDs exp), ts4)
+
 parseStm ts@((TokenNew, (row,col)):(TokenID id, (r1,c1)):rest) = 
     let
         (exp, ts1) = parseE ts
