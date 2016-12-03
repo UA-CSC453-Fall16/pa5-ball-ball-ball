@@ -1,9 +1,9 @@
+
 -- SymbolTable.hs
--- compilation:
---      ghc --make SymbolTableStart.hs -o symTableStart
 --
--- usage for testing the structure:
---      ./symTableStart
+-- Not a step in compiling.
+--
+-- The functions symTabToString, genSTEs, and indent were adapted from PA4 PeerReview group 9748 to pretty print the SymbolTable
 
 module SymbolTable where
 
@@ -21,8 +21,8 @@ data SymbolTable = SymTab Scope [String]
 type Scope = M.Map String STE
 
 data STE
-    =   ClassSTE    Scope
-    |   MethodSTE   (Scope, TypeSig)
+    =   ClassSTE    Scope Int -- int is the max offset for member variables
+    |   MethodSTE   (Scope, TypeSig) Int -- int is the max offset for params and local variables
     |   VarSTE      Type String String Int -- Type, Name, Base, Offset
     deriving (Show,Eq)
 
@@ -37,7 +37,7 @@ emptySymTab = SymTab emptyScope []
 -- Inserts a class with an empty scope.
 insertClass :: SymbolTable -> String -> SymbolTable
 insertClass (SymTab scope nesting) classname =
-    SymTab (M.insert classname (ClassSTE emptyScope) scope) nesting
+    SymTab (M.insert classname (ClassSTE emptyScope 0) scope) nesting
 
 setProgScope :: SymbolTable -> SymbolTable
 setProgScope (SymTab scope list) = 
@@ -63,12 +63,12 @@ popScope (SymTab progScope []) =
 insertMethod :: SymbolTable -> String -> TypeSig -> SymbolTable
 insertMethod (SymTab progScope [classname]) methodname tsig@(TS params ret) =
     let
-        (Just (ClassSTE classScope)) = M.lookup classname progScope
+        (Just (ClassSTE classScope coffset)) = M.lookup classname progScope
         doubleDef = checkDoubleDef classScope methodname
-        classScope_new  = M.insert methodname (MethodSTE (emptyScope, tsig)) classScope
-        st1 = SymTab  (M.insert classname (ClassSTE classScope_new) progScope) [classname] -- without parameters in method scope
+        classScope_new  = M.insert methodname (MethodSTE (emptyScope, tsig) 0) classScope
+        st1 = SymTab  (M.insert classname (ClassSTE classScope_new coffset) progScope) [classname] -- without parameters in method scope
         st2 = pushScope st1 methodname -- push methodscope
-        st3 = insertParameters st2 2 params -- insert all parameters into method scope
+        st3 = insertParameters st2 params -- insert all parameters into method scope
     in
         if doubleDef then
             error ("Redefined symbol " ++ methodname ++ "\nErrors found while building symbol table" )
@@ -79,8 +79,8 @@ insertMethod (SymTab progScope [classname]) methodname tsig@(TS params ret) =
 lookupTypeSig :: SymbolTable -> String -> String -> TypeSig
 lookupTypeSig (SymTab progScope stack) classname methodname =
     let
-        classScope = namedScopeLookup progScope classname
-        (methodScope, tsig) = namedScopeLookup' classScope methodname
+        (classScope, coffset) = namedScopeLookup progScope classname
+        (methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
     in
         tsig
 
@@ -96,32 +96,31 @@ lookupReturn st classname methodname =
         returnType
 
 -- Called by insertMethod, calls insertParam, recursively adds all method parameters to method scope
-insertParameters :: SymbolTable -> Int -> [(String,Type)] -> SymbolTable
-insertParameters st offset [] = st
-insertParameters st offset ((pname, ptype):ps) =
+insertParameters :: SymbolTable -> [(String,Type)] -> SymbolTable
+insertParameters st [] = st
+insertParameters st ((pname, ptype):ps) =
     let
-        (st2, offset2) = insertParam st offset pname ptype
+        st2 = insertParam st pname ptype
     in
-        insertParameters st2 offset2 ps
+        insertParameters st2 ps
 
 -- Insert a parameter into the current scope.
-insertParam :: SymbolTable -> Int -> String -> Type -> (SymbolTable, Int)
-insertParam (SymTab progScope [methodname,classname]) offset param pType =
+insertParam :: SymbolTable -> String -> Type -> SymbolTable
+insertParam (SymTab progScope [methodname,classname]) param pType =
     let
         -- unravel data structure to find all scopes
-        classScope  = namedScopeLookup progScope classname
-        (methodScope, tsig) = namedScopeLookup' classScope methodname
+        (classScope, coffset)  = namedScopeLookup progScope classname
+        (methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
 
         -- create new versions of all the scopes
-        offset2 = offset + typeToBytes pType
-        methodScope_new = M.insert  param (VarSTE pType param " Y " offset2)
+        moffset2 = moffset + typeToBytes pType
+        methodScope_new = M.insert  param (VarSTE pType param " Y " moffset2)
                                     methodScope
-        classScope_new = M.insert   methodname (MethodSTE (methodScope_new, tsig))
+        classScope_new = M.insert   methodname (MethodSTE (methodScope_new, tsig) moffset2)
                                     classScope
     in
-        (SymTab  (M.insert classname (ClassSTE classScope_new) progScope)
-                [methodname,classname],
-        offset2)
+        (SymTab  (M.insert classname (ClassSTE classScope_new coffset) progScope)
+                [methodname,classname])
 
 -- helper function to insertParam, determines offset based on type
 typeToBytes :: Type -> Int
@@ -135,8 +134,8 @@ typeToBytes t
 lookupParamType :: SymbolTable -> String -> Type
 lookupParamType (SymTab progScope (methodname:classname:rest)) paramname =
     let
-        classScope  = namedScopeLookup progScope classname
-        (methodScope, tsig) = namedScopeLookup' classScope methodname
+        (classScope, coffset) = namedScopeLookup progScope classname
+        (methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
     in
         case M.lookup paramname methodScope of
             Nothing -> error (paramname++" not found in "++methodname++ " or "++classname)
@@ -146,32 +145,65 @@ lookupParamType (SymTab progScope (methodname:classname:rest)) paramname =
 lookupParamOffset :: SymbolTable -> String -> Int
 lookupParamOffset (SymTab progScope [methodname,classname]) paramname =
     let
-        classScope  = namedScopeLookup progScope classname
-        (methodScope, tsig) = namedScopeLookup' classScope methodname
+        (classScope, coffset) = namedScopeLookup progScope classname
+        (methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
     in
         case M.lookup paramname methodScope of
             Nothing -> error (paramname++" not found in "++methodname++ " or "++classname)
             (Just (VarSTE vartype name base offset)) -> offset
             (Just x) -> error ("Parameter without a type, "++(show x))
 
+-- Insert a variable declaration into the current scope.
+insertVariable :: SymbolTable -> String -> Type -> SymbolTable
+-- into a method
+insertVariable (SymTab progScope [methodname,classname]) vname vtype =
+    let
+        -- unravel data structure to find all scopes
+        (classScope, coffset)  = namedScopeLookup progScope classname
+        (methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+
+        -- create new versions of all the scopes
+        moffset2 = moffset + typeToBytes vtype
+        methodScope_new = M.insert  vname (VarSTE vtype vname " Y " moffset2)
+                                    methodScope
+        classScope_new = M.insert   methodname (MethodSTE (methodScope_new, tsig) moffset2)
+                                    classScope
+    in
+        (SymTab  (M.insert classname (ClassSTE classScope_new coffset) progScope)
+                [methodname,classname])
+
+-- into a class
+insertVariable (SymTab progScope [classname]) vname vtype =
+    let
+        -- unravel data structure to find all scopes
+        (classScope, coffset)  = namedScopeLookup progScope classname
+
+        -- create new versions of all the scopes
+        coffset2 = coffset + typeToBytes vtype
+        classScope_new = M.insert  vname (VarSTE vtype vname " Z " coffset2)
+                                    classScope
+    in
+        (SymTab  (M.insert classname (ClassSTE classScope_new coffset2) progScope)
+                [classname])        
+
 -- Given some scope and a string to lookup, find the embedded scope or throw
 -- an error.
 -- CANNOT be used for methods
-namedScopeLookup :: Scope -> String -> Scope
+namedScopeLookup :: Scope -> String -> (Scope, Int)
 namedScopeLookup outer name =
     case M.lookup name outer of
         -- Nothing -> error ("Undeclared class of name [" ++ name ++ "] in new operator")
         Nothing -> error ("\n------\nSymbol Table Error:\nOuter scope: "++show outer++"\n------\nDoes not have class of: "++ name++"\n------")
-        (Just (ClassSTE inner))  -> inner
+        (Just (ClassSTE inner offset))  -> (inner, offset)
         (Just x) -> error ("STE without a scope, "++ (show x))
 
 -- Only used for methods
-namedScopeLookup' :: Scope -> String -> (Scope, TypeSig)
+namedScopeLookup' :: Scope -> String -> (Scope, TypeSig, Int)
 namedScopeLookup' outer name =
     case M.lookup name outer of
         -- Nothing -> error ("Method " ++ name ++ " does not exist in class " ++ outer)
         Nothing -> error ("\n------\nSymbol Table Error:\nOuter scope: "++show outer++"\n------\nDoes not have method of: "++ name++"\n------")
-        (Just (MethodSTE (inner))) -> inner
+        (Just (MethodSTE (scope, tsig) moffset)) -> (scope, tsig, moffset)
         (Just x) -> error ("STE without a scope, "++ (show x))
 
 checkDoubleDef :: Scope -> String -> Bool
@@ -179,8 +211,69 @@ checkDoubleDef outer name =
     case M.lookup name outer of
         -- Nothing -> error ("Method " ++ name ++ " does not exist in class " ++ outer)
         Nothing -> False
-        (Just (MethodSTE (inner))) -> True
+        (Just (MethodSTE (inner) moffset)) -> True
         (Just x) -> error ("When checking for double definition, found STE without a scope, "++ (show x))
+
+-- Pretty print method to better visualize the symbol
+-- table data structure.
+symTabToString :: SymbolTable -> Int -> String
+symTabToString (SymTab scope location) n = 
+  let
+    stars = "********************************************\n"
+    prefix = indent n
+    intro = "Printing Table " ++ (show location) ++ ":\n"
+    entries = "keys: " ++  (show (M.keys scope)) ++ "\n"
+    stes = getSTEs (M.elems scope) (n+1)
+  in
+    prefix ++ intro ++ prefix ++ entries ++ prefix ++ stars ++ stes ++ prefix ++ stars
+
+symTabToString' :: Scope -> Int -> String
+symTabToString' scope n = 
+  let
+    stars = "********************************************\n"
+    prefix = indent n
+    intro = "Printing Scope:\n"
+    entries = "keys: " ++  (show (M.keys scope)) ++ "\n"
+    stes = getSTEs (M.elems scope) (n+1)
+  in
+    prefix ++ intro ++ prefix ++ entries ++ prefix ++ stars ++ stes ++ prefix ++ stars
+
+-- Helper method for symTabToString to get the
+-- STEs in the symbol table for printing.
+getSTEs :: [STE] -> Int -> String
+getSTEs ((ClassSTE scope coffset):rest) n =
+  let 
+    prefix = indent n
+    info = "Printing ClassSTE: " ++ "NAME "++ ": max_offset = " ++ show coffset ++ "\n"
+    entries = symTabToString' scope (n+1)
+    everythingElse = getSTEs rest (n)
+  in
+    prefix ++ info ++ entries ++ everythingElse
+getSTEs ((MethodSTE (scope, tsig) moffset):rest) n =
+  let 
+    prefix = indent n
+    info = "Printing MethodSTE: " ++ "NAME " ++ ": max_offset = " ++ show moffset ++ "\n"
+    signature = "Signature = " ++ (show tsig) ++ "\n"
+    entries = symTabToString' scope (n+1)
+    everythingElse = getSTEs rest (n)
+  in
+    prefix ++ info ++ prefix ++ signature ++ entries ++ everythingElse
+getSTEs ((VarSTE vtype vname base offset):rest) n =
+  let 
+    prefix = indent n
+    info = "Printing VarSTE: " ++ (show vname) ++ ":\n"
+    tp = "Type: " ++ (show vtype) ++ "\n"
+    baseOffset = "Base: " ++ base ++ ",\tOffset: " ++ (show offset) ++ "\n"
+    everythingElse = getSTEs rest (n)
+  in
+    prefix ++ info ++ prefix ++ tp ++ prefix ++ baseOffset ++ everythingElse
+getSTEs [] n = ""
+
+-- Indent method to provide spacing for printing
+-- the STE.
+indent :: Int -> String
+indent 0 = ""
+indent n = "\t" ++ indent (n-1)
 
 -- ========================= Testing
 -- Testing
@@ -190,4 +283,3 @@ checkExpect check expect =
     then "checkExpect FAILED, got: "
          ++ (show check) ++ ", expected: " ++ (show expect)
     else "checkExpect PASSED"
-

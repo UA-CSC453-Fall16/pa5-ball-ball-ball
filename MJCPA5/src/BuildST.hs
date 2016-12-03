@@ -48,7 +48,7 @@ traverseVariables :: (AST, SymbolTable) -> SymbolTable
 traverseVariables ((VarDecl variables), st) = traverseVariables' (variables, st)
 
 traverseVariables' :: ([AST], SymbolTable) -> SymbolTable
-traverseVariables' ([], st)            = st
+traverseVariables' ([], st) = st
 traverseVariables' ((variable:rest), st) = 
     let
         st1 = traverseVariable (variable, st)
@@ -59,4 +59,4 @@ traverseMethod :: (AST, SymbolTable) -> SymbolTable
 traverseMethod ((Method _ _ method_name typesig), st) = insertMethod st method_name typesig
 
 traverseVariable :: (AST, SymbolTable) -> SymbolTable
-traverseVariable ((Variable typesig identifier), st) = insertVariable st identifier typesig
+traverseVariable ((Variable vtype vname), st) = insertVariable st vname vtype
