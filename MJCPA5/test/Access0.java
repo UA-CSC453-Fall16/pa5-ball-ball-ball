@@ -33,13 +33,13 @@ class C{
         int c;
         int d;
 
-        //this.test2();
+        this.test2();
         deep[1] = 4;
-        // mine = new D();
-        // a = this.test3().init().length;
+        mine = new D();
+        a = this.test3().init().length;
         // b = mine.vari; // MJ.jar doesn't like this
         // c = this.mine.hard().vari; // MJ.jar doesn't like this
-        // d = this.test2()[0];
+        d = this.test2()[a];
     }
 }
 

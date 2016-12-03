@@ -509,7 +509,7 @@ parseL ((TokenFalse, (row,col)):rest)  = (Boolean False, rest)
 parseL ((TokenID id, (row,col)):rest)  = parsePostE rest (Identifier id)
 
 --More Complicated expressions
-parseL ((TokenThis, (row,col)):rest) = (Instance "this", rest)
+parseL ((TokenThis, (row,col)):rest) = parsePostE rest (Instance "this")
 
 parseL ((TokenLeftParen, (row,col)):rest) = 
     let
