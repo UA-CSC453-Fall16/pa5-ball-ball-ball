@@ -23,7 +23,7 @@ type Scope = M.Map String STE
 data STE
     =   ClassSTE    Scope
     |   MethodSTE   (Scope, TypeSig)
-    |   VarSTE      Type String Int Int -- Type, Name, Base, Offset
+    |   VarSTE      Type String String Int -- Type, Name, Base, Offset
     deriving (Show,Eq)
 
 -- ========================= Functions for SymbolTable
@@ -105,7 +105,6 @@ insertParameters st offset ((pname, ptype):ps) =
         insertParameters st2 offset2 ps
 
 -- Insert a parameter into the current scope.
--- TODO: will eventually want this function to compute offset
 insertParam :: SymbolTable -> Int -> String -> Type -> (SymbolTable, Int)
 insertParam (SymTab progScope [methodname,classname]) offset param pType =
     let
@@ -115,7 +114,7 @@ insertParam (SymTab progScope [methodname,classname]) offset param pType =
 
         -- create new versions of all the scopes
         offset2 = offset + typeToBytes pType
-        methodScope_new = M.insert  param (VarSTE pType param (-1) offset2)
+        methodScope_new = M.insert  param (VarSTE pType param " Y " offset2)
                                     methodScope
         classScope_new = M.insert   methodname (MethodSTE (methodScope_new, tsig))
                                     classScope

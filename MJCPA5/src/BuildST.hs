@@ -16,7 +16,7 @@ import Util         -- For AST type
 genSymbolTable :: AST -> SymbolTable
 genSymbolTable root = travisty (root, emptySymTab)
 
--- traverse is an illegal Haskell function name, what a travisty
+-- traverse is a Haskell keyword and cannot be used as our function name, what a travisty
 travisty :: (AST, SymbolTable) -> SymbolTable
 travisty (Prog main_class [], st) =  st
 travisty (Prog main_class other_class, st) =  traverseClass (other_class, st)
@@ -42,7 +42,7 @@ traverseMethods' ((method:rest), st) =
     let
         st1 = traverseMethod (method, st)
     in 
-        traverseMethods (rest, st1)
+        traverseMethods' (rest, st1)
 
 traverseVariables :: (AST, SymbolTable) -> SymbolTable
 traverseVariables ((VarDecl variables), st) = traverseVariables' (variables, st)
@@ -53,10 +53,10 @@ traverseVariables' ((variable:rest), st) =
     let
         st1 = traverseVariable (variable, st)
     in 
-        traverseVariables (rest, st1)
+        traverseVariables' (rest, st1)
 
 traverseMethod :: (AST, SymbolTable) -> SymbolTable
 traverseMethod ((Method _ _ method_name typesig), st) = insertMethod st method_name typesig
 
-traverseMethod :: (AST, SymbolTable) -> SymbolTable
-traverseMethod ((Variable typesig identifier), st) = insertVariable st identifier typesig
+traverseVariable :: (AST, SymbolTable) -> SymbolTable
+traverseVariable ((Variable typesig identifier), st) = insertVariable st identifier typesig

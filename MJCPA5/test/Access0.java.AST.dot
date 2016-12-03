@@ -16,13 +16,11 @@ digraph {
 12 -> 13
 12  [label = "VariableDeclarations"];
 19  [label = "VariableDeclarations"];
-26  [label = "IntLiteral 6"];
-25 -> 26
-25  [label = "IntArrayInstance"];
+25  [label = "IntLiteral 6"];
 24 -> 25
-24  [label = "ParenExp"];
-29  [label = "IntLiteral 0"];
-23 -> 29
+24  [label = "IntArrayInstance"];
+27  [label = "IntLiteral 0"];
+23 -> 27
 23 -> 24
 23  [label = "ArrayAccess: left[right]"];
 22 -> 23
@@ -32,151 +30,151 @@ digraph {
 18 -> 21
 18 -> 19
 18  [label = "Method: public TS [] IntType str ()"];
-35  [label = "VariableDeclarations"];
-40  [label = "IntLiteral 5"];
-39 -> 40
-39  [label = "IntArrayInstance"];
-38 -> 39
-38  [label = "Assignment: deep = "];
-44  [label = "IntLiteral 0"];
-45  [label = "IntLiteral 3"];
-43 -> 45
-43 -> 44
-43  [label = "deepArray Assignment: [left] = right "];
-48  [label = " Id (deep) "];
-47 -> 48
-47  [label = "Return"];
-37 -> 47
-37 -> 43
+33  [label = "VariableDeclarations"];
+38  [label = "IntLiteral 5"];
 37 -> 38
-37  [label = "Body"];
-34 -> 37
-34 -> 35
-34  [label = "Method: public TS [] IntArrayType str ()"];
-53  [label = "VariableDeclarations"];
-57  [label = "D"];
-56 -> 57
-56  [label = "Assignment: mine2 = "];
-60  [label = " Id (mine2) "];
-59 -> 60
-59  [label = "Return"];
-55 -> 59
-55 -> 56
-55  [label = "Body"];
-52 -> 55
-52 -> 53
-52  [label = "Method: public TS [] (ClassType D) str ()"];
-66  [label = " IntType a; "];
-67  [label = " IntType b; "];
-68  [label = " IntType c; "];
-69  [label = " IntType d; "];
-65 -> 69
-65 -> 68
-65 -> 67
-65 -> 66
-65  [label = "VariableDeclarations"];
-73  [label = "this"];
-72 -> 73
-72  [label = " Invoke test2  "];
-76  [label = "IntLiteral 1"];
-77  [label = "IntLiteral 4"];
-75 -> 77
-75 -> 76
-75  [label = "deepArray Assignment: [left] = right "];
-80  [label = "D"];
-79 -> 80
-79  [label = "Assignment: mine = "];
-86  [label = "this"];
-85 -> 86
-85  [label = " Invoke test3  "];
-84 -> 85
-84  [label = " Invoke init  "];
+37  [label = "IntArrayInstance"];
+36 -> 37
+36  [label = "Assignment: deep = "];
+42  [label = "IntLiteral 0"];
+43  [label = "IntLiteral 3"];
+41 -> 43
+41 -> 42
+41  [label = "deepArray Assignment: [left] = right "];
+46  [label = " Id (deep) "];
+45 -> 46
+45  [label = "Return"];
+35 -> 45
+35 -> 41
+35 -> 36
+35  [label = "Body"];
+32 -> 35
+32 -> 33
+32  [label = "Method: public TS [] IntArrayType str ()"];
+51  [label = "VariableDeclarations"];
+55  [label = "D"];
+54 -> 55
+54  [label = "Assignment: mine2 = "];
+58  [label = " Id (mine2) "];
+57 -> 58
+57  [label = "Return"];
+53 -> 57
+53 -> 54
+53  [label = "Body"];
+50 -> 53
+50 -> 51
+50  [label = "Method: public TS [] (ClassType D) str ()"];
+64  [label = " IntType a; "];
+65  [label = " IntType b; "];
+66  [label = " IntType c; "];
+67  [label = " IntType d; "];
+63 -> 67
+63 -> 66
+63 -> 65
+63 -> 64
+63  [label = "VariableDeclarations"];
+71  [label = "this"];
+70 -> 71
+70  [label = " Invoke test2  "];
+74  [label = "IntLiteral 1"];
+75  [label = "IntLiteral 4"];
+73 -> 75
+73 -> 74
+73  [label = "deepArray Assignment: [left] = right "];
+78  [label = "D"];
+77 -> 78
+77  [label = "Assignment: mine = "];
+84  [label = "this"];
 83 -> 84
-83  [label = "ArrayLength"];
+83  [label = " Invoke test3  "];
 82 -> 83
-82  [label = "Assignment: a = "];
-94  [label = "this"];
-93 -> 94
-93  [label = " Invoke test2  "];
-96  [label = " Id (a) "];
-92 -> 96
-92 -> 93
-92  [label = "ArrayAccess: left[right]"];
+82  [label = " Invoke init  "];
+81 -> 82
+81  [label = "ArrayLength"];
+80 -> 81
+80  [label = "Assignment: a = "];
+92  [label = "this"];
 91 -> 92
-91  [label = "Assignment: d = "];
-71 -> 91
-71 -> 82
-71 -> 79
-71 -> 75
-71 -> 72
-71  [label = "Body"];
-64 -> 71
-64 -> 65
-64  [label = "Method: public TS [] VoidType str ()"];
-17 -> 64
-17 -> 52
-17 -> 34
+91  [label = " Invoke test2  "];
+94  [label = " Id (a) "];
+90 -> 94
+90 -> 91
+90  [label = "ArrayAccess: left[right]"];
+89 -> 90
+89  [label = "Assignment: d = "];
+69 -> 89
+69 -> 80
+69 -> 77
+69 -> 73
+69 -> 70
+69  [label = "Body"];
+62 -> 69
+62 -> 63
+62  [label = "Method: public TS [] VoidType str ()"];
+17 -> 62
+17 -> 50
+17 -> 32
 17 -> 18
 17  [label = "MethodDeclarations"];
 11 -> 17
 11 -> 12
 11  [label = "Class C"];
-105  [label = " IntType vari; "];
-106  [label = " IntArrayType dArr; "];
-104 -> 106
-104 -> 105
-104  [label = "VariableDeclarations"];
-110  [label = "VariableDeclarations"];
-114  [label = "IntLiteral 3"];
-113 -> 114
-113  [label = "Assignment: vari = "];
-112 -> 113
-112  [label = "Body"];
-109 -> 112
-109 -> 110
-109  [label = "Method: public TS [] VoidType str ()"];
-119  [label = "VariableDeclarations"];
-124  [label = "IntLiteral 3"];
-123 -> 124
-123  [label = "IntArrayInstance"];
-122 -> 123
-122  [label = "Assignment: dArr = "];
-128  [label = " Id (dArr) "];
-127 -> 128
-127  [label = "Return"];
-121 -> 127
+103  [label = " IntType vari; "];
+104  [label = " IntArrayType dArr; "];
+102 -> 104
+102 -> 103
+102  [label = "VariableDeclarations"];
+108  [label = "VariableDeclarations"];
+112  [label = "IntLiteral 3"];
+111 -> 112
+111  [label = "Assignment: vari = "];
+110 -> 111
+110  [label = "Body"];
+107 -> 110
+107 -> 108
+107  [label = "Method: public TS [] VoidType str ()"];
+117  [label = "VariableDeclarations"];
+122  [label = "IntLiteral 3"];
 121 -> 122
-121  [label = "Body"];
-118 -> 121
-118 -> 119
-118  [label = "Method: public TS [] IntArrayType str ()"];
-134  [label = " ClassType D soHard; "];
-133 -> 134
-133  [label = "VariableDeclarations"];
-138  [label = "D"];
-137 -> 138
-137  [label = "Assignment: soHard = "];
-141  [label = " Id (soHard) "];
-140 -> 141
-140  [label = " Invoke set  "];
-144  [label = " Id (soHard) "];
-143 -> 144
-143  [label = "Return"];
-136 -> 143
-136 -> 140
-136 -> 137
-136  [label = "Body"];
-132 -> 136
-132 -> 133
-132  [label = "Method: public TS [] (ClassType D) str ()"];
-108 -> 132
-108 -> 118
-108 -> 109
-108  [label = "MethodDeclarations"];
-103 -> 108
-103 -> 104
-103  [label = "Class D"];
-1 -> 103
+121  [label = "IntArrayInstance"];
+120 -> 121
+120  [label = "Assignment: dArr = "];
+126  [label = " Id (dArr) "];
+125 -> 126
+125  [label = "Return"];
+119 -> 125
+119 -> 120
+119  [label = "Body"];
+116 -> 119
+116 -> 117
+116  [label = "Method: public TS [] IntArrayType str ()"];
+132  [label = " ClassType D soHard; "];
+131 -> 132
+131  [label = "VariableDeclarations"];
+136  [label = "D"];
+135 -> 136
+135  [label = "Assignment: soHard = "];
+139  [label = " Id (soHard) "];
+138 -> 139
+138  [label = " Invoke set  "];
+142  [label = " Id (soHard) "];
+141 -> 142
+141  [label = "Return"];
+134 -> 141
+134 -> 138
+134 -> 135
+134  [label = "Body"];
+130 -> 134
+130 -> 131
+130  [label = "Method: public TS [] (ClassType D) str ()"];
+106 -> 130
+106 -> 116
+106 -> 107
+106  [label = "MethodDeclarations"];
+101 -> 106
+101 -> 102
+101  [label = "Class D"];
+1 -> 101
 1 -> 11
 1 -> 2
 1  [label = "Prog"];
