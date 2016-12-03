@@ -300,7 +300,7 @@ parseStm ((TokenID name, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
 parseStm ((t, (row,col)):rest) = 
     error ("ERR: (Parser - ParseStm) Invalid instance on token string " ++ show t ++ "... starting at [" ++ show row ++ ", " ++ show col ++ "]\n")
 
-parsePostE ::
+parsePostE :: [(Token, (Int,Int))] -> AST -> (AST, [(Token, (Int,Int))])
 parsePostE ((TokenDotLength, (row,col)):rest) receiver = (ArrayLength receiver, rest)
 parsePostE ((TokenDot, (row,col)):rest) receiver = 
     let 
