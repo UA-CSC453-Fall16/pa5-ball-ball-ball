@@ -13,7 +13,9 @@ class C{
     D mine2;
 
     public int test0(){
-        return (new int[6])[0]; // make sure our parser doesn't accept the removal of these parentheses
+        int val;
+		val = (new int[6])[0]; // make sure our parser doesn't accept the removal of these parentheses
+		val = new int[6][0];   // the above should pass this should fail.
     }
 
     public int[] test2(){
