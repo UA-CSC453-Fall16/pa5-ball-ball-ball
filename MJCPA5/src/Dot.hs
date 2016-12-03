@@ -52,7 +52,7 @@ astdotviz_rec _ myid astnode =
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (vars:ast1:[])
                 in 
-                    (maxChild,subTreeStr++prefix++"Method " ++ id str ++ " typesig: " ++ (id $ show typesig) ++ suffix)
+                    (maxChild,subTreeStr++prefix++"Method " ++ id str ++ " typesig: " ++ qq(id $ show typesig) ++ suffix)
 
             (Body ast1) ->
                 let 
@@ -192,12 +192,6 @@ astdotviz_rec _ myid astnode =
                 in
                     (maxChild,subTreeStr++prefix++" Invoke " ++ id name ++ "  " ++suffix)
 
-            (Instance ast1 name) ->
-                let 
-                    (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1:[])
-                in
-                    (maxChild,subTreeStr++prefix++"Instance " ++ id name ++ "  " ++suffix)
-
             (IntArrayInstance ast) ->
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast:[])
@@ -233,6 +227,8 @@ astdotviz_rec _ myid astnode =
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (ast1:[])
                 in
                     (maxChild,subTreeStr++prefix++"ArrayLength"++suffix)
+
+            (Instance name) -> (myid, prefix ++ id name ++ suffix)
 
             (Variable varType varId) -> (myid, prefix++ " "  ++ show varType ++ " " ++ varId ++ "; "++suffix)
 
