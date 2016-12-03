@@ -587,10 +587,10 @@ parseB ((TokenDotLength, (row, col)):rest) array = (ArrayLength array, rest)
 
 -- Method Invocation Grammar
 parseInvoke :: [(Token, (Int,Int))] -> AST -> (AST, [(Token, (Int,Int))])
-parseInvoke ((TokenID mname, (row,col)):rest) child = 
+parseInvoke ((TokenID mname, (row,col)):rest) receiver = 
     let
         ts1 = match rest TokenLeftParen
-        (params, ts2) = parseParam ts1
+        (params, ts2@((tok, (_,_)):rest)) = parseParam ts1
         -- TokenRightParen matched by parseParam
     in
         (Invoke child params mname, ts2)
