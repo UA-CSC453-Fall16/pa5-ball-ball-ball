@@ -8,7 +8,7 @@ class Array0{
 
 class C{
 	public void test(int x){
-		if(someArray.length == 0)
+		if(b.length == 0)
 			Meggy.delay(100);
 	}
 } 

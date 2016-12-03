@@ -29,7 +29,7 @@ class C{
 
 		ia = new int[2];
 		ia[0] = i + b;
-		ia[1] = ia[0] * 3;
+		ia[1] = ((byte) 2) * ((byte) 3);
 
 		mca = new Meggy.Color[2];
 		mca[0] = mc; // mc

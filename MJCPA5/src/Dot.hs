@@ -48,11 +48,11 @@ astdotviz_rec _ myid astnode =
                 in 
                     (maxChild,subTreeStr++prefix++"MainClass"++suffix)
 
-            (Method vars ast1 str typesig) ->
+            (Method vars ast1 str types) ->
                 let 
                     (maxChild,subTreeStr) = visitChildren myid (myid+1) (vars:ast1:[])
                 in 
-                    (maxChild,subTreeStr++prefix++"Method " ++ id str ++ " typesig: " ++ (id $ show typesig) ++ suffix)
+                    (maxChild,subTreeStr++prefix++"Method: public " ++ stripQuotes "\"" (show types) ++ " str ()" ++ suffix)
 
             (Body ast1) ->
                 let 
@@ -230,7 +230,7 @@ astdotviz_rec _ myid astnode =
 
             (Instance name) -> (myid, prefix ++ id name ++ suffix)
 
-            (Variable varType varId) -> (myid, prefix++ " "  ++ show varType ++ " " ++ varId ++ "; "++suffix)
+            (Variable varType varId) -> (myid, prefix++ " "  ++ stripQuotes "\"" (show varType) ++ " " ++ varId ++ "; "++suffix)
 
             (IntLiteral x) -> (myid, prefix++"IntLiteral "++(show x)++suffix)
 
@@ -254,3 +254,7 @@ visitChildren pid myid (x:xs) =
     let (xmax,xstr) = astdotviz_rec pid myid x
         (maxid,str) = visitChildren pid (xmax+1) xs
     in  (maxid,xstr++str ++ show pid ++" -> "++ show myid ++ "\n" )
+
+
+stripQuotes :: String -> String -> String
+stripQuotes = filter . flip notElem
