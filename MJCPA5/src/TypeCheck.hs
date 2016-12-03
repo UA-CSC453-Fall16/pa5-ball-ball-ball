@@ -155,6 +155,24 @@ tCheck ((SetAuxLEDs child), st)
     where
         expType = tCheck (child, st)
 
+tCheck ((IntArrayInstance child), st) 
+    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
+    | otherwise = expType
+    where
+        expType = tCheck (child, st)
+
+tCheck ((ColorArrayInstance child), st) 
+    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
+    | otherwise = expType
+    where
+        expType = tCheck (child, st)
+
+tCheck ((ArrayLength child), st) 
+    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
+    | otherwise = expType
+    where
+        expType = tCheck (child, st)
+
 {-
 ------- Binary AST nodes
 -}
