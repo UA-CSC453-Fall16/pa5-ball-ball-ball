@@ -15,7 +15,7 @@ java -jar MJ.jar $SOURCE #INESRT SOURCE FILE NAME HERE
 
 #echo "producing AST"
 if [ $? == 0 ]; then
-    dot -Tpng "${SOURCE}.AST.dot" > "${SOURCE}.ref.png"
+    dot -Tpng "${SOURCE}.ast.dot" > "${SOURCE}.ref.png"
 else
     echo "Skipping generating the dot file."
 fi
