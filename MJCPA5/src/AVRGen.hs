@@ -77,19 +77,16 @@ avrCodeGen ((Identifier id), st) label =
         loadCode = (if pushSize == 1 then "    ldd r25, " ++ base ++ "+ " ++ show (offset+1) ++ "\n" else "" ) ++ "    ldd r24, " ++ base ++ "+ " ++ show offset ++ "\n"
         classVar = "    ldd r31, Y + 2\n   ldd r30, Y + 1\n"
 
+        result = if pushSize == 2 then "    push r25\n    push r24\n" else "    push r24\n"
+
         loadExp  = "    # Loading variable " ++ id ++ " \n" ++ 
-            if base == " Y " then 
+            (if base == " Y " then 
                     "    # Variable is local\n"
                  ++      loadCode
-
             else 
                     "    # Variable belongs to the class\n"
                  ++      classVar
-                 ++      loadCode
-
-         result = if pushSize == 2 then "    push r25\n    push r24\n" else "    push r24\n"        
-
-
+                 ++      loadCode)
     in
         (label, loadExp ++ result)
 
@@ -664,14 +661,14 @@ avrCodeGen ((Class  variables methods class_name), st) label =
     in
         (newLabel, this_classes_functions)
 
-avrCodeGen ((MethDecl []), st) label = ""
-avrCodeGen ((MethDecl ((method@(Method body method_name sig):rest)), st@(SymTab progScope [class_name])) label =
+avrCodeGen ((MethDecl []), st) label = (label, "")
+avrCodeGen (MethDecl ((method@(Method variables body method_name sig):rest)), st@(SymTab progScope [class_name])) label =
     let
         f_id      = correctName (class_name ++ method_name)
         functHead = ("\n\n### Function Head\n    .text\n" ++ ".global " ++ f_id ++ "\n" ++ "   .type " ++ f_id ++ ", @function\n" ++ f_id ++ ":\n")
         functFoot = ("    #restore FP and return\n" ++ "    pop r28\n" ++ "    pop r29\n" ++ "    ret\n" ++ "    .size " ++ f_id ++ ", .-" ++ f_id ++ "\n")
         (newLabel, method_code) = avrCodeGen (method, st) label
-        function_complete = functHead ++ function ++ functFoot
+        function_complete = functHead ++ method_code ++ functFoot
         (final_label, other_methods_code) = avrCodeGen (((MethDecl rest)), st) newLabel
     in
         (final_label, method_code ++ other_methods_code) 
@@ -745,23 +742,24 @@ avrCodeGen ((Instance class_name), st) label =
     in
         (label,
             "    # NewExp\n"
-        ++  "    ldi    r24, lo8("++size++")\n"
-        ++  "    ldi    r25, hi8("++size++")\n"
-        ++  "    # allocating object of size "++size++" on heap\n"
+        ++  "    ldi    r24, lo8("++ show size ++")\n"
+        ++  "    ldi    r25, hi8("++ show size ++")\n"
+        ++  "    # allocating object of size "++ show size ++" on heap\n"
         ++  "    call    malloc\n"
         ++  "    # push object address\n"
         ++  "    # push two byte expression onto stack\n"
         ++  "    push   r25\n"
         ++  "    push   r24\n\n")
 
-avrCodeGen ((Invoke list_of_params method_name), st) label = 
+avrCodeGen ((Invoke receiver list_of_params method_name), st) label0 = 
     let
+        (label,  receiver_code)           = avrCodeGen (receiver, st) label0
         st1                               = pushScope st method_name
         (label1, param_evaluations)       = evaluateParams (list_of_params, st1) method_name label
         fucntion_call_code                = setUpFunctionCall st1
         st2                               = popScope st1
     in
-        (label1, param_evaluations ++ fucntion_call_code)      
+        (label1, receiver_code ++ param_evaluations ++ fucntion_call_code)      
 
 avrCodeGen ((LessThan operand1 operand2), st) label = 
     let
@@ -914,18 +912,30 @@ avrCodeGen ((ColorArrayInstance capacity), st) label =
         ++ "    push r30\n"
         )
 
+{-
+            )  (         )     
+  *   )  ( /(  )\ )   ( /(     
+` )  /(  )\())(()/(   )\())    
+ ( )(_))((_)\  /(_)) ((_)\     
+(_(_())   ((_)(_))_    ((_) _  
+|_   _|  / _ \ |   \  / _ \(_) 
+  | |   | (_) || |) || (_) |_  -- Use the Identifier production
+  |_|    \___/ |___/  \___/(_) 
+-}
+
+
 avrCodeGen ((Assignment variable value), st) label=
     let
         (newLabel, valueExpr) = avrCodeGen (value, st) label
         valueType      = tCheck (value, st)
         variableBase   = lookupVariableBase   st variable
-        variableOffset = lookupVariableOffset st variable
+        variableOffset = lookupVariableOffset st variable 
 
         loadLow        = "    pop r24\n"
         loadHi         = if valueType == IntType then "    pop r25\n" else ""
 
-        storeLow       = "    std   " ++ base ++ "+ " ++ show variableOffset ++ ", r24\n"
-        storeHi        =  if valueType == IntType then "    std   " ++ base ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
+        storeLow       = "    std   " ++ variableBase ++ "+ " ++ show variableOffset ++ ", r24\n"
+        storeHi        =  if valueType == IntType then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
     in
         (newLabel, 
                 valueExpr 
@@ -990,8 +1000,8 @@ avrCodeGen ((ArrayAssignment variable index value), st) label =
 avrCodeGen ((ArrayAccess arrayExp index), st) label = 
     let
         indexType = tCheck (index, st)
-        indexLoad = if valueType == IntType then "    pop r24\n    pop r25\n" else "    pop r24\n"
-        doubleElementsForIntArray = if valueType == IntType then
+        indexLoad = if indexType == IntType then "    pop r24\n    pop r25\n" else "    pop r24\n"
+        doubleElementsForIntArray = if indexType == IntType then
                                             "    # add size in elems to self to multiply by 2\n"
                                          ++ "    add r18, r18\n"
                                          ++ "    adc r19, r19\n" 
@@ -1001,8 +1011,8 @@ avrCodeGen ((ArrayAccess arrayExp index), st) label =
         (newLabel, variableCode) = avrCodeGen (arrayExp, st) label
         (final_label, indexCode) = avrCodeGen (index, st)    newLabel
     
-        arrayLoad  = "    ldd r24, Z+0\n" ++ if valueType == IntType then "    ldd r25, Z+1\n" else ""
-        resultPush = (if valueType == IntType then "    push r25\n" else "") ++ "    push r24\n"
+        arrayLoad  = "    ldd r24, Z+0\n" ++ if indexType == IntType then "    ldd r25, Z+1\n" else ""
+        resultPush = (if indexType == IntType then "    push r25\n" else "") ++ "    push r24\n"
     in
         (final_label, 
                 variableCode
@@ -1111,7 +1121,7 @@ setUpFunctionCall st@(SymTab prog_scope [method_name,class_name]) =
                "    #handles return value\n"
             ++ "    push r24\n")
 
-setUpFunctionCall st = error("Error: AVRGen, setUpFunctionCall:\n"++show st)
+setUpFunctionCall st = error("Error: AVRGen, setUpFunctionCall:\n"++ (symTabToString st 0))
 
 -- called by setUpFunctionCall
 retSize :: Type -> Int
@@ -1160,7 +1170,7 @@ functionLoadParams ((pName, pType):rest) reg
      ++ functionLoadParams rest (reg+2)
 
 arrayLoadAndCast :: Int -> Int -> String
-expressionLoadAndCast bytes reg =
+arrayLoadAndCast bytes reg
     | bytes == 2 =
         "    # load a two byte expression off stack\n"
      ++ "    pop r"++show reg++"\n"

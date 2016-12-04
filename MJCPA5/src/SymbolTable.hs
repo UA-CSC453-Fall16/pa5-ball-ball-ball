@@ -212,14 +212,14 @@ lookupVariableType (SymTab progScope [classname]) vname =
             (Just x) -> error ("Variable without a type, "++(show x))
 
 -- Given some current scope, and a variable name, lookup the lower offset of the variable
-lookupVariableOffset :: SymbolTable -> String -> Type
+lookupVariableOffset :: SymbolTable -> String -> Int
 lookupVariableOffset (SymTab progScope [methodname,classname]) vname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
         (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
     in
         case M.lookup vname methodScope of
-            Nothing -> lookupVariableType (SymTab progScope [classname]) vname
+            Nothing -> lookupVariableOffset (SymTab progScope [classname]) vname
             (Just (VarSTE vartype name base offset)) -> offset
             (Just x) -> error ("Variable without a type, "++(show x))
 
@@ -233,18 +233,18 @@ lookupVariableOffset (SymTab progScope [classname]) vname =
             (Just x) -> error ("Variable without a type, "++(show x))
 
 -- Given some current scope, and a variable name, lookup the base of the variable
-lookupVariableOffset :: SymbolTable -> String -> Type
-lookupVariableOffset (SymTab progScope [methodname,classname]) vname =
+lookupVariableBase :: SymbolTable -> String -> String
+lookupVariableBase (SymTab progScope [methodname,classname]) vname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
         (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
     in
         case M.lookup vname methodScope of
-            Nothing -> lookupVariableType (SymTab progScope [classname]) vname
+            Nothing -> lookupVariableBase (SymTab progScope [classname]) vname
             (Just (VarSTE vartype name base offset)) -> base
             (Just x) -> error ("Variable without a type, "++(show x))
 
-lookupVariableOffset (SymTab progScope [classname]) vname =
+lookupVariableBase (SymTab progScope [classname]) vname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
     in
