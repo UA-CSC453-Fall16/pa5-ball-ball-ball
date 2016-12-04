@@ -38,20 +38,20 @@ tCheck (Epsilon, st)               = VoidType
 -}
 tCheck ((Prog main (aClass:other_classes) ), st)
     | mainType  /= VoidType = error("Invalid type found in main class: " ++ (show mainType))
-    | childType /= VoidType = error("Invalid type found in class " ++ class_name ++ ": " ++ (show childType))
+    | childType /= VoidType = error("Invalid type found in class " ++ class_name ++ ": " ++ (show childType) ++ "\n")
     | otherwise  = tCheck ((Prog Epsilon other_classes), st) 
     where
         mainType  = tCheck (main, st)
         childType = tCheck (aClass, st)
 
 tCheck ((Prog main [] ), st)
-    | mainType  /= VoidType = error("Invalid type found in main class: " ++ (show mainType))
+    | mainType  /= VoidType = error("Invalid type found in main class: " ++ (show mainType) ++ "\n")
     | otherwise  = VoidType
     where
         mainType  = tCheck (main, st)
 
 tCheck ((Class instVars methods class_name), st)
-    | classType  /= VoidType = error("Invalid type found in class " ++ class_name ++": " ++ (show classType))
+    | classType  /= VoidType = error("Invalid type found in class " ++ class_name ++": " ++ (show classType) ++ "\n")
     | otherwise   = VoidType
     where
         st1 = pushScope st class_name
@@ -59,14 +59,14 @@ tCheck ((Class instVars methods class_name), st)
         st2 = popScope st1
 
 tCheck ((MainClass child), st)
-    | actual_type /= VoidType = error("Invalid type found in main: " ++ (show actual_type))
+    | actual_type /= VoidType = error("Invalid type found in main: " ++ (show actual_type) ++ "\n")
     | otherwise    = VoidType
     where
         actual_type = tCheck (child, st)
 
 tCheck ((Method variables body method_name (TS params return_type)), st)
     | actual_type == ByteType && return_type == IntType = VoidType
-    | actual_type /= return_type = error("Invalid type found in main: " ++ (show actual_type))
+    | actual_type /= return_type = error("Invalid type found in main: " ++ (show actual_type) ++ "\n")
     | otherwise    = VoidType
     where
         st1         = pushScope st method_name
@@ -97,13 +97,13 @@ tCheck ((Return child), st@(SymTab scope [method_name,class_name])) =
         returnExpType = tCheck (child, st)
     in
         if signatureRetType == VoidType then
-            error("Error: " ++ method_name ++ " has a return type of void, but contains a return expression")
+            error("Error: " ++ method_name ++ " has a return type of void, but contains a return expression" ++ "\n")
         else if returnExpType == signatureRetType then
             returnExpType
         else if returnExpType == ByteType && signatureRetType == IntType then
             ByteType
         else
-            error(method_name ++ ": Return expression type: " ++ show returnExpType ++ ", does not match signature return type: " ++ show signatureRetType)
+            error(method_name ++ ": Return expression type: " ++ show returnExpType ++ ", does not match signature return type: " ++ show signatureRetType ++ "\n")
 
 tCheck ((Identifier name), st) =  lookupParamType st name 
 
@@ -112,89 +112,116 @@ tCheck ((Identifier name), st) =  lookupParamType st name
 -}
 tCheck ((Delay child), st)  --Check for negative child
     | stmType  == IntType = VoidType 
-    | otherwise = error("Invalid arg type for delay: " ++ (show stmType) ++ ", expected IntType")
+    | otherwise = error("Invalid arg type for delay: " ++ (show stmType) ++ ", expected IntType\n")
     where
         stmType = tCheck (child, st)
         random = error (show st ++ ",\n ast: " ++ show child ) 
 
 tCheck ((CheckButton child), st)   
     | expType  == MeggyButtonType = BooleanType
-    | otherwise = error("Invalid arg type for checkButton: " ++ (show expType) ++ ", expected MeggyButtonType")
+    | otherwise = error("Invalid arg type for checkButton: " ++ (show expType) ++ ", expected MeggyButtonType\n")
     where
         expType = tCheck (child, st)
 
 tCheck ((LogicalNot child), st)    
     | expType  == BooleanType = BooleanType
-    | otherwise = error("Invalid type found in operand of logical negation: " ++ (show expType) ++ ", expected BooleanType")
+    | otherwise = error("Invalid type found in operand of logical negation: " ++ (show expType) ++ ", expected BooleanType\n")
     where
         expType = tCheck (child, st)
 
 tCheck ((UnaryMinus child), st)    
     | expType  == IntType  = IntType
     | expType  == ByteType = ByteType
-    | otherwise = error("Invalid type found in operand of arithmetic negation (-): " ++ (show expType) ++ ", expected ByteType or IntType")
+    | otherwise = error("Invalid type found in operand of arithmetic negation (-): " ++ (show expType) ++ ", expected ByteType or IntType\n")
     where
         expType = tCheck (child, st)
 
 tCheck ((ByteCast child), st) 
     | expType  == IntType  = ByteType
     | expType  == ByteType = ByteType
-    | otherwise = error("ByteCast expected operand of type Int or Byte but it was " ++ (show expType))
+    | otherwise = error("ByteCast expected operand of type Int or Byte but it was " ++ (show expType) ++ "\n")
     where
         expType = tCheck (child, st)
 
 tCheck ((ParenExp child), st) 
-    | expType  == VoidType = error("Parenthesis wrap unexpected type (usually statement type): " ++ (show expType))
+    | expType  == VoidType = error("Parenthesis wrap unexpected type (usually statement type): " ++ (show expType) ++ "\n")
     | otherwise = expType
     where
         expType = tCheck (child, st)
 
 tCheck ((SetAuxLEDs child), st) 
-    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
-    | otherwise = expType
+    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType) ++ "\n")
+    | otherwise = VoidType
     where
         expType = tCheck (child, st)
 
 tCheck ((IntArrayInstance child), st) 
-    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
-    | otherwise = expType
+    | expType  /= IntType = error("Type Error: Invalid type for length expression of Int Array: " ++ (show expType) ++ "\n")
+    | otherwise = IntArrayType
     where
         expType = tCheck (child, st)
 
 tCheck ((ColorArrayInstance child), st) 
-    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
-    | otherwise = expType
+    | expType  /= IntType = error("Type Error: Invalid type for length expression of Color Array: " ++ (show expType) ++ "\n")
+    | otherwise = ColorArrayType
     where
         expType = tCheck (child, st)
 
 tCheck ((ArrayLength child), st) 
-    | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
-    | otherwise = expType
+    | expType  /= ColorArrayType && expType /= IntArrayType = error("Type Error: .length must be invoked on an IntArray or ColorArray not a " ++ (show expType) ++ "\n")
+    | otherwise = IntType
     where
         expType = tCheck (child, st)
+
+tCheck ((Variable varType name), st) = varType
+
+tCheck ((Assignment var value), st)
+    | varType == IntType && expressionType == ByteType = VoidType
+    | varType == expressionType = VoidType
+    | otherwise = error ("Type Error: Cannot assign an " ++ show expressionType ++ " to " ++ var ++ ". It expects " ++ show varType ++ "\n")
+    where
+        varType        = lookupVariableType st var
+        expressionType = tCheck (value, st)
+
+tCheck ((ArrayAssignment array_var index value), st)
+    | arrayType == IntType && valueType == ByteType = VoidType
+    | arrayType /= valueType = error("Type Error: Cannot assign expression of type " ++ show valueType ++ " to the array " ++ array_var ++ " of type " ++ show arrayType ++ "\n")
+    | indexType /= IntType && indexType /= ByteType = error("Type Error: Cannot access non-integer type (" ++ show indexType ++ ") of array " ++ array_var ++ "\n")
+    | otherwise = VoidType
+    where 
+        arrayType = lookupVariableType st array_var
+        indexType = tCheck (index, st)
+        valueType = tCheck (value, st)
+
+tCheck ((ArrayAccess array_var index), st)
+    | indexType /= IntType && indexType /= ByteType = error("Type Error: Cannot access non-integer type (" ++ show indexType ++ ") of array " ++ array_var ++ "\n")
+    | otherwise = arrayType
+    where 
+        arrayType = lookupVariableType st array_var
+        indexType = tCheck (index, st)
 
 {-
 ------- Binary AST nodes
 -}
 tCheck ((GetPixel child1 child2), st) 
-    | exp1Type /= ByteType  = error("SetPixel expected first arg of type Byte but it was " ++ (show exp1Type))
-    | exp2Type /= ByteType  = error("SetPixel expected second arg of type Byte but it was " ++ (show exp2Type))
+    | exp1Type /= ByteType  = error("SetPixel expected first arg of type Byte but it was " ++ (show exp1Type) ++ "\n")
+    | exp2Type /= ByteType  = error("SetPixel expected second arg of type Byte but it was " ++ (show exp2Type) ++ "\n")
     | otherwise = MeggyColorType
     where
         exp1Type = tCheck (child1, st)
         exp2Type = tCheck (child2, st)
 
 tCheck ((ToneStart child1 child2), st) 
-    | exp1Type /= MeggyToneType  = error("SetPixel expected first arg of type Byte but it was " ++ (show exp1Type))
-    | exp2Type /= IntType        = error("SetPixel expected second arg of type Byte but it was " ++ (show exp2Type))
+    | exp1Type /= MeggyToneType  = error("SetPixel expected first arg of type Byte but it was " ++ (show exp1Type) ++ "\n")
+    | exp2Type /= IntType        = error("SetPixel expected second arg of type Byte but it was " ++ (show exp2Type) ++ "\n")
     | otherwise = VoidType
     where
         exp1Type = tCheck (child1, st)
         exp2Type = tCheck (child2, st)
 
 tCheck ((LogicalAnd child1 child2), st)
-    | exp1Type /= BooleanType = error("Logical And (&&) has invalid type for left operand " ++ (show exp1Type))
-    | exp2Type /= BooleanType = error("Logical And (&&) has invalid type for right operand " ++ (show exp2Type))
+    | exp1Type /= BooleanType = error("Logical And (&&) has invalid type for left operand " ++ (show exp1Type) ++ "\n")
+    | exp2Type /= BooleanType = error("Logical And (&&) has invalid type for right operand " ++ (show exp2Type) ++ "\n")
     | otherwise = BooleanType
     where
         exp1Type = tCheck (child1, st)
@@ -205,16 +232,16 @@ tCheck ((LessThan child1 child2), st)
     | exp1Type == ByteType && exp2Type == IntType  = BooleanType
     | exp1Type == exp2Type && exp1Type == ByteType = BooleanType
     | exp1Type == exp2Type && exp1Type == IntType  = BooleanType
-    | otherwise = error("LessThan operator (<) has unexpected operand types: " ++ (show exp1Type) ++ " and " ++ (show exp2Type))
+    | otherwise = error("LessThan operator (<) has unexpected operand types: " ++ (show exp1Type) ++ " and " ++ (show exp2Type) ++ "\n")
     where
         exp1Type = tCheck (child1, st)
         exp2Type = tCheck (child2, st)
 
 tCheck ((LogicalEqual child1 child2), st) 
-    | exp1Type == VoidType = error("Logical Equal (==) has invalid type for left operand " ++ (show exp1Type))
-    | exp2Type == VoidType = error("Logical Equal (==) has invalid type for right operand " ++ (show exp2Type))
-    | exp1Type == MeggyButtonType = error("Logical Equal (==) has invalid type for left operand " ++ (show exp1Type))
-    | exp2Type == MeggyButtonType = error("Logical Equal (==) has invalid type for left operand " ++ (show exp1Type))
+    | exp1Type == VoidType = error("Logical Equal (==) has invalid type for left operand " ++ (show exp1Type) ++ "\n")
+    | exp2Type == VoidType = error("Logical Equal (==) has invalid type for right operand " ++ (show exp2Type) ++ "\n")
+    | exp1Type == MeggyButtonType = error("Logical Equal (==) has invalid type for left operand " ++ (show exp1Type) ++ "\n")
+    | exp2Type == MeggyButtonType = error("Logical Equal (==) has invalid type for left operand " ++ (show exp1Type) ++ "\n" ++ "\n")
     | otherwise = BooleanType
     where
         exp1Type = tCheck (child1, st)
@@ -225,7 +252,7 @@ tCheck ((Add child1 child2), st)
     | exp1Type == ByteType && exp2Type == IntType  = IntType
     | exp1Type == exp2Type && exp1Type == ByteType = ByteType
     | exp1Type == exp2Type && exp1Type == IntType  = IntType
-    | otherwise = error("Add operator (+) has unexpected operand types: " ++ (show exp1Type) ++ " and " ++ (show exp2Type))
+    | otherwise = error("Add operator (+) has unexpected operand types: " ++ (show exp1Type) ++ " and " ++ (show exp2Type) ++ "\n")
     where 
         exp1Type = tCheck (child1, st)
         exp2Type = tCheck (child2, st)
@@ -235,34 +262,34 @@ tCheck ((Sub child1 child2), st)
     | exp1Type == ByteType && exp2Type == IntType  = IntType
     | exp1Type == exp2Type && exp1Type == ByteType = ByteType
     | exp1Type == exp2Type && exp1Type == IntType  = IntType
-    | otherwise = error("Sub operator (-) has unexpected operand types: " ++ (show exp1Type) ++ " and " ++ (show exp2Type))
+    | otherwise = error("Sub operator (-) has unexpected operand types: " ++ (show exp1Type) ++ " and " ++ (show exp2Type) ++ "\n")
     where
         exp1Type = tCheck (child1, st)
         exp2Type = tCheck (child2, st)
 
 tCheck ((Mul child1 child2), st) 
     | exp1Type == exp2Type && exp1Type == ByteType = IntType
-    | otherwise = error("Mul operator (*) has unexpected operand types: " ++ (show exp1Type) ++ " and " ++ (show exp2Type))
+    | otherwise = error("Mul operator (*) has unexpected operand types: " ++ (show exp1Type) ++ " and " ++ (show exp2Type) ++ "\n")
     where
         exp1Type = tCheck (child1, st)
         exp2Type = tCheck (child2, st)
 
 tCheck ((While child1 child2), st) 
-    | exp1Type /= BooleanType = error("Condition in while loop has unexpected type: " ++ (show exp1Type) ++ " expected BooleanType")
-    | exp2Type /= VoidType = error("Body of while loop has unexpected type: " ++ (show exp2Type) ++ " expected Statement Type")
+    | exp1Type /= BooleanType = error("Condition in while loop has unexpected type: " ++ (show exp1Type) ++ " expected BooleanType" ++ "\n")
+    | exp2Type /= VoidType = error("Body of while loop has unexpected type: " ++ (show exp2Type) ++ " expected Statement Type" ++ "\n")
     | otherwise = VoidType
     where
         exp1Type = tCheck (child1, st)
         exp2Type = tCheck (child2, st)
 
-tCheck ((Instance className), st) = ClassType className
+-- tCheck ((Instance className), st) = ClassType className
 
-tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mname:class_name:[]))) = 
-    | return
-    |
-    where
-        receiver_returnType   = tCheck (receiver, st)
-        (TS expectedType ret_type) = lookupTypeSig st class_name method_name
+-- tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mname:class_name:[]))) = 
+--     | return
+--     |
+--     where
+--         receiver_returnType   = tCheck (receiver, st)
+--         (TS expectedType ret_type) = lookupTypeSig st class_name method_name
 
 -- I'm lost. 
 -- Check that method_name belongs to the receiver_returnType class otherwise report error. 
@@ -309,9 +336,9 @@ tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mna
 ------- Trinary AST nodes
 -}
 tCheck ((If child1 child2 child3), st) 
-    | exp1Type /= BooleanType = error("Condition of if statement has unexpected type: " ++ (show exp1Type) ++ " expected BooleanType")
-    | exp2Type /= VoidType = error("If body has unexpected type: " ++ (show exp2Type) ++ " expected Statement type")
-    | exp3Type /= VoidType = error("Else body has unexpected type: " ++ (show exp3Type) ++ " expected Statement type")
+    | exp1Type /= BooleanType = error("Condition of if statement has unexpected type: " ++ (show exp1Type) ++ " expected BooleanType" ++ "\n")
+    | exp2Type /= VoidType = error("If body has unexpected type: " ++ (show exp2Type) ++ " expected Statement type" ++ "\n")
+    | exp3Type /= VoidType = error("Else body has unexpected type: " ++ (show exp3Type) ++ " expected Statement type" ++ "\n")
     | otherwise = VoidType
     where
         exp1Type = tCheck (child1, st)
@@ -319,9 +346,9 @@ tCheck ((If child1 child2 child3), st)
         exp3Type = tCheck (child3, st)
 
 tCheck ((SetPixel child1 child2 child3), st)
-    | exp1Type /= ByteType  = error("SetPixel expected first arg of ByteType but it was " ++ (show exp1Type))
-    | exp2Type /= ByteType  = error("SetPixel expected second arg of ByteType but it was " ++ (show exp2Type))
-    | exp3Type /= MeggyColorType = error("SetPixel expected third arg of MeggyColorType but it was " ++ (show exp3Type))
+    | exp1Type /= ByteType  = error("SetPixel expected first arg of ByteType but it was " ++ (show exp1Type) ++ "\n")
+    | exp2Type /= ByteType  = error("SetPixel expected second arg of ByteType but it was " ++ (show exp2Type) ++ "\n")
+    | exp3Type /= MeggyColorType = error("SetPixel expected third arg of MeggyColorType but it was " ++ (show exp3Type) ++ "\n")
     | otherwise = VoidType
     where
         exp1Type = tCheck (child1, st)
@@ -333,17 +360,17 @@ tCheck (ast, st) =
         ++ "\n\t -> Failed to pattern match this AST "
         ++ "\n\t\t -> " ++ show ast 
         ++ "\n\t -> with this symbol table "
-        ++ "\n\t\t -> " ++ show st ++ " in type checking")
+        ++ "\n\t\t -> " ++ show st ++ " in type checking" ++ "\n")
 
 
 typeCheckInvoke :: ([AST], [(String,Type)], Type) -> String -> SymbolTable -> Type
 typeCheckInvoke ([], []      , ret_type) method_name st = ret_type
-typeCheckInvoke (extra:[], [], ret_type) method_name st = error(method_name ++ " invocation error: extra parameter found of type: " ++ show extra)
-typeCheckInvoke ([], extra:[], ret_type) method_name st = error(method_name ++ " invocation error: insufficient number of parameters, requires: " ++ show extra)
+typeCheckInvoke (extra:[], [], ret_type) method_name st = error(method_name ++ " invocation error: extra parameter found of type: " ++ show extra ++ "\n")
+typeCheckInvoke ([], extra:[], ret_type) method_name st = error(method_name ++ " invocation error: insufficient number of parameters, requires: " ++ show extra ++ "\n")
 
 typeCheckInvoke ( (param@(Identifier id):restP), ((exp_name,expected_type):restE), ret_type) method_name st
     | expected_type == IntType && param_type == ByteType = typeCheckInvoke (restP, restE, ret_type) method_name st1
-    | param_type /= expected_type = error(method_name ++ " invocation error: expected type:" ++ show expected_type ++ " but found type: " ++ show param)
+    | param_type /= expected_type = error(method_name ++ " invocation error: expected type:" ++ show expected_type ++ " but found type: " ++ show param ++ "\n")
     | otherwise = typeCheckInvoke (restP, restE, ret_type) method_name st1
     where
         st1 = pushScope st method_name
@@ -351,7 +378,7 @@ typeCheckInvoke ( (param@(Identifier id):restP), ((exp_name,expected_type):restE
 
 typeCheckInvoke ( (param:restP), ((exp_name,expected_type):restE), ret_type) method_name st
     | expected_type == IntType && param_type == ByteType = typeCheckInvoke (restP, restE, ret_type) method_name st
-    | param_type /= expected_type = error(method_name ++ " invocation error: expected type:" ++ show expected_type ++ " but found type: " ++ show param)
+    | param_type /= expected_type = error(method_name ++ " invocation error: expected type:" ++ show expected_type ++ " but found type: " ++ show param ++ "\n")
     | otherwise = typeCheckInvoke (restP, restE, ret_type) method_name st
     where
         param_type = (tCheck (param, st))
