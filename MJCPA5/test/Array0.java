@@ -7,8 +7,9 @@ class Array0{
 }
 
 class C{
-	public void test(int x){
-		if(b.length == 0)
-			Meggy.delay(100);
+	public void test(){
+		int[] b;
+		b = new int[7];
+		Meggy.delay(b.length);
 	}
 } 
