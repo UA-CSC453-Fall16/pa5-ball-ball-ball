@@ -2,13 +2,13 @@ import meggy.Meggy;
 
 class Param0{
     public static void main(String[] args){
-        Meggy.delay(new A().invoke());
+        Meggy.delay(new C().invoke());
     }
 }
 
-class A{
+class C{
 	public int invoke(){
-		return new A().a(new A().a(new A().a(10)));
+		return new C().a(new C().a(new C().a(10)));
 	}
 
 	public int a(int b){

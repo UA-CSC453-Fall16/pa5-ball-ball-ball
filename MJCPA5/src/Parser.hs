@@ -496,7 +496,7 @@ parseP ((TokenMeggyColorType, (r1,c1)):(TokenLeftBracket, (r2,c2)):rest) =
         else
             parsePostE ts2 (ColorArrayInstance capacity)
 
-parseP foo = error(show foo)
+parseP ts = error("Error: parseP "++ (show $ head ts))
 
 --K
 parseK  :: [(Token, (Int,Int))] -> (AST, [(Token, (Int,Int))])

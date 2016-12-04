@@ -17,7 +17,7 @@ import Dot
 import BuildST
 import SymbolTable
 import TypeCheck
---import AVRGen
+import AVRGen
 
 
 main :: IO ()
@@ -59,8 +59,6 @@ main = do
         putStrLn ("Type Checking Failed - Be Better\n") --Should never execute if type checker throws error 
                                                       -- -> you and your code are beautiful.
 
-{- start of omit shit because we are testing" comment
-
     -- uses AST and symbol table to generate AVR code (AVRGen.hs)
     let (label, avr_code) = avrCodeGen (ast, symbol_table) 0 
     putStrLn ("Counting Nibbles between the Frame Pointer and Stack Pointer... \n\t -> AVR Code Generated.")
@@ -72,5 +70,5 @@ main = do
     hClose out_file
     putStrLn ("You win this time...\n\t -> AVR Code written to file: " ++ outf_name ++ "\nBye Weirdo!\n\n")
 
-
+{- start of omit shit because we are testing" comment
     End of "omit shit because we are testing" comment -}
