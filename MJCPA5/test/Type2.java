@@ -9,6 +9,8 @@ class Type2{
 class C2{
     int[] ia;
     Meggy.Color[] mca;
+    int b;
+    byte c;
 
     public void invoke(){
         ia = new int[2];

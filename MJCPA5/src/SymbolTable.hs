@@ -65,7 +65,7 @@ insertMethod (SymTab progScope [classname]) methodname tsig@(TS params ret) =
     let
         (Just (ClassSTE cname classScope coffset)) = M.lookup classname progScope
         doubleDef = checkDoubleDef classScope methodname
-        classScope_new  = M.insert methodname (MethodSTE methodname (emptyScope, tsig) 0) classScope
+        classScope_new  = M.insert methodname (MethodSTE methodname (emptyScope, tsig) 2) classScope
         st1 = SymTab  (M.insert classname (ClassSTE cname classScope_new coffset) progScope) [classname] -- without parameters in method scope
         st2 = pushScope st1 methodname -- push methodscope
         st3 = insertParameters st2 params -- insert all parameters into method scope
@@ -120,7 +120,7 @@ insertParam (SymTab progScope [methodname,classname]) param pType =
 
         -- create new versions of all the scopes
         moffset2 = moffset + typeToBytes pType
-        methodScope_new = M.insert  param (VarSTE pType param " Y " moffset2)
+        methodScope_new = M.insert  param (VarSTE pType param " Y " moffset)
                                     methodScope
         classScope_new = M.insert   methodname (MethodSTE mname (methodScope_new, tsig) moffset2)
                                     classScope
@@ -130,9 +130,9 @@ insertParam (SymTab progScope [methodname,classname]) param pType =
 
 -- helper function to insertParam, determines offset based on type
 typeToBytes :: Type -> Int
-typeToBytes t
-    | t == IntType = 2
-    | otherwise = 1
+typeToBytes (ClassType name) = 2
+typeToBytes IntType = 2
+typeToBytes other = 1
 
 -- Given some current scope, and a parameter name, lookup the type of the parameter
 lookupParamType :: SymbolTable -> String -> Type
@@ -168,7 +168,7 @@ insertVariable (SymTab progScope [methodname,classname]) vname vtype =
 
         -- create new versions of all the scopes
         moffset2 = moffset + typeToBytes vtype
-        methodScope_new = M.insert  vname (VarSTE vtype vname " Y " moffset2)
+        methodScope_new = M.insert  vname (VarSTE vtype vname " Y " moffset)
                                     methodScope
         classScope_new = M.insert   methodname (MethodSTE mname (methodScope_new, tsig) moffset2)
                                     classScope
@@ -184,7 +184,7 @@ insertVariable (SymTab progScope [classname]) vname vtype =
 
         -- create new versions of all the scopes
         coffset2 = coffset + typeToBytes vtype
-        classScope_new = M.insert  vname (VarSTE vtype vname " Z " coffset2)
+        classScope_new = M.insert  vname (VarSTE vtype vname " Z " coffset)
                                     classScope
     in
         (SymTab  (M.insert classname (ClassSTE cname classScope_new coffset2) progScope)

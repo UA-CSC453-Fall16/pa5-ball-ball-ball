@@ -88,6 +88,17 @@ avrCodeGen ((Identifier id), st) label =
             )
 
 -- Unary statements
+avrCodeGen ((SetAuxLEDs child), st) label =
+    let
+        (newLabel, code) = avrCodeGen (child, st) label
+    in
+        (newLabel, code
+        ++ "    \n### Meggy.setAuxLEDs(num) call\n"
+        ++ "    # load a two byte expression off stack\n"
+        ++ "    pop    r24\n"
+        ++ "    pop    r25\n"
+        ++ "    call   _Z10SetAuxLEDsh\n")
+
 avrCodeGen ((Delay child), st) label = 
     let
         (newLabel, code) = avrCodeGen (child, st) label
@@ -639,35 +650,50 @@ avrCodeGen ((Class  ((Method body method_name sig):methods) class_name), st) lab
     in
         (final_label, function_complete ++ function_rest)
 
-avrCodeGen ((Instance invocation class_name), st) label = 
-    if class_name == "this" then
-        let
-            st1 = popScope st
-            (final_label, fucntion_call_code) = avrCodeGen (invocation, st) label
-        in
-            (final_label,
-            "    #Instantiation (new ... ()) \n" ++
-            "    ldi r24, lo8(0)\n" ++
-            "    ldi r25, hi8(0)\n" ++
-            "    #push the (object) on the stack\n" ++
-            "    push r25\n" ++
-            "    push r24\n\n" ++ fucntion_call_code
-            )
-    else 
-        let
-            st1 = setProgScope st
-            st2 = pushScope st1 class_name
-            (final_label, fucntion_call_code) = avrCodeGen (invocation, st2) label
-            st3 = popScope st2
-        in
-            (final_label,
-            "    #Instantiation (new ... ()) \n" ++
-            "    ldi r24, lo8(0)\n" ++
-            "    ldi r25, hi8(0)\n" ++
-            "    #push the (object) on the stack\n" ++
-            "    push r25\n" ++
-            "    push r24\n\n" ++ fucntion_call_code
-            )
+-- avrCodeGen ((Instance invocation class_name), st) label = 
+--     if class_name == "this" then
+--         let
+--             st1 = popScope st
+--             (final_label, fucntion_call_code) = avrCodeGen (invocation, st) label
+--         in
+--             (final_label,
+--             "    #Instantiation (new ... ()) \n" ++
+--             "    ldi r24, lo8(0)\n" ++
+--             "    ldi r25, hi8(0)\n" ++
+--             "    #push the (object) on the stack\n" ++
+--             "    push r25\n" ++
+--             "    push r24\n\n" ++ fucntion_call_code
+--             )
+--     else 
+--         let
+--             st1 = setProgScope st
+--             st2 = pushScope st1 class_name
+--             (final_label, fucntion_call_code) = avrCodeGen (invocation, st2) label
+--             st3 = popScope st2
+--         in
+--             (final_label,
+--             "    #Instantiation (new ... ()) \n" ++
+--             "    ldi r24, lo8(0)\n" ++
+--             "    ldi r25, hi8(0)\n" ++
+--             "    #push the (object) on the stack\n" ++
+--             "    push r25\n" ++
+--             "    push r24\n\n" ++ fucntion_call_code
+--             )
+
+avrCodeGen ((Instance class_name), st) label = 
+    let
+        size = mallocSize st class_name
+    in
+        (label,
+            "    # NewExp\n"
+        ++  "    ldi    r24, lo8("++size++")\n"
+        ++  "    ldi    r25, hi8("++size++")\n"
+        ++  "    # allocating object of size "++size++" on heap\n"
+        ++  "    call    malloc\n"
+        ++  "    # push object address\n"
+        ++  "    # push two byte expression onto stack\n"
+        ++  "    push   r25\n"
+        ++  "    push   r24\n\n")
 
 avrCodeGen ((Invoke list_of_params method_name), st) label = 
     let
@@ -781,7 +807,31 @@ avrCodeGen ((LessThan operand1 operand2), st) label =
             ++ "    ### End Less Than expression\n\n"
             )
 
+avrCodeGen ((ArrayLength array), st) label =
+    let
+        (final_label, array_code) = avrCodeGen (array, st) label
+    in
+        (final_label,
+        array_code
+        ++ "    # length of array\n"
+        ++ "    # load a two byte expression off stack\n"
+        ++ "    pop    r30\n"
+        ++ "    pop    r31\n"
+        ++ "    ldd    r24, Z+0\n"
+        ++ "    ldd    r25, Z+1\n"
+        ++ "    # push two byte expression onto stack\n"
+        ++ "    push   r25\n"
+        ++ "    push   r24\n")
+
 avrCodeGen (x, st) label = error ("AST: " ++ show x)
+
+-- called by avrCodeGen (Instance) for new Object()
+mallocSize :: SymbolTable -> String -> Int
+mallocSize (SymTab progScope nesting) class_name =
+    let
+        (_, _, size) = namedScopeLookup progScope class_name
+    in
+        size
 
 --avrPop Pop one or two bytes depending on Type, into register Int (and Int + 1) return the avr code for this 
 --       the AST is required for promoting byte to int, the last Int is the label #
@@ -842,46 +892,28 @@ setUpFunctionCall st@(SymTab prog_scope [method_name,class_name]) =
                      ++ "    pop r24\n"
                      ++ "    pop r25\n"
                      ++ "    call " ++ id ++ "\n"
+        ret_exp_size = retSize ret_type
     in
-        if ret_type == IntType then
+        if ret_exp_size == 2 then
             (params ++ call_function ++ 
                "    #handles return value\n"
             ++ "    push r25\n"
             ++ "    push r24\n")
-        else if ret_type == VoidType then 
+        else if ret_exp_size == 0 then
             (params ++ call_function)
         else
             (params ++ call_function ++ 
                "    #handles return value\n"
             ++ "    push r24\n")
 
-setUpFunctionCall st@(SymTab prog_scope [mname,method_name,class_name]) = 
-    let 
-        --for each parameter pop the correct number of bytes into ascending registers
-        st1 = popScope st
-        (TS paramTypes ret_type) = lookupTypeSig st1 class_name method_name
-        num_params = length paramTypes
-        starting_register = (24) - (num_params * 2)
-        params = functionLoadParams (reverse paramTypes) starting_register
-        call_function = "\n    #receiver will be passed in as first param\n"
-                     ++ "    pop r24\n"
-                     ++ "    pop r25\n"
-                     ++ "    call " ++ class_name ++ method_name ++ "\n"
-    in
-        if ret_type == IntType then
-            (params ++ call_function ++ 
-               "    #handles return value\n"
-            ++ "    push r25\n"
-            ++ "    push r24\n")
-        else if ret_type == VoidType then 
-            (params ++ call_function)
-        else
-            (params ++ call_function ++ 
-               "    #handles return value\n"
-            ++ "    push r24\n")
+setUpFunctionCall st = error("Error: AVRGen, setUpFunctionCall:\n"++show st)
 
-
-setUpFunctionCall st = error (show st)
+-- called by setUpFunctionCall
+retSize :: Type -> Int
+retSize IntType = 2
+retSize (ClassType _) = 2
+retSize VoidType = 0
+retSize other = 1
 
 helpStoreMethodParams :: [(String, Type)] -> SymbolTable -> Int -> String
 helpStoreMethodParams [] st reg = ""
