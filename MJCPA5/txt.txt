@@ -1,0 +1,557 @@
+1c1
+<     .file "main.java"
+---
+>     .file  "main.java"
+10c10
+<     call _Z18MeggyJrSimpleSetupv
+---
+>     call _Z18MeggyJrSimpleSetupv 
+17,19c17,19
+<     pop r24
+<     pop r25
+<     call Ctest
+---
+>     pop    r24
+>     pop    r25
+>     call    Ctest
+25,40c25,42
+<     push r29
+<     push r28
+<     ldi r30, 0
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+<     push r30
+---
+>     .type  Ctest, @function
+>     push   r29
+>     push   r28
+>     ldi    r30, 0
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+>     push   r30
+43,51c45,52
+<     std Y + 2, r25
+<     std Y + 1, r24
+<     ldi r24,lo8(10)
+<     ldi r25,hi8(10)
+<     push r25
+<     push r24
+<     pop r24
+<     pop r25
+<     std    Y + 3, r24
+---
+>     std    Y + 2, r25
+>     std    Y + 1, r24
+>     ldi    r24,lo8(10)
+>     ldi    r25,hi8(10)
+>     push   r25
+>     push   r24
+>     pop    r24
+>     pop    r25
+53,60c54,62
+<     ldd r25,  Y + 4
+<     ldd r24,  Y + 3
+<     push r25
+<     push r24
+<     pop   r24
+<     pop   r25
+<     push  r24
+<     pop r24
+---
+>     std    Y + 3, r24
+>     ldd    r25, Y + 4
+>     ldd    r24, Y + 3
+>     push   r25
+>     push   r24
+>     pop    r24
+>     pop    r25
+>     push   r24
+>     pop    r24
+62,64c64,66
+<     ldi     r22, 1
+<     push    r22
+<     pop r24
+---
+>     ldi    r22, 1
+>     push   r22
+>     pop    r24
+66,68c68,70
+<     ldi r22,1
+<     push r22
+<     pop r24
+---
+>     ldi    r22,1
+>     push   r22
+>     pop    r24
+70,96c72
+<     pop r24
+<     std    Y + 9, r24
+<     ldi r24,lo8(2)
+<     ldi r25,hi8(2)
+<     push r25
+<     push r24
+<     pop r26
+<     pop r27
+<     push r27
+<     push r26
+<     add r26, r26
+<     adc r27, r27
+<     ldi r24, 2
+<     ldi r25, 0
+<     add r24, r26
+<     adc r25, r27
+<     call malloc
+<     mov r31, r25
+<     mov r30, r24
+<     pop r26
+<     pop r27
+<     std Z+0, r26
+<     std Z+1, r27
+<     push r31
+<     push r30
+<     pop r24
+<     pop r25
+---
+>     pop    r24
+98,115c74,117
+<     std    Y + 11, r25
+<     ldd r25,  Y + 11
+<     ldd r24,  Y + 10
+<     push r25
+<     push r24
+<     ldi r24,lo8(0)
+<     ldi r25,hi8(0)
+<     push r25
+<     push r24
+<     ldd r25,  Y + 4
+<     ldd r24,  Y + 3
+<     push r25
+<     push r24
+<     ldd r24,  Y + 5
+<     push r24
+<     pop     r18
+<     pop     r24
+<     pop     r25
+---
+>     ldi    r24,lo8(2)
+>     ldi    r25,hi8(2)
+>     push   r25
+>     push   r24
+>     pop    r26
+>     pop    r27
+>     push   r27
+>     push   r26
+>     add    r26,r26
+>     adc    r27,r27
+>     ldi    r24, 2
+>     ldi    r25, 0
+>     add    r24,r26
+>     adc    r25,r27
+>     call   malloc
+>     mov    r31, r25
+>     mov    r30, r24
+>     pop    r26
+>     pop    r27
+>     std    Z+0,r26
+>     std    Z+1,r27
+>     push   r31
+>     push   r30
+>     pop    r24
+>     pop    r25
+>     std    Y + 12, r25
+>     std    Y + 11, r24
+>     ldd    r25, Y + 12
+>     ldd    r24, Y + 11
+>     push   r25
+>     push   r24
+>     ldi    r24,lo8(0)
+>     ldi    r25,hi8(0)
+>     push   r25
+>     push   r24
+>     ldd    r25, Y + 4
+>     ldd    r24, Y + 3
+>     push   r25
+>     push   r24
+>     ldd    r24, Y + 5
+>     push   r24
+>     pop    r18
+>     pop    r24
+>     pop    r25
+117,164c119,166
+<     brlt    MJ_L0
+<     ldi     r19, 0
+<     jmp     MJ_L1
+<     ldi     r19, hi8(-1)
+<     add     r24, r18
+<     adc     r25, r19
+<     push    r25
+<     push    r24
+<     pop r24
+<     pop r25
+<     pop r18
+<     pop r19
+<     add r18, r18
+<     adc r19, r19
+<     mov r31, r19
+<     mov r30, r18
+<     ldi r20, 2
+<     ldi r21, 0
+<     add r30, r20
+<     adc r31, r21
+<     pop r22
+<     pop r23
+<     add r30, r22
+<     adc r31, r23
+<     std Z+0, r24
+<     std Z+1, r25
+<     ldd r25,  Y + 11
+<     ldd r24,  Y + 10
+<     push r25
+<     push r24
+<     ldi r24,lo8(1)
+<     ldi r25,hi8(1)
+<     push r25
+<     push r24
+<     ldi r24,lo8(2)
+<     ldi r25,hi8(2)
+<     push r25
+<     push r24
+<     pop   r24
+<     pop   r25
+<     push  r24
+<     ldi r24,lo8(3)
+<     ldi r25,hi8(3)
+<     push r25
+<     push r24
+<     pop   r24
+<     pop   r25
+<     push  r24
+---
+>     brlt     MJ_L0
+>     ldi    r25, 0
+>     jmp    MJ_L1
+>     ldi    r25, hi8(-1)
+>     add    r24, r18
+>     adc    r25, r19
+>     push   r25
+>     push   r24
+>     pop    r24
+>     pop    r25
+>     pop    r18
+>     pop    r19
+>     add    r18,r18
+>     adc    r19,r19
+>     mov    r31, r19
+>     mov    r30, r18
+>     ldi    r20, 2
+>     ldi    r21, 0
+>     add    r30, r20
+>     adc    r31, r21
+>     pop    r22
+>     pop    r23
+>     add    r30, r22
+>     adc    r31, r23
+>     std    Z+0, r24
+>     std    Z+1, r25
+>     ldd    r25, Y + 12
+>     ldd    r24, Y + 11
+>     push   r25
+>     push   r24
+>     ldi    r24,lo8(1)
+>     ldi    r25,hi8(1)
+>     push   r25
+>     push   r24
+>     ldi    r24,lo8(2)
+>     ldi    r25,hi8(2)
+>     push   r25
+>     push   r24
+>     pop    r24
+>     pop    r25
+>     push   r24
+>     ldi    r24,lo8(3)
+>     ldi    r25,hi8(3)
+>     push   r25
+>     push   r24
+>     pop    r24
+>     pop    r25
+>     push   r24
+174,303c176,302
+<     pop r24
+<     pop r25
+<     pop r18
+<     pop r19
+<     add r18, r18
+<     adc r19, r19
+<     mov r31, r19
+<     mov r30, r18
+<     ldi r20, 2
+<     ldi r21, 0
+<     add r30, r20
+<     adc r31, r21
+<     pop r22
+<     pop r23
+<     add r30, r22
+<     adc r31, r23
+<     std Z+0, r24
+<     std Z+1, r25
+<     ldi r24,lo8(2)
+<     ldi r25,hi8(2)
+<     push r25
+<     push r24
+<     pop r26
+<     pop r27
+<     push r27
+<     push r26
+<     ldi r24, 2
+<     ldi r25, 0
+<     add r24, r26
+<     adc r25, r27
+<     call malloc
+<     mov r31, r25
+<     mov r30, r24
+<     pop r26
+<     pop r27
+<     std Z+0, r26
+<     stc Z+1, r27
+<     push r31
+<     push r30
+<     pop r24
+<     pop r25
+<     std    Y + 12, r24
+<     std    Y + 13, r25
+<     ldd r25,  Y + 13
+<     ldd r24,  Y + 12
+<     push r25
+<     push r24
+<     ldi r24,lo8(0)
+<     ldi r25,hi8(0)
+<     push r25
+<     push r24
+<     ldd r24,  Y + 7
+<     push r24
+<     pop r24
+<     pop r18
+<     pop r19
+<     mov r31, r19
+<     mov r30, r18
+<     ldi r20, 2
+<     ldi r21, 0
+<     add r30, r20
+<     adc r31, r21
+<     pop r22
+<     pop r23
+<     add r30, r22
+<     adc r31, r23
+<     std Z+0, r24
+<     ldd r25,  Y + 13
+<     ldd r24,  Y + 12
+<     push r25
+<     push r24
+<     ldi r24,lo8(1)
+<     ldi r25,hi8(1)
+<     push r25
+<     push r24
+<     ldd r25,  Y + 13
+<     ldd r24,  Y + 12
+<     push r25
+<     push r24
+<     ldi r24,lo8(0)
+<     ldi r25,hi8(0)
+<     push r25
+<     push r24
+<     pop r18
+<     pop r19
+<     add r18, r18
+<     adc r19, r19
+<     mov r31, r19
+<     mov r30, r18
+<     ldi r20, 2
+<     ldi r21, 0
+<     add r30, r20
+<     adc r31, r21
+<     pop r22
+<     pop r23
+<     add r30, r22
+<     adc r31, r23
+<     ldd r24, Z+0
+<     ldd r25, Z+1
+<     push r25
+<     push r24
+<     pop r24
+<     pop r18
+<     pop r19
+<     mov r31, r19
+<     mov r30, r18
+<     ldi r20, 2
+<     ldi r21, 0
+<     add r30, r20
+<     adc r31, r21
+<     pop r22
+<     pop r23
+<     add r30, r22
+<     adc r31, r23
+<     std Z+0, r24
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r30
+<     pop r28
+<     pop r29
+---
+>     pop    r24
+>     pop    r25
+>     pop    r18
+>     pop    r19
+>     add    r18,r18
+>     adc    r19,r19
+>     mov    r31, r19
+>     mov    r30, r18
+>     ldi    r20, 2
+>     ldi    r21, 0
+>     add    r30, r20
+>     adc    r31, r21
+>     pop    r22
+>     pop    r23
+>     add    r30, r22
+>     adc    r31, r23
+>     std    Z+0, r24
+>     std    Z+1, r25
+>     ldi    r24,lo8(2)
+>     ldi    r25,hi8(2)
+>     push   r25
+>     push   r24
+>     pop    r26
+>     pop    r27
+>     push   r27
+>     push   r26
+>     ldi    r24, 2
+>     ldi    r25, 0
+>     add    r24,r26
+>     adc    r25,r27
+>     call   malloc
+>     mov    r31, r25
+>     mov    r30, r24
+>     pop    r26
+>     pop    r27
+>     std    Z+0,r26
+>     std    Z+1,r27
+>     push   r31
+>     push   r30
+>     pop    r24
+>     pop    r25
+>     std    Y + 14, r25
+>     std    Y + 13, r24
+>     ldd    r25, Y + 14
+>     ldd    r24, Y + 13
+>     push   r25
+>     push   r24
+>     ldi    r24,lo8(0)
+>     ldi    r25,hi8(0)
+>     push   r25
+>     push   r24
+>     ldd    r24, Y + 7
+>     push   r24
+>     pop    r24
+>     pop    r18
+>     pop    r19
+>     mov    r31, r19
+>     mov    r30, r18
+>     ldi    r20, 2
+>     ldi    r21, 0
+>     add    r30, r20
+>     adc    r31, r21
+>     pop    r22
+>     pop    r23
+>     add    r30, r22
+>     adc    r31, r23
+>     std    Z+0, r24
+>     ldd    r25, Y + 14
+>     ldd    r24, Y + 13
+>     push   r25
+>     push   r24
+>     ldi    r24,lo8(1)
+>     ldi    r25,hi8(1)
+>     push   r25
+>     push   r24
+>     ldd    r25, Y + 14
+>     ldd    r24, Y + 13
+>     push   r25
+>     push   r24
+>     ldi    r24,lo8(0)
+>     ldi    r25,hi8(0)
+>     push   r25
+>     push   r24
+>     pop    r18
+>     pop    r19
+>     mov    r31, r19
+>     mov    r30, r18
+>     ldi    r20, 2
+>     ldi    r21, 0
+>     add    r30, r20
+>     adc    r31, r21
+>     pop    r22
+>     pop    r23
+>     add    r30, r22
+>     adc    r31, r23
+>     ldd    r24, Z+0
+>     push   r24
+>     pop    r24
+>     pop    r18
+>     pop    r19
+>     mov    r31, r19
+>     mov    r30, r18
+>     ldi    r20, 2
+>     ldi    r21, 0
+>     add    r30, r20
+>     adc    r31, r21
+>     pop    r22
+>     pop    r23
+>     add    r30, r22
+>     adc    r31, r23
+>     std    Z+0, r24
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r30
+>     pop    r28
+>     pop    r29

@@ -1109,12 +1109,13 @@ setUpFunctionCall st = error("Error: AVRGen, setUpFunctionCall:\n"++ (symTabToSt
 
 -- called by setUpFunctionCall
 retSize :: Type -> Int
-retSize IntType = 2
-retSize (ClassType _) = 2
-retSize IntArrayType = 2
+retSize IntType        = 2
+retSize (ClassType _)  = 2
+retSize IntArrayType   = 2
 retSize ColorArrayType = 2
-retSize VoidType = 0
-retSize other = 1
+retSize MeggyToneType  = 2
+retSize VoidType       = 0
+retSize other          = 1
 
 helpStoreMethodParams :: [(String, Type)] -> SymbolTable -> Int -> String
 helpStoreMethodParams [] st reg = ""

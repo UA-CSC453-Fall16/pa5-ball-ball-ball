@@ -13,11 +13,15 @@ stack build MJCPA5
 
 if [ $? == 0 ]; then 
     stack exec MJCPA5 "$SOURCE" #INESRT SOURCE FILE NAME HERE 
-    mv "$SOURCE.s" ./ours.s
-
+    
+    if [ $? == 0 ]; then 
+        mv "$SOURCE.s" ./ours.s
+    fi
 
     java -jar MJ.jar "$SOURCE"
-    mv "$SOURCE.s" ./ref.s
+    if [ $? == 0 ]; then 
+        mv "$SOURCE.s" ./ref.s
+    fi
 
     echo "Running MJSim:"
     java -jar MJSIM.jar -b -f ref.s  > ./ref.batch.out
