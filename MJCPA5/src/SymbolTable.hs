@@ -211,6 +211,49 @@ lookupVariableType (SymTab progScope [classname]) vname =
             (Just (VarSTE vartype name base offset)) -> vartype
             (Just x) -> error ("Variable without a type, "++(show x))
 
+-- Given some current scope, and a variable name, lookup the lower offset of the variable
+lookupVariableOffset :: SymbolTable -> String -> Type
+lookupVariableOffset (SymTab progScope [methodname,classname]) vname =
+    let
+        (cname, classScope, coffset) = namedScopeLookup progScope classname
+        (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+    in
+        case M.lookup vname methodScope of
+            Nothing -> lookupVariableType (SymTab progScope [classname]) vname
+            (Just (VarSTE vartype name base offset)) -> offset
+            (Just x) -> error ("Variable without a type, "++(show x))
+
+lookupVariableOffset (SymTab progScope [classname]) vname =
+    let
+        (cname, classScope, coffset) = namedScopeLookup progScope classname
+    in
+        case M.lookup vname classScope of
+            Nothing -> error (vname++" not found in "++classname)
+            (Just (VarSTE vartype name base offset)) -> offset
+            (Just x) -> error ("Variable without a type, "++(show x))
+
+-- Given some current scope, and a variable name, lookup the base of the variable
+lookupVariableOffset :: SymbolTable -> String -> Type
+lookupVariableOffset (SymTab progScope [methodname,classname]) vname =
+    let
+        (cname, classScope, coffset) = namedScopeLookup progScope classname
+        (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+    in
+        case M.lookup vname methodScope of
+            Nothing -> lookupVariableType (SymTab progScope [classname]) vname
+            (Just (VarSTE vartype name base offset)) -> base
+            (Just x) -> error ("Variable without a type, "++(show x))
+
+lookupVariableOffset (SymTab progScope [classname]) vname =
+    let
+        (cname, classScope, coffset) = namedScopeLookup progScope classname
+    in
+        case M.lookup vname classScope of
+            Nothing -> error (vname++" not found in "++classname)
+            (Just (VarSTE vartype name base offset)) -> base
+            (Just x) -> error ("Variable without a type, "++(show x))
+
+
 -- Given some scope and a string to lookup, find the embedded scope or throw
 -- an error.
 -- CANNOT be used for methods
