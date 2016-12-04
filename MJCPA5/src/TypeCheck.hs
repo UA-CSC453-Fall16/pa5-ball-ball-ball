@@ -155,6 +155,51 @@ tCheck ((SetAuxLEDs child), st)
     | otherwise = expType
     where
         expType = tCheck (child, st)
+        
+tCheck ((IntArrayInstance child), st) 
+    | expType  /= IntType = error("Type Error: Invalid type for length expression of Int Array: " ++ (show expType) ++ "\n")
+    | otherwise = IntArrayType
+    where
+        expType = tCheck (child, st)
+
+tCheck ((ColorArrayInstance child), st) 
+    | expType  /= IntType = error("Type Error: Invalid type for length expression of Color Array: " ++ (show expType) ++ "\n")
+    | otherwise = ColorArrayType
+    where
+        expType = tCheck (child, st)
+
+tCheck ((ArrayLength child), st) 
+    | expType  /= ColorArrayType && expType /= IntArrayType = error("Type Error: .length must be invoked on an IntArray or ColorArray not a " ++ (show expType) ++ "\n")
+    | otherwise = IntType
+    where
+        expType = tCheck (child, st)
+
+tCheck ((Variable varType name), st) = varType
+
+tCheck ((Assignment var value), st)
+    | varType == IntType && expressionType == ByteType = VoidType
+    | varType == expressionType = VoidType
+    | otherwise = error ("Type Error: Cannot assign an " ++ show expressionType ++ " to " ++ var ++ ". It expects " ++ show varType ++ "\n")
+    where
+        varType        = lookupVariableType st var
+        expressionType = tCheck (value, st)
+
+tCheck ((ArrayAssignment array_var index value), st)
+    | arrayType == IntType && valueType == ByteType = VoidType
+    | arrayType /= valueType = error("Type Error: Cannot assign expression of type " ++ show valueType ++ " to the array " ++ array_var ++ " of type " ++ show arrayType ++ "\n")
+    | indexType /= IntType && indexType /= ByteType = error("Type Error: Cannot access non-integer type (" ++ show indexType ++ ") of array " ++ array_var ++ "\n")
+    | otherwise = VoidType
+    where 
+        arrayType = lookupVariableType st array_var
+        indexType = tCheck (index, st)
+        valueType = tCheck (value, st)
+
+tCheck ((ArrayAccess array_var index), st)
+    | indexType /= IntType && indexType /= ByteType = error("Type Error: Cannot access non-integer type (" ++ show indexType ++ ") of array " ++ array_var ++ "\n")
+    | otherwise = arrayType
+    where 
+        arrayType = lookupVariableType st array_var
+        indexType = tCheck (index, st)
 
 {-
 ------- Binary AST nodes
