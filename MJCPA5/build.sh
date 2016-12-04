@@ -30,6 +30,7 @@ if [ $? == 0 ]; then
 fi
 #if [ $? == 0 ]; then
 #    dot -Tpng "${SOURCE}.AST.dot" > "${SOURCE}.png"
+    dot -Tpng "${SOURCE}.AST.dot" > "${SOURCE}.png"
 #else
 #    echo "Skipping generating the dot file."
 #fi

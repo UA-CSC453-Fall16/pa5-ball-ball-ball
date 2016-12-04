@@ -39,14 +39,14 @@ class C{
         int c;
         int d;
 
-        this.test2();
+        //this.test2();
         deep[1] = 4;
         mine = new D();
         a = this.test3().init().length;
         // b = mine.vari; // MJ.jar doesn't like this
         // c = mine.hard().vari; // MJ.jar and our compiler both report this error correctly
         // c = this.mine.hard().vari; // MJ.jar and our compiler both report this error correctly
-        d = this.test2()[a];
+        //d = this.test2()[a];
     }
 }
 

@@ -153,6 +153,7 @@ parseParamDecl ts@((t, (row,col)):rest) =
 
 parseU :: [(Token, (Int,Int))] -> ((String, Type), [(Token, (Int,Int))])
 parseU all@((TokenPublic, (row, col)):rest) = (("", Error), all)
+parseU all@((TokenReturn, (row, col)):rest) = (("", Error), all)
 parseU ((typeTok, (row,col)):((TokenID name), (r1,c1)):rest) =
     if first_Type typeTok then
         ((name, (grab_Type typeTok)), rest)

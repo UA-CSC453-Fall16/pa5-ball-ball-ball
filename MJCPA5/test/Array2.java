@@ -1,6 +1,6 @@
 import meggy.Meggy;
 
-class Array1{
+class Array2{
 	public static void main(String[] args){
 		new C().test();
 	}

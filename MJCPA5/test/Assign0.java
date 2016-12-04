@@ -20,8 +20,8 @@ class C{
 
 		i = 10;
 		b = (byte) i;
-		bb = true;
-		mc = Meggy.Color.RED;
+		//bb = true;
+		//mc = Meggy.Color.RED;
 
 		// mt = Meggy.Tone.B2; // HOLY FUCK THIS LAG
 

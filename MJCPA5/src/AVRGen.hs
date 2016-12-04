@@ -75,19 +75,28 @@ avrCodeGen ((Identifier id), st) label =
         offset   = lookupVariableOffset st id 
         base     = lookupVariableBase   st id
 
-        loadCode = (if pushSize == 2 then "    ldd r25, " ++ base ++ "+ " ++ show (offset+1) ++ "\n" else "" ) ++ "    ldd r24, " ++ base ++ "+ " ++ show offset ++ "\n"
-        classVar = "    ldd r31, Y + 2\n   ldd r30, Y + 1\n"
+        loadCode =  if pushSize == 2 then 
+                           "    ldd r25, " 
+                        ++ base 
+                        ++ "+ " 
+                        ++ show (offset+1) 
+                        ++ "\n" 
+                    else ""
+
+        loadCode' = loadCode ++ "    ldd r24, " ++ base ++ "+ " ++ show offset ++ "\n"
+
+        classVar = "    ldd r31, Y + 2\n    ldd r30, Y + 1\n"
 
         result   = if pushSize == 2 then "    push r25\n    push r24\n" else "    push r24\n"
 
         loadExp  = "    # Identifier Expression\n    # Loading variable " ++ id ++ " \n" ++ 
             (if base == " Y " then 
                     "    # Variable is local\n"
-                 ++      loadCode
+                 ++      loadCode'
             else 
                     "    # Variable belongs to the class\n"
                  ++      classVar
-                 ++      loadCode)
+                 ++      loadCode')
     in
         (label, loadExp ++ result)
 
@@ -569,7 +578,7 @@ avrCodeGen ((If child1 child2 child3), st) label =
         ++ "MJ_L" ++ (show (newLabel3 + 2)) ++ ":\n\n")
 
 -- from a Meggy.SetPixel statement, post-order traverse to child argumentsto 
--- get their AVR code strings, concatenate them, then prepend that tothe AVR 
+-- get their AVR code strings, concatenate them, then prepend that to the AVR 
 -- code string for this function call
 avrCodeGen ((SetPixel bc1 bc2 col), st) label =
     let
@@ -639,20 +648,6 @@ avrCodeGen (Prog main [], st) label =
         (final_label, main_code)  = avrCodeGen (main, st) label
     in
         (final_label, header ++ main_code ++ footer)
-
--- avrCodeGen ((Class  [] name), st) label = (label, "")
--- avrCodeGen ((Class  ((Method body method_name sig):methods) class_name), st) label =
---     let
---         id        = correctName (class_name ++ method_name)
---         functHead = ("\n\n\n### Function Head\n    .text\n" ++ ".global " ++ id ++ "\n" ++ "   .type " ++ id ++ ", @function\n" ++ id ++ ":\n")
---         functFoot = ("    #restore FP and return\n" ++ "    pop r28\n" ++ "    pop r29\n" ++ "    ret\n" ++ "    .size " ++ id ++ ", .-" ++ id ++ "\n")
---         st1       = pushScope st class_name
---         (label1, function) = avrCodeGen ((Method body method_name sig), st1) label
---         function_complete = functHead ++ function ++ functFoot
---         st2       = popScope st1
---         (final_label, function_rest) = avrCodeGen ((Class methods class_name), st2) label
---     in
---         (final_label, function_complete ++ function_rest)
 
 avrCodeGen ((Class  variables methods class_name), st) label =
     let
@@ -726,7 +721,7 @@ avrCodeGen ((Invoke receiver list_of_params method_name), st) label0 =
     let
         (label,  receiver_code)           = avrCodeGen (receiver, st) label0
         (ClassType receiver_type)         = tCheck (receiver, st)
-        st0                               = pushScope st receiver_type
+        st0                               = if receiver_type /= "this" then pushScope (setProgScope st) receiver_type else popScope st
         st1                               = pushScope st0 method_name
         (label1, param_evaluations)       = evaluateParams (list_of_params, st1) method_name label
         fucntion_call_code                = setUpFunctionCall st1
@@ -880,23 +875,11 @@ avrCodeGen ((ColorArrayInstance capacity), st) label =
         ++ "    pop r26\n"
         ++ "    pop r27\n"
         ++ "    std Z+0, r26\n"
-        ++ "    stc Z+1, r27\n"
+        ++ "    std Z+1, r27\n"
         ++ "    # Color[] is now allocated. Push the reference to it on the stack\n"
         ++ "    push r31\n"
         ++ "    push r30\n"
         )
-
-{-
-            )  (         )     
-  *   )  ( /(  )\ )   ( /(     
-` )  /(  )\())(()/(   )\())    
- ( )(_))((_)\  /(_)) ((_)\     
-(_(_())   ((_)(_))_    ((_) _  
-|_   _|  / _ \ |   \  / _ \(_) 
-  | |   | (_) || |) || (_) |_  -- Use the Identifier production
-  |_|    \___/ |___/  \___/(_) 
--}
-
 
 avrCodeGen ((Assignment variable value), st) label=
     let
@@ -908,6 +891,8 @@ avrCodeGen ((Assignment variable value), st) label=
         loadLow        = "    pop r24\n"
         loadHi         = if retSize valueType == 2 then "    pop r25\n" else ""
 
+        implicitThis   = if variableBase == " Z " then "    # Variable is class member, goes to memory\n    ldd r31, Y + 2\n    ldd r30, Y + 1\n" else "    # Variable belongs to method, will go on stack\n"
+
         storeLow       = "    std   " ++ variableBase ++ "+ " ++ show variableOffset ++ ", r24\n"
         storeHi        =  if retSize valueType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
     in
@@ -917,6 +902,7 @@ avrCodeGen ((Assignment variable value), st) label=
         ++ "    # Load right hand side expression off the stack\n"    
         ++      loadLow   
         ++      loadHi    
+        ++      implicitThis
         ++ "    # Store the right hand side value into " ++ variable ++ "\n"
         ++      storeLow   
         ++      storeHi       
@@ -948,8 +934,8 @@ avrCodeGen ((ArrayAssignment variable index value), st) label =
         ++ "    ### Array assignment statement to " ++ variable ++ "[]\n"
         ++ "    # load right hand side of assignment\n"
         ++      rhs_pop
-        ++ "    calculate the array element address by first\n"
-        ++ "    loading index:\n"
+        ++ "    # calculate the array element address by first\n"
+        ++ "    # loading index:\n"
         ++ "    pop r18\n"
         ++ "    pop r19\n"
         ++      doubleElementsForIntArray
@@ -974,7 +960,7 @@ avrCodeGen ((ArrayAssignment variable index value), st) label =
 avrCodeGen ((ArrayAccess arrayExp index), st) label = 
     let
         indexType = tCheck (index, st)
-        indexLoad = if indexType == IntType then "    pop r24\n    pop r25\n" else "    pop r24\n"
+        indexLoad = if indexType == IntType then "    pop r18\n    pop r19\n" else "    pop r18\n"
         doubleElementsForIntArray = if indexType == IntType then
                                             "    # add size in elems to self to multiply by 2\n"
                                          ++ "    add r18, r18\n"
@@ -1120,7 +1106,7 @@ helpStoreMethodParams ((pName,pType):rest) st reg
     | pType == IntType =
         let
             offsetH = lookupParamOffset st pName
-            offsetL = offsetH-1
+            offsetL = offsetH
         in  "    std Y + "++show offsetH++", r"++show (reg+1)++"\n"
           ++"    std Y + "++show offsetL++", r"++show (reg)++"\n"
           ++helpStoreMethodParams rest st (reg-2)
