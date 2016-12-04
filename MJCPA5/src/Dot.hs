@@ -228,7 +228,7 @@ astdotviz_rec _ myid astnode =
                 in
                     (maxChild,subTreeStr++prefix++"ArrayLength"++suffix)
 
-            (Instance name) -> (myid, prefix ++ id name ++ suffix)
+            (Instance name) -> (myid, prefix ++ "Class Instance: " ++ id name ++ suffix)
 
             (Variable varType varId) -> (myid, prefix++ " "  ++ stripQuotes "\"" (show varType) ++ " " ++ varId ++ "; "++suffix)
 

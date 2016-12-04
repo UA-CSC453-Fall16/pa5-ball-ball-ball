@@ -702,6 +702,15 @@ avrCodeGen ((Method varDecl body method_name (TS params ret_type)), st@(SymTab p
     in
         (new_label, methodPrologueCode++methodBodyCode++methodEpilogueCode)
   
+avrCodeGen ((Instance "this"), st) label = 
+        (label,
+            "    # Loading the implicit this\n"
+        ++  "    ldd    r31, Y + 2\n"
+        ++  "    ldd    r30, Y + 1\n"
+        ++  "    # Pushing this on the stack\n"
+        ++  "    push   r31\n"
+        ++  "    push   r30\n\n")
+
 avrCodeGen ((Instance class_name), st) label = 
     let
         size = mallocSize st class_name
@@ -1003,7 +1012,14 @@ avrCodeGen (x, st) label = error ("AST: " ++ show x)
 
 -- called by avrCodeGen (Instance) for new Object()
 mallocSize :: SymbolTable -> String -> Int
-mallocSize (SymTab progScope nesting) class_name =
+mallocSize st@(SymTab progScope nesting) "this" =
+    let
+        st1@(SymTab newScope [newNesting]) = popScope st
+        (_, _, size) = namedScopeLookup newScope newNesting
+    in
+        size
+
+mallocSize st@(SymTab progScope nesting) class_name =
     let
         (_, _, size) = namedScopeLookup progScope class_name
     in
@@ -1103,7 +1119,7 @@ retSize other = 1
 helpStoreMethodParams :: [(String, Type)] -> SymbolTable -> Int -> String
 helpStoreMethodParams [] st reg = ""
 helpStoreMethodParams ((pName,pType):rest) st reg
-    | pType == IntType =
+    | retSize pType == 2 =
         let
             offsetH = lookupParamOffset st pName
             offsetL = offsetH
@@ -1119,9 +1135,9 @@ helpStoreMethodParams ((pName,pType):rest) st reg
 
 helpLoadMethodReturnValue :: Type -> String
 helpLoadMethodReturnValue ret_type                  -- = to fix syntax hilighting.
-    | ret_type == IntType = "    # load a two byte expression off stack\n"
-                         ++ "    pop r24\n"
-                         ++ "    pop r25\n"
+    | retSize ret_type == 2 = "    # load a two byte expression off stack\n"
+                           ++ "    pop r24\n"
+                           ++ "    pop r25\n"
     | ret_type == VoidType = "    # Nothing to return -> Void return type\n"
     | otherwise = "    # load a one byte expression off stack\n"
                ++ "    pop r24\n"
@@ -1129,7 +1145,7 @@ helpLoadMethodReturnValue ret_type                  -- = to fix syntax hilightin
 functionLoadParams :: [(String, Type)] -> Int-> String
 functionLoadParams [] reg = ""
 functionLoadParams ((pName, pType):rest) reg
-    | pType == IntType =
+    | retSize pType == 2 =
         "    # load a two byte expression off stack\n"
      ++ "    pop r"++show reg++"\n"
      ++ "    pop r"++show (reg+1)++"\n"
@@ -1174,11 +1190,6 @@ evaluateParams ((param:rest), st) method_name label =
         (final_label, rest_of_param_code) = evaluateParams (rest, st1) method_name label
     in
         (final_label, param_code ++ rest_of_param_code)
-
-numBytesInParameters :: [(String, Type)] -> Int -> Int 
-numBytesInParameters [] num = num
-numBytesInParameters ((_, IntType):rest) num = numBytesInParameters rest (num + 2)
-numBytesInParameters ((_, _):rest) num = numBytesInParameters rest (num + 1)
 
 correctName :: String -> String
 correctName "" = ""
