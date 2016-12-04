@@ -77,12 +77,32 @@ insertMethod (SymTab progScope [classname]) methodname tsig@(TS params ret) =
 
 -- Given some class name and method name, lookup the type signature of the method
 lookupTypeSig :: SymbolTable -> String -> String -> TypeSig
-lookupTypeSig (SymTab progScope stack) classname methodname =
-    let
-        (cname, classScope, coffset) = namedScopeLookup progScope classname
-        (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
-    in
-        tsig
+lookupTypeSig (SymTab progScope [mname,currcname]) classname methodname =
+    if cname == "this" then
+        let
+            (cname, classScope, coffset) = namedScopeLookup progScope currcname
+            (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+        in
+            tsig
+    else
+        let
+            (cname, classScope, coffset) = namedScopeLookup progScope classname
+            (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+        in
+            tsig
+lookupTypeSig (SymTab progScope [cname]) classname methodname =
+    if cname == "this" then
+        let
+            (cname, classScope, coffset) = namedScopeLookup progScope currcname
+            (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+        in
+            tsig
+    else
+        let
+            (cname, classScope, coffset) = namedScopeLookup progScope classname
+            (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+        in
+            tsig
 
 -- Assumes we are already in the correct scope of a method, grabs the return type of current method scope
 getReturn :: SymbolTable -> Type
@@ -129,7 +149,6 @@ typeToBytes t
     | otherwise = 1
 
 -- Given some current scope, and a parameter name, lookup the type of the parameter
--- options -> lookupTypeSig, lookupParamType, lookupParamOffset
 lookupParamType :: SymbolTable -> String -> Type
 lookupParamType (SymTab progScope (methodname:classname:rest)) paramname =
     let
@@ -183,7 +202,28 @@ insertVariable (SymTab progScope [classname]) vname vtype =
                                     classScope
     in
         (SymTab  (M.insert classname (ClassSTE cname classScope_new coffset2) progScope)
-                [classname])        
+                [classname])
+
+-- Given some current scope, and a variable name, lookup the type of the variable
+lookupVariableType :: SymbolTable -> String -> Type
+lookupVariableType (SymTab progScope [methodname,classname]) vname =
+    let
+        (cname, classScope, coffset) = namedScopeLookup progScope classname
+        (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+    in
+        case M.lookup vname methodScope of
+            Nothing -> lookupVariableType (SymTab progScope [classname]) vname
+            (Just (VarSTE vartype name base offset)) -> vartype
+            (Just x) -> error ("Variable without a type, "++(show x))
+
+lookupVariableType (SymTab progScope [classname]) vname =
+    let
+        (cname, classScope, coffset) = namedScopeLookup progScope classname
+    in
+        case M.lookup vname classScope of
+            Nothing -> error (vname++" not found in "++classname)
+            (Just (VarSTE vartype name base offset)) -> vartype
+            (Just x) -> error ("Variable without a type, "++(show x))
 
 -- Given some scope and a string to lookup, find the embedded scope or throw
 -- an error.

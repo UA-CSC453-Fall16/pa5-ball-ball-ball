@@ -76,7 +76,7 @@ tCheck ((Method variables body method_name (TS params return_type)), st)
 tCheck ((Body []), st)            = VoidType
 tCheck ((Body (Epsilon:[]) ), st) = VoidType
 tCheck ((Body ((Return ret_exp):[])), st) = tCheck ((Return ret_exp), st)
-tCheck ((Body (child:rest)), st) 
+tCheck ((Body (child:rest)), st) =
     let
         typeBody = tCheck (child, st) 
     in
@@ -239,12 +239,18 @@ tCheck ((While child1 child2), st)
 
 tCheck ((Instance className), st) = ClassType className
 
-tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mname:class_name:[]))) = 
-    | return
-    |
-    where
-        receiver_returnType   = tCheck (receiver, st)
-        (TS expectedType ret_type) = lookupTypeSig st class_name method_name
+-- tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mname:class_name:[]))) =
+--     | return
+--     |
+--     where
+--         receiver_returnType   = tCheck (receiver, st)
+--         (TS expectedType ret_type) = lookupTypeSig st class_name method_name
+
+-- tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mname:class_name:[]))) =
+--     where
+--         receiver_type = tCheck (receiver, st)
+--         (mname, mscope, (TS params return_type, maxoffset) = namedScopeLookup' scope method_name
+
 
 -- I'm lost. 
 -- Check that method_name belongs to the receiver_returnType class otherwise report error. 
@@ -265,26 +271,22 @@ tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mna
 
 -- --We can assume that the return type declared is the type of this expression or statement
 -- st -> (SymTab scope (firstThingInTheListWhichShouldBeTheMethodNameButWeAlreadyHaveThatFromTheLeftPatternMatch:class_name:emptyListHopefullyButInAnErrorCaseItMayNotBeTheEmptyListAndMayCauseAnErrorSoLetsHopeItIsJustTheEmptyList)) ) = 
--- tCheck ((Invoke params@(param:rest) method_name), st@(SymTab scope (class_name:[])) ) = 
-    -- let
-    --     (TS expected_types ret_type) = lookupTypeSig st class_name method_name 
-    -- in
-    --     typeCheckInvoke (params, expected_types, ret_type) method_name st
+tCheck ((Invoke recexp params@(param:rest) method_name), st@(SymTab scope [mname,class_name]) ) = 
+    let
+        receiver_type = tCheck (recexp, st) -- get class of receiver
+        (TS expected_types ret_type) = lookupTypeSig st return_type method_name -- verify receiver has method of method_name
+    in
+        typeCheckInvoke (params, expected_types, ret_type) method_name st
 
--- tCheck ((Invoke params@(param:rest) method_name), st@(SymTab scope (mname:class_name:[])) ) = 
---     let
---         (TS expected_types ret_type) = lookupTypeSig st class_name method_name 
---     in
---         typeCheckInvoke (params, expected_types, ret_type) method_name st
-
--- tCheck ((Invoke [] method_name), ts@(SymTab scope [class_name]) ) = 
---     let
---         (TS expected_types ret_type) = lookupTypeSig ts class_name method_name 
---     in
---         if length expected_types == 0 then
---             ret_type
---         else
---             error(method_name ++ " invocation error: insufficient number of parameters, requires: " ++ show expected_types)
+tCheck ((Invoke recexp [] method_name), ts@(SymTab scope [class_name]) ) = 
+    let
+        receiver_type = tCheck (recexp, st) -- get class of receiver
+        (TS expected_types ret_type) = lookupTypeSig ts class_name method_name -- verify receiver has method of method_name
+    in
+        if length expected_types == 0 then
+            ret_type
+        else
+            error(method_name ++ " invocation error: insufficient number of parameters, requires: " ++ show expected_types)
 
 
 {-

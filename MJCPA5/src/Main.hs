@@ -16,7 +16,7 @@ import Parser
 import Dot
 import BuildST
 import SymbolTable
---import TypeCheck
+import TypeCheck
 --import AVRGen
 
 
@@ -51,16 +51,15 @@ main = do
     -- traverses AST and builds a symbol table (BuildST.hs)
     let symbol_table = genSymbolTable ast
     putStrLn ("Here is our book of secrets... \n\n" ++ (symTabToString symbol_table 0))
-    -- putStrLn ("Here is our book of secrets... \n\n" ++ show symbol_table)
-
-{- start of omit shit because we are testing" comment
 
     -- uses AST and symbol table to perform type checking (TypeCheck.hs)
     if typeCheck (ast, symbol_table) then
         putStrLn ("Your MeggyJr must be so proud! :,-)\n\t -> Type Checking Passed.")
     else
         putStrLn ("Type Checking Failed - Be Better\n") --Should never execute if type checker throws error 
-                                                      -- -> you and your code are beautiful. 
+                                                      -- -> you and your code are beautiful.
+
+{- start of omit shit because we are testing" comment
 
     -- uses AST and symbol table to generate AVR code (AVRGen.hs)
     let (label, avr_code) = avrCodeGen (ast, symbol_table) 0 
