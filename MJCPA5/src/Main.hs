@@ -50,7 +50,7 @@ main = do
 
     -- traverses AST and builds a symbol table (BuildST.hs)
     let symbol_table = genSymbolTable ast
-    putStrLn ("Here is our book of secrets... \n\n" ++ (symTabToString symbol_table 0))
+    --putStrLn ("Here is our book of secrets... \n\n" ++ (symTabToString symbol_table 0))
 
     -- uses AST and symbol table to perform type checking (TypeCheck.hs)
     if typeCheck (ast, symbol_table) then

@@ -11,6 +11,7 @@ module TypeCheck where
 
 import Util
 import SymbolTable
+import Debug.Trace
 
 -- entry point
 typeCheck :: (AST, SymbolTable)-> Bool
@@ -36,7 +37,7 @@ tCheck (Epsilon, st)               = VoidType
 {-
 ------- Top level n-ary AST nodes 
 -}
-tCheck ((Prog main (aClass:other_classes) ), st)
+tCheck ((Prog main (aClass@(Class vars meths class_name):other_classes) ), st)
     | mainType  /= VoidType = error("Invalid type found in main class: " ++ (show mainType))
     | childType /= VoidType = error("Invalid type found in class " ++ class_name ++ ": " ++ (show childType))
     | otherwise  = tCheck ((Prog Epsilon other_classes), st) 
@@ -66,7 +67,7 @@ tCheck ((MainClass child), st)
 
 tCheck ((Method variables body method_name (TS params return_type)), st)
     | actual_type == ByteType && return_type == IntType = VoidType
-    | actual_type /= return_type = error("Invalid type found in main: " ++ (show actual_type))
+    | actual_type /= return_type = error("Invalid type found in method "++method_name++": " ++ (show actual_type))
     | otherwise    = VoidType
     where
         st1         = pushScope st method_name
@@ -84,7 +85,7 @@ tCheck ((Body (child:rest)), st) =
 
 tCheck ((MethDecl []), st) = VoidType
 tCheck ((MethDecl (left:rest)), st)
-    | methodType /= TypeVoid = error ("Type check error, method with bad type\n")
+    | methodType /= VoidType = error ("Type check error, method with bad type\n")
     | otherwise = tCheck ((MethDecl rest), st)
     where
         methodType = tCheck (left, st)
@@ -105,7 +106,7 @@ tCheck ((Return child), st@(SymTab scope [method_name,class_name])) =
         else
             error(method_name ++ ": Return expression type: " ++ show returnExpType ++ ", does not match signature return type: " ++ show signatureRetType)
 
-tCheck ((Identifier name), st) =  lookupParamType st name 
+tCheck ((Identifier name), st) =  lookupVariableType st name --trace(symTabToString st 0)
 
 {-
 ------- Unary AST Nodes
@@ -271,17 +272,17 @@ tCheck ((Instance className), st) = ClassType className
 
 -- --We can assume that the return type declared is the type of this expression or statement
 -- st -> (SymTab scope (firstThingInTheListWhichShouldBeTheMethodNameButWeAlreadyHaveThatFromTheLeftPatternMatch:class_name:emptyListHopefullyButInAnErrorCaseItMayNotBeTheEmptyListAndMayCauseAnErrorSoLetsHopeItIsJustTheEmptyList)) ) = 
-tCheck ((Invoke recexp params@(param:rest) method_name), st@(SymTab scope [mname,class_name]) ) = 
+tCheck ((Invoke recexp params@(param:rest) method_name), st@(SymTab scope nesting) ) = 
     let
-        receiver_type = tCheck (recexp, st) -- get class of receiver
-        (TS expected_types ret_type) = lookupTypeSig st return_type method_name -- verify receiver has method of method_name
+        (ClassType receiver_type) = tCheck (recexp, st) -- get class of receiver
+        (TS expected_types ret_type) = lookupTypeSig st receiver_type method_name -- verify receiver has method of method_name
     in
         typeCheckInvoke (params, expected_types, ret_type) method_name st
 
-tCheck ((Invoke recexp [] method_name), ts@(SymTab scope [class_name]) ) = 
+tCheck ((Invoke recexp [] method_name), st@(SymTab scope nesting) ) = 
     let
-        receiver_type = tCheck (recexp, st) -- get class of receiver
-        (TS expected_types ret_type) = lookupTypeSig ts class_name method_name -- verify receiver has method of method_name
+        (ClassType receiver_type) = tCheck (recexp, st) -- get class of receiver
+        (TS expected_types ret_type) = lookupTypeSig st receiver_type method_name -- verify receiver has method of method_name
     in
         if length expected_types == 0 then
             ret_type

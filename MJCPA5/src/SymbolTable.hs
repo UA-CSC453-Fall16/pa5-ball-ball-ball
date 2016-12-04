@@ -78,7 +78,7 @@ insertMethod (SymTab progScope [classname]) methodname tsig@(TS params ret) =
 -- Given some class name and method name, lookup the type signature of the method
 lookupTypeSig :: SymbolTable -> String -> String -> TypeSig
 lookupTypeSig (SymTab progScope [mname,currcname]) classname methodname =
-    if cname == "this" then
+    if currcname == "this" then
         let
             (cname, classScope, coffset) = namedScopeLookup progScope currcname
             (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
@@ -90,8 +90,8 @@ lookupTypeSig (SymTab progScope [mname,currcname]) classname methodname =
             (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
         in
             tsig
-lookupTypeSig (SymTab progScope [cname]) classname methodname =
-    if cname == "this" then
+lookupTypeSig (SymTab progScope [currcname]) classname methodname =
+    if currcname == "this" then
         let
             (cname, classScope, coffset) = namedScopeLookup progScope currcname
             (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname

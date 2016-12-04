@@ -20,6 +20,7 @@ class C{
 		//val = new int[6][0];   // the above should pass this should fail.
 		//arr = new int[5];
 		//val = arr[0][1]; //Should fail and does correctly
+        return val;
     }
 
     public int[] test2(){
