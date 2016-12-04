@@ -65,7 +65,7 @@ insertMethod (SymTab progScope [classname]) methodname tsig@(TS params ret) =
     let
         (Just (ClassSTE cname classScope coffset)) = M.lookup classname progScope
         doubleDef = checkDoubleDef classScope methodname
-        classScope_new  = M.insert methodname (MethodSTE methodname (emptyScope, tsig) 2) classScope
+        classScope_new  = M.insert methodname (MethodSTE methodname (emptyScope, tsig) 3) classScope
         st1 = SymTab  (M.insert classname (ClassSTE cname classScope_new coffset) progScope) [classname] -- without parameters in method scope
         st2 = pushScope st1 methodname -- push methodscope
         st3 = insertParameters st2 params -- insert all parameters into method scope
@@ -132,11 +132,13 @@ insertParam (SymTab progScope [methodname,classname]) param pType =
 typeToBytes :: Type -> Int
 typeToBytes (ClassType name) = 2
 typeToBytes IntType = 2
+typeToBytes IntArrayType = 2
+typeToBytes ColorArrayType = 2 --;
 typeToBytes other = 1
 
 -- Given some current scope, and a parameter name, lookup the type of the parameter
 lookupParamType :: SymbolTable -> String -> Type
-lookupParamType (SymTab progScope (methodname:classname:rest)) paramname =
+lookupParamType st@(SymTab progScope (methodname:classname:rest)) paramname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
         (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
@@ -144,10 +146,10 @@ lookupParamType (SymTab progScope (methodname:classname:rest)) paramname =
         case M.lookup paramname methodScope of
             Nothing -> error (paramname++" not found in "++methodname++ " or "++classname)
             (Just (VarSTE vartype name base offset)) -> vartype
-            (Just x) -> error ("Parameter without a type, "++(show x))
+            (Just x) -> error ("Parameter without a type, "++(symTabToString st 0))
 
 lookupParamOffset :: SymbolTable -> String -> Int
-lookupParamOffset (SymTab progScope [methodname,classname]) paramname =
+lookupParamOffset st@(SymTab progScope [methodname,classname]) paramname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
         (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
@@ -155,7 +157,7 @@ lookupParamOffset (SymTab progScope [methodname,classname]) paramname =
         case M.lookup paramname methodScope of
             Nothing -> error (paramname++" not found in "++methodname++ " or "++classname)
             (Just (VarSTE vartype name base offset)) -> offset
-            (Just x) -> error ("Parameter without a type, "++(show x))
+            (Just x) -> error ("Parameter without a type, "++(symTabToString st 0))
 
 -- Insert a variable declaration into the current scope.
 insertVariable :: SymbolTable -> String -> Type -> SymbolTable
@@ -192,7 +194,7 @@ insertVariable (SymTab progScope [classname]) vname vtype =
 
 -- Given some current scope, and a variable name, lookup the type of the variable
 lookupVariableType :: SymbolTable -> String -> Type
-lookupVariableType (SymTab progScope [methodname,classname]) vname =
+lookupVariableType st@(SymTab progScope [methodname,classname]) vname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
         (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
@@ -200,20 +202,20 @@ lookupVariableType (SymTab progScope [methodname,classname]) vname =
         case M.lookup vname methodScope of
             Nothing -> lookupVariableType (SymTab progScope [classname]) vname
             (Just (VarSTE vartype name base offset)) -> vartype
-            (Just x) -> error ("Variable without a type, "++(show x))
+            (Just x) -> error ("Variable without a type, "++(symTabToString st 0))
 
-lookupVariableType (SymTab progScope [classname]) vname =
+lookupVariableType st@(SymTab progScope [classname]) vname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
     in
         case M.lookup vname classScope of
             Nothing -> error (vname++" not found in "++classname)
             (Just (VarSTE vartype name base offset)) -> vartype
-            (Just x) -> error ("Variable without a type, "++(show x))
+            (Just x) -> error ("Variable without a type, "++(symTabToString st 0))
 
 -- Given some current scope, and a variable name, lookup the lower offset of the variable
 lookupVariableOffset :: SymbolTable -> String -> Int
-lookupVariableOffset (SymTab progScope [methodname,classname]) vname =
+lookupVariableOffset st@(SymTab progScope [methodname,classname]) vname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
         (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
@@ -221,16 +223,16 @@ lookupVariableOffset (SymTab progScope [methodname,classname]) vname =
         case M.lookup vname methodScope of
             Nothing -> lookupVariableOffset (SymTab progScope [classname]) vname
             (Just (VarSTE vartype name base offset)) -> offset
-            (Just x) -> error ("Variable without a type, "++(show x))
+            (Just x) -> error ("Variable without a type, "++(symTabToString st 0))
 
-lookupVariableOffset (SymTab progScope [classname]) vname =
+lookupVariableOffset st@(SymTab progScope [classname]) vname =
     let
         (cname, classScope, coffset) = namedScopeLookup progScope classname
     in
         case M.lookup vname classScope of
             Nothing -> error (vname++" not found in "++classname)
             (Just (VarSTE vartype name base offset)) -> offset
-            (Just x) -> error ("Variable without a type, "++(show x))
+            (Just x) -> error ("Variable without a type, "++(symTabToString st 0))
 
 -- Given some current scope, and a variable name, lookup the base of the variable
 lookupVariableBase :: SymbolTable -> String -> String
@@ -256,6 +258,7 @@ lookupVariableBase (SymTab progScope [classname]) vname =
 
 -- Given some scope and a string to lookup, find the embedded scope or throw
 -- an error.
+-- NOTE: Assumes the caller passes the Program scope
 -- CANNOT be used for methods
 namedScopeLookup :: Scope -> String -> (String, Scope, Int)
 namedScopeLookup outer name =
@@ -266,6 +269,7 @@ namedScopeLookup outer name =
         (Just x) -> error ("STE without a scope, "++ (show x))
 
 -- Only used for methods
+-- NOTE: Assumes the caller passes the Class scope
 namedScopeLookup' :: Scope -> String -> (String, Scope, TypeSig, Int)
 namedScopeLookup' outer name =
     case M.lookup name outer of
@@ -286,55 +290,58 @@ checkDoubleDef outer name =
 -- table data structure.
 symTabToString :: SymbolTable -> Int -> String
 symTabToString (SymTab scope location) n =
-  let
-    stars = "********************************************\n"
-    prefix = indent n
-    intro = "Printing SymbolTable " ++ (show location) ++ ":\n"
-    entries = "keys: " ++  (show (M.keys scope)) ++ "\n"
-    stes = getSTEs (M.elems scope) (n+1)
-  in
-    prefix ++ stars ++ intro ++ prefix ++ entries ++ prefix ++ stars ++ stes ++ prefix ++ stars
+    let
+        stars = "********************************************\n"
+        prefix = indent n
+        intro = "Printing SymbolTable " ++ (show location) ++ ":\n"
+        entries = "keys: " ++  (show (M.keys scope)) ++ "\n"
+        stes = getSTEs (M.elems scope) (n+1)
+    in
+        prefix ++ stars ++ intro ++ prefix ++ entries ++ prefix ++ stars ++ stes ++ prefix ++ stars
 
 symTabToString' :: Scope -> Int -> String
 symTabToString' scope n = 
-  let
-    stars = "********************************************\n"
-    prefix = indent n
-    intro = "Printing Scope:\n"
-    entries = "keys: " ++  (show (M.keys scope)) ++ "\n"
-    stes = getSTEs (M.elems scope) (n+1)
-  in
-    prefix ++ entries ++ prefix ++ intro ++ prefix ++ stars ++ stes ++ prefix ++ stars
+    let
+        stars = "********************************************\n"
+        prefix = indent n
+        intro = "Printing Scope:\n"
+        entries = "keys: " ++  (show (M.keys scope)) ++ "\n"
+        stes = getSTEs (M.elems scope) (n+1)
+    in
+        prefix ++ entries ++ prefix ++ intro ++ prefix ++ stars ++ stes ++ prefix ++ stars
 
 -- Helper method for symTabToString to get the
 -- STEs in the symbol table for printing.
 getSTEs :: [STE] -> Int -> String
 getSTEs ((ClassSTE cname scope coffset):rest) n =
-  let 
-    prefix = indent n
-    info = "ClassSTE: " ++ cname ++ ": max_offset = " ++ show coffset ++ "\n"
-    entries = symTabToString' scope (n+1)
-    everythingElse = getSTEs rest (n)
-  in
-    prefix ++ info ++ entries ++ everythingElse
+    let 
+        prefix = indent n
+        info = "ClassSTE: " ++ cname ++ ": max_offset = " ++ show coffset ++ "\n"
+        entries = symTabToString' scope (n+1)
+        everythingElse = getSTEs rest (n)
+    in
+        prefix ++ info ++ entries ++ everythingElse
+
 getSTEs ((MethodSTE mname (scope, tsig) moffset):rest) n =
-  let 
-    prefix = indent n
-    info = "MethodSTE: " ++ mname ++ ": max_offset = " ++ show moffset ++ "\n"
-    signature = "Signature = " ++ (show tsig) ++ "\n"
-    entries = symTabToString' scope (n+1)
-    everythingElse = getSTEs rest (n)
-  in
-    prefix ++ info ++ prefix ++ signature ++ entries ++ everythingElse
+    let 
+        prefix = indent n
+        info = "MethodSTE: " ++ mname ++ ": max_offset = " ++ show moffset ++ "\n"
+        signature = "Signature = " ++ (show tsig) ++ "\n"
+        entries = symTabToString' scope (n+1)
+        everythingElse = getSTEs rest (n)
+    in
+        prefix ++ info ++ prefix ++ signature ++ entries ++ everythingElse
+
 getSTEs ((VarSTE vtype vname base offset):rest) n =
-  let 
-    prefix = indent n
-    info = "VarSTE: " ++ (show vname) ++ ":\n"
-    tp = "Type: " ++ (show vtype) ++ "\n"
-    baseOffset = "Base: " ++ base ++ ",\tOffset: " ++ (show offset) ++ "\n"
-    everythingElse = getSTEs rest (n)
-  in
-    prefix ++ info ++ prefix ++ tp ++ prefix ++ baseOffset ++ everythingElse
+    let 
+        prefix = indent n
+        info = "VarSTE: " ++ (show vname) ++ ":\n"
+        tp = "Type: " ++ (show vtype) ++ "\n"
+        baseOffset = "Base: " ++ base ++ ",\tOffset: " ++ (show offset) ++ "\n"
+        everythingElse = getSTEs rest (n)
+    in
+        prefix ++ info ++ prefix ++ tp ++ prefix ++ baseOffset ++ everythingElse
+
 getSTEs [] n = ""
 
 -- Indent method to provide spacing for printing

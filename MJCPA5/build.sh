@@ -19,9 +19,14 @@ if [ $? == 0 ]; then
     java -jar MJ.jar "$SOURCE"
     mv "$SOURCE.s" ./ref.s
 
-    java -jar MJSIM.jar -b -f ours.s > ./ours.batch.out
+    echo "Running MJSim:"
     java -jar MJSIM.jar -b -f ref.s  > ./ref.batch.out
-
+    java -jar MJSIM.jar -b -f ours.s > ./ours.batch.out
+    
+    if [ $? == 0 ]; then
+        echo "Diff results:"
+        diff ours.batch.out ref.batch.out
+    fi
 fi
 #if [ $? == 0 ]; then
 #    dot -Tpng "${SOURCE}.AST.dot" > "${SOURCE}.png"

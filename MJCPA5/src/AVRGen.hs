@@ -12,6 +12,7 @@ module AVRGen where
 import Util
 import TypeCheck
 import SymbolTable
+import Debug.Trace
 
 -- search for the below comment to find the entry point at Prog
 {-
@@ -74,12 +75,12 @@ avrCodeGen ((Identifier id), st) label =
         offset   = lookupVariableOffset st id 
         base     = lookupVariableBase   st id
 
-        loadCode = (if pushSize == 1 then "    ldd r25, " ++ base ++ "+ " ++ show (offset+1) ++ "\n" else "" ) ++ "    ldd r24, " ++ base ++ "+ " ++ show offset ++ "\n"
+        loadCode = (if pushSize == 2 then "    ldd r25, " ++ base ++ "+ " ++ show (offset+1) ++ "\n" else "" ) ++ "    ldd r24, " ++ base ++ "+ " ++ show offset ++ "\n"
         classVar = "    ldd r31, Y + 2\n   ldd r30, Y + 1\n"
 
-        result = if pushSize == 2 then "    push r25\n    push r24\n" else "    push r24\n"
+        result   = if pushSize == 2 then "    push r25\n    push r24\n" else "    push r24\n"
 
-        loadExp  = "    # Loading variable " ++ id ++ " \n" ++ 
+        loadExp  = "    # Identifier Expression\n    # Loading variable " ++ id ++ " \n" ++ 
             (if base == " Y " then 
                     "    # Variable is local\n"
                  ++      loadCode
@@ -671,19 +672,20 @@ avrCodeGen (MethDecl ((method@(Method variables body method_name sig):rest)), st
         function_complete = functHead ++ method_code ++ functFoot
         (final_label, other_methods_code) = avrCodeGen (((MethDecl rest)), st) newLabel
     in
-        (final_label, method_code ++ other_methods_code) 
+        (final_label, functHead ++ method_code ++ functFoot ++ other_methods_code) 
 
 
 avrCodeGen ((Method varDecl body method_name (TS params ret_type)), st@(SymTab progScope [class_name])) label =
     let
-        st1 = pushScope st method_name
-        id = correctName (class_name ++ method_name)
+        bitchAssInteger = spaceOnActivationRecord st method_name class_name
+        st1   = pushScope st method_name
+        id    = correctName (class_name ++ method_name)
         methodPrologueCode = 
                "    push r29\n"
             ++ "    push r28\n"
             ++ "    # make space for locals and params\n"
             ++ "    ldi r30, 0\n"
-            ++ (concat $ replicate (numBytesInParameters params 2) "    push r30\n") -- 2 for 'this'
+            ++ (concat $ replicate bitchAssInteger "    push r30\n") -- 2 for 'this'
           ++ "\n    # Copy stack pointer to frame pointer\n"
             ++ "    in     r28,__SP_L__\n"
             ++ "    in     r29,__SP_H__\n\n"
@@ -699,43 +701,12 @@ avrCodeGen ((Method varDecl body method_name (TS params ret_type)), st@(SymTab p
             ++ "    # handle return value\n"
             ++ helpLoadMethodReturnValue actual_return_type
             ++ "    # pop space off stack for parameters and locals\n"
-            ++ (concat $ replicate (numBytesInParameters params 2) "    pop r30\n") -- 2 for 'this'
+            ++ (concat $ replicate bitchAssInteger "    pop r30\n") -- 2 for 'this'
             ++ "    # restoring the frame pointer\n"
         st2 = popScope st1 -- NOT UNTIL AFTER DONE WITH BODY
     in
         (new_label, methodPrologueCode++methodBodyCode++methodEpilogueCode)
   
-
--- avrCodeGen ((Instance invocation class_name), st) label = 
---     if class_name == "this" then
---         let
---             st1 = popScope st
---             (final_label, fucntion_call_code) = avrCodeGen (invocation, st) label
---         in
---             (final_label,
---             "    #Instantiation (new ... ()) \n" ++
---             "    ldi r24, lo8(0)\n" ++
---             "    ldi r25, hi8(0)\n" ++
---             "    #push the (object) on the stack\n" ++
---             "    push r25\n" ++
---             "    push r24\n\n" ++ fucntion_call_code
---             )
---     else 
---         let
---             st1 = setProgScope st
---             st2 = pushScope st1 class_name
---             (final_label, fucntion_call_code) = avrCodeGen (invocation, st2) label
---             st3 = popScope st2
---         in
---             (final_label,
---             "    #Instantiation (new ... ()) \n" ++
---             "    ldi r24, lo8(0)\n" ++
---             "    ldi r25, hi8(0)\n" ++
---             "    #push the (object) on the stack\n" ++
---             "    push r25\n" ++
---             "    push r24\n\n" ++ fucntion_call_code
---             )
-
 avrCodeGen ((Instance class_name), st) label = 
     let
         size = mallocSize st class_name
@@ -754,10 +725,13 @@ avrCodeGen ((Instance class_name), st) label =
 avrCodeGen ((Invoke receiver list_of_params method_name), st) label0 = 
     let
         (label,  receiver_code)           = avrCodeGen (receiver, st) label0
-        st1                               = pushScope st method_name
+        (ClassType receiver_type)         = tCheck (receiver, st)
+        st0                               = pushScope st receiver_type
+        st1                               = pushScope st0 method_name
         (label1, param_evaluations)       = evaluateParams (list_of_params, st1) method_name label
         fucntion_call_code                = setUpFunctionCall st1
         st2                               = popScope st1
+        st3                               = popScope st2
     in
         (label1, receiver_code ++ param_evaluations ++ fucntion_call_code)      
 
@@ -852,7 +826,7 @@ avrCodeGen ((IntArrayInstance capacity), st) label =
     let
         (newLabel, capacityExpr) = avrCodeGen (capacity, st) label
         capacityType = tCheck (capacity, st)
-        loadAndPushExp = if capacityType == IntType then (arrayLoadAndCast 2 26) else (arrayLoadAndCast 1 26)
+        loadAndPushExp = if retSize capacityType == 2 then (arrayLoadAndCast 2 26) else (arrayLoadAndCast 1 26)
     in
         (newLabel, 
                 capacityExpr
@@ -875,7 +849,7 @@ avrCodeGen ((IntArrayInstance capacity), st) label =
         ++ "    pop r26\n"
         ++ "    pop r27\n"
         ++ "    std Z+0, r26\n"
-        ++ "    stc Z+1, r27\n"
+        ++ "    std Z+1, r27\n"
         ++ "    # int[] is now allocated. Push the reference to it on the stack\n"
         ++ "    push r31\n"
         ++ "    push r30\n"
@@ -932,10 +906,10 @@ avrCodeGen ((Assignment variable value), st) label=
         variableOffset = lookupVariableOffset st variable 
 
         loadLow        = "    pop r24\n"
-        loadHi         = if valueType == IntType then "    pop r25\n" else ""
+        loadHi         = if retSize valueType == 2 then "    pop r25\n" else ""
 
         storeLow       = "    std   " ++ variableBase ++ "+ " ++ show variableOffset ++ ", r24\n"
-        storeHi        =  if valueType == IntType then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
+        storeHi        =  if retSize valueType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
     in
         (newLabel, 
                 valueExpr 
@@ -1049,6 +1023,14 @@ mallocSize (SymTab progScope nesting) class_name =
     in
         size
 
+spaceOnActivationRecord :: SymbolTable -> String -> String -> Int
+spaceOnActivationRecord st@(SymTab progScope nesting) method_name class_name=
+    let
+        (_, classScope, _) = namedScopeLookup progScope   class_name
+        (_, _, _, size)    = namedScopeLookup' classScope method_name
+    in
+        size - 1
+
 --avrPop Pop one or two bytes depending on Type, into register Int (and Int + 1) return the avr code for this 
 --       the AST is required for promoting byte to int, the last Int is the label #
 avrPop :: Type -> Int -> Int -> String
@@ -1127,6 +1109,8 @@ setUpFunctionCall st = error("Error: AVRGen, setUpFunctionCall:\n"++ (symTabToSt
 retSize :: Type -> Int
 retSize IntType = 2
 retSize (ClassType _) = 2
+retSize IntArrayType = 2
+retSize ColorArrayType = 2
 retSize VoidType = 0
 retSize other = 1
 

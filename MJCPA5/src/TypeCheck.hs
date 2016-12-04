@@ -300,36 +300,6 @@ tCheck ((While child1 child2), st)
 
 tCheck ((Instance className), st) = ClassType className
 
--- tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mname:class_name:[]))) =
---     | return
---     |
---     where
---         receiver_returnType   = tCheck (receiver, st)
---         (TS expectedType ret_type) = lookupTypeSig st class_name method_name
-
--- tCheck ((Invoke receiver params@(first:rest) method_name), st@(SymTab scope (mname:class_name:[]))) =
---     where
---         receiver_type = tCheck (receiver, st)
---         (mname, mscope, (TS params return_type, maxoffset) = namedScopeLookup' scope method_name
-
-
--- I'm lost. 
--- Check that method_name belongs to the receiver_returnType class otherwise report error. 
-
-
-
--- tCheck ((Instance child class_name), st) = 
---     if class_name == "this" then
---             tCheck (child, st)
---     else
---         let 
---             st1 = setProgScope st
---             st2 = pushScope st1 class_name
---             return_type = tCheck (child, st2)
---             st3 = popScope st2
---         in
---             return_type
-
 -- --We can assume that the return type declared is the type of this expression or statement
 -- st -> (SymTab scope (firstThingInTheListWhichShouldBeTheMethodNameButWeAlreadyHaveThatFromTheLeftPatternMatch:class_name:emptyListHopefullyButInAnErrorCaseItMayNotBeTheEmptyListAndMayCauseAnErrorSoLetsHopeItIsJustTheEmptyList)) ) = 
 tCheck ((Invoke recexp params@(param:rest) method_name), st@(SymTab scope nesting) ) = 
