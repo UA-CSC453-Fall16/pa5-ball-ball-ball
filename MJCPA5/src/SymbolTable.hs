@@ -77,32 +77,18 @@ insertMethod (SymTab progScope [classname]) methodname tsig@(TS params ret) =
 
 -- Given some class name and method name, lookup the type signature of the method
 lookupTypeSig :: SymbolTable -> String -> String -> TypeSig
-lookupTypeSig (SymTab progScope [mname,currcname]) classname methodname =
-    if currcname == "this" then
-        let
-            (cname, classScope, coffset) = namedScopeLookup progScope currcname
-            (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
-        in
-            tsig
-    else
-        let
-            (cname, classScope, coffset) = namedScopeLookup progScope classname
-            (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
-        in
-            tsig
-lookupTypeSig (SymTab progScope [currcname]) classname methodname =
-    if currcname == "this" then
-        let
-            (cname, classScope, coffset) = namedScopeLookup progScope currcname
-            (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
-        in
-            tsig
-    else
-        let
-            (cname, classScope, coffset) = namedScopeLookup progScope classname
-            (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
-        in
-            tsig
+lookupTypeSig (SymTab progScope [mmm,ccc]) "this" methodname =
+    let
+        (cname, classScope, coffset) = namedScopeLookup progScope ccc
+        (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+    in
+        tsig
+lookupTypeSig (SymTab progScope nesting) classname methodname =
+    let
+        (cname, classScope, coffset) = namedScopeLookup progScope classname
+        (mname, methodScope, tsig, moffset) = namedScopeLookup' classScope methodname
+    in
+        tsig
 
 -- Assumes we are already in the correct scope of a method, grabs the return type of current method scope
 getReturn :: SymbolTable -> Type

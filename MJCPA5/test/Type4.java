@@ -14,6 +14,6 @@ class C2{
         ia = new int[2];
         mca = new Meggy.Color[2];
         ia[0] = 3;
-        mca[(byte) 0] = Meggy.Color.BLUE; //should pass   
+        mca[(byte) 0] = Meggy.Color.BLUE; //should pass
     }
 }

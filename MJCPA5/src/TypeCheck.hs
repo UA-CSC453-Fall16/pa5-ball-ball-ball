@@ -79,9 +79,12 @@ tCheck ((Body (Epsilon:[]) ), st) = VoidType
 tCheck ((Body ((Return ret_exp):[])), st) = tCheck ((Return ret_exp), st)
 tCheck ((Body (child:rest)), st) =
     let
-        typeBody = tCheck (child, st) 
+        typeBody = tCheck (child, st)
     in
-        tCheck ((Body rest), st)
+        if typeBody /= Error then
+            tCheck ((Body rest), st)
+        else
+            error("Invalid statment type found in body: "++show typeBody)
 
 tCheck ((MethDecl []), st) = VoidType
 tCheck ((MethDecl (left:rest)), st)
@@ -98,13 +101,21 @@ tCheck ((Return child), st@(SymTab scope [method_name,class_name])) =
         returnExpType = tCheck (child, st)
     in
         if signatureRetType == VoidType then
-            error("Error: " ++ method_name ++ " has a return type of void, but contains a return expression")
+            error("Error: method " ++ method_name ++ " has a return type of void, but contains a return expression")
         else if returnExpType == signatureRetType then
             returnExpType
         else if returnExpType == ByteType && signatureRetType == IntType then
             ByteType
+        else if returnExpType == (ClassType "this") then
+            let
+                (ClassType ctype) = getReturn st
+            in
+                if ctype == class_name then
+                    signatureRetType
+                else
+                    error("Error: method " ++ method_name ++ ": Return expression type: " ++ show class_name ++ ", does not match signature return type: " ++ show signatureRetType)        
         else
-            error(method_name ++ ": Return expression type: " ++ show returnExpType ++ ", does not match signature return type: " ++ show signatureRetType)
+            error("Error: method " ++ method_name ++ ": Return expression type: " ++ show returnExpType ++ ", does not match signature return type: " ++ show signatureRetType)
 
 tCheck ((Identifier name), st) =  lookupVariableType st name --trace(symTabToString st 0)
 
@@ -156,14 +167,14 @@ tCheck ((SetAuxLEDs child), st)
     where
         expType = tCheck (child, st)
         
-tCheck ((IntArrayInstance child), st) 
-    | expType  /= IntType = error("Type Error: Invalid type for length expression of Int Array: " ++ (show expType) ++ "\n")
+tCheck ((IntArrayInstance child), st)
+    | expType  /= IntType && expType /= ByteType = error("Type Error: Invalid type for length expression of Int Array: " ++ (show expType) ++ "\n")
     | otherwise = IntArrayType
     where
         expType = tCheck (child, st)
 
 tCheck ((ColorArrayInstance child), st) 
-    | expType  /= IntType = error("Type Error: Invalid type for length expression of Color Array: " ++ (show expType) ++ "\n")
+    | expType  /= IntType && expType /= ByteType = error("Type Error: Invalid type for length expression of Color Array: " ++ (show expType) ++ "\n")
     | otherwise = ColorArrayType
     where
         expType = tCheck (child, st)
@@ -185,9 +196,11 @@ tCheck ((Assignment var value), st)
         expressionType = tCheck (value, st)
 
 tCheck ((ArrayAssignment array_var index value), st)
-    | arrayType == IntType && valueType == ByteType = VoidType
-    | arrayType /= valueType = error("Type Error: Cannot assign expression of type " ++ show valueType ++ " to the array " ++ array_var ++ " of type " ++ show arrayType ++ "\n")
     | indexType /= IntType && indexType /= ByteType = error("Type Error: Cannot access non-integer type (" ++ show indexType ++ ") of array " ++ array_var ++ "\n")
+    | arrayType == IntArrayType && valueType == ByteType = VoidType
+    | arrayType == IntArrayType && valueType == IntType = VoidType
+    | arrayType == ColorArrayType && valueType == MeggyColorType = VoidType
+    | arrayType /= valueType = error("Type Error: Cannot assign expression of type " ++ show valueType ++ " to the array " ++ array_var ++ " of type " ++ show arrayType ++ "\n")
     | otherwise = VoidType
     where 
         arrayType = lookupVariableType st array_var
@@ -195,10 +208,12 @@ tCheck ((ArrayAssignment array_var index value), st)
         valueType = tCheck (value, st)
 
 tCheck ((ArrayAccess array_var index), st)
-    | indexType /= IntType && indexType /= ByteType = error("Type Error: Cannot access non-integer type (" ++ show indexType ++ ") of array " ++ array_var ++ "\n")
+    | indexType /= IntType && indexType /= ByteType = error("Type Error: Cannot access non-integer type (" ++ show indexType ++ ") of array " ++ show array_var ++ "\n")
+    | arrayType == IntArrayType = IntType
+    | arrayType == ColorArrayType = MeggyColorType
     | otherwise = arrayType
-    where 
-        arrayType = lookupVariableType st array_var
+    where
+        arrayType = tCheck (array_var, st)
         indexType = tCheck (index, st)
 
 {-
