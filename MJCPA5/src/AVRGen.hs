@@ -854,9 +854,9 @@ avrCodeGen ((IntArrayInstance capacity), st) label =
     let
         (newLabel, capacityExpr) = avrCodeGen (capacity, st) label
         capacityType = tCheck (capacity, st)
-        loadAndPushExp = if typeToBytes capacityType == 2 then (arrayLoadAndCast 2 26) else (arrayLoadAndCast 1 26)
+        (final_label, loadAndPushExp) = if typeToBytes capacityType == 2 then (arrayLoadAndCast 2 26 label) else (arrayLoadAndCast 1 26 label)
     in
-        (newLabel, 
+        (final_label, 
                 capacityExpr
         ++ "    ### New Integer Array Instance \n"
         ++ "    # Load capacity of array from stack\n"
@@ -887,9 +887,9 @@ avrCodeGen ((ColorArrayInstance capacity), st) label =
     let
         (newLabel, capacityExpr) = avrCodeGen (capacity, st) label
         capacityType = tCheck (capacity, st)
-        loadAndPushExp = if capacityType == IntType then (arrayLoadAndCast 2 26) else (arrayLoadAndCast 1 26)
+        (final_label, loadAndPushExp) = if capacityType == IntType then (arrayLoadAndCast 2 26 label) else (arrayLoadAndCast 1 26 label)
     in
-        (newLabel, 
+        (final_label, 
                 capacityExpr
         ++ "    ### New Color Array Instance \n"
         ++ "    # Load capacity of array from stack\n"
@@ -924,17 +924,22 @@ avrCodeGen ((Assignment variable value), st) label=
         loadLow        = "    pop r24\n"
         loadHi         = if typeToBytes valueType == 2 then "    pop r25\n" else ""
 
+        assgnType      = tCheck ((Identifier variable), st)
+        promotion      = if typeToBytes assgnType == 2 && typeToBytes valueType == 1 then promote 24 label else ""
+        final_label    = if typeToBytes assgnType == 2 && typeToBytes valueType == 1 then newLabel + 2 else newLabel
+
         implicitThis   = if variableBase == " Z " then "    # Variable is class member, goes to memory\n    ldd r31, Y + 2\n    ldd r30, Y + 1\n" else "    # Variable belongs to method, will go on stack\n"
 
         storeLow       = "    std   " ++ variableBase ++ "+ " ++ show variableOffset ++ ", r24\n"
-        storeHi        = if typeToBytes valueType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
+        storeHi        = if typeToBytes assgnType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
     in
-        (newLabel, 
+        (final_label, 
                 valueExpr 
         ++ "    ### Variable Assignment\n"    
         ++ "    # Load right hand side expression off the stack\n"    
         ++      loadLow   
-        ++      loadHi    
+        ++      loadHi  
+        ++      promotion  
         ++      implicitThis
         ++ "    # Store the right hand side value into " ++ variable ++ "\n"
         ++      storeLow   
@@ -1169,21 +1174,23 @@ functionLoadParams ((pName, pType):rest) reg
      ++ "    pop r"++show reg++"\n"
      ++ functionLoadParams rest (reg+2)
 
-arrayLoadAndCast :: Int -> Int -> String
-arrayLoadAndCast bytes reg
+arrayLoadAndCast :: Int -> Int -> Int -> (Int, String)
+arrayLoadAndCast bytes reg label
     | bytes == 2 =
+        (label,
         "    # load a two byte expression off stack\n"
      ++ "    pop r"++show reg++"\n"
      ++ "    pop r"++show (reg+1)++"\n"
      ++ "    push r"++show (reg+1)++"\n"
-     ++ "    push r"++show reg++"\n"     
+     ++ "    push r"++show reg++"\n")     
     | otherwise =
+        (label + 2, 
         "    # load a one byte expression off stack, array length is non-negative we \n"
      ++ "    # can assume that the upper bits will not need to be sign extended\n"
      ++ "    pop r"++show reg++"\n"
-     ++ "    ldi r"++show (reg+1)++", 0\n"
+     ++     (promote reg label)
      ++ "    push r"++show (reg+1)++"\n"
-     ++ "    push r"++show reg++"\n"  
+     ++ "    push r"++show reg++"\n")  
 
 
 -- A list of ASTs (parameters) and the symbol table and the method name and the current label number produce
