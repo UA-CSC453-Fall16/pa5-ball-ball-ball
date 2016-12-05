@@ -1,3 +1,1 @@
-Setting auxiliary LEDs from left to right as follows:  0  1  0  1  1  1  1  1 
-Setting auxiliary LEDs from left to right as follows:  0  1  1  0  0  0  0  0 
-Delaying for 5 milliseconds
+Checking button B and returning false
