@@ -117,7 +117,7 @@ tCheck ((Return child), st@(SymTab scope [method_name,class_name])) =
         else
             error("Error: method " ++ method_name ++ ": Return expression type: " ++ show returnExpType ++ ", does not match signature return type: " ++ show signatureRetType)
 
-tCheck ((Identifier name), st) =  trace(symTabToString st 0) lookupVariableType st name --
+tCheck ((Identifier name), st) = lookupVariableType st name --
 
 {-
 ------- Unary AST Nodes

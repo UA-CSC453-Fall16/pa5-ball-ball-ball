@@ -730,14 +730,14 @@ avrCodeGen ((Invoke receiver list_of_params method_name), st) label0 =
     let
         (label,  receiver_code)           = avrCodeGen (receiver, st) label0
         (ClassType receiver_type)         = tCheck (receiver, st)
-        st0                               = if receiver_type /= "this" then pushScope (setProgScope st) receiver_type else popScope st
-        st1                               = pushScope st0 method_name
-        (label1, param_evaluations)       = evaluateParams (list_of_params, st1) method_name label
-        fucntion_call_code                = setUpFunctionCall st1
-        st2                               = popScope st1
+        st1                               = if receiver_type /= "this" then pushScope (setProgScope st) receiver_type else popScope st
+        st2                               = pushScope st1 method_name
+        (label1, param_evaluations)       = evaluateParams (list_of_params, st2) method_name label
+        function_call_code                = setUpFunctionCall st2
         st3                               = popScope st2
+        st4                               = popScope st3
     in
-        (label1, receiver_code ++ param_evaluations ++ fucntion_call_code)      
+        (label1, receiver_code ++ param_evaluations ++ function_call_code)      
 
 avrCodeGen ((LessThan operand1 operand2), st) label = 
     let
@@ -1177,18 +1177,10 @@ arrayLoadAndCast bytes reg
 --      -> The new label number and the code that represents the list of ASTs (parameters)
 evaluateParams :: ([AST], SymbolTable) -> String -> Int -> (Int, String)
 evaluateParams ([], st) method_name label = (label, "")
-evaluateParams ((param@(Identifier id):rest), st) method_name label =
+evaluateParams ((param:rest), st) method_name label =
     let
         (label1, param_code)              = avrCodeGen (param, st) label
         (final_label, rest_of_param_code) = evaluateParams (rest, st) method_name label
-    in
-        (final_label, param_code ++ rest_of_param_code)
-
-evaluateParams ((param:rest), st) method_name label =
-    let
-        st1 = popScope st
-        (label1, param_code)              = avrCodeGen (param, st1) label
-        (final_label, rest_of_param_code) = evaluateParams (rest, st1) method_name label
     in
         (final_label, param_code ++ rest_of_param_code)
 
