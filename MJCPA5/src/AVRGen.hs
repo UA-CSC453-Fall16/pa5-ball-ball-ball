@@ -18,12 +18,6 @@ module AVRGen where
 import Util
 import TypeCheck
 import SymbolTable
-import Debug.Trace
-
--- search for the below comment to find the entry point at Prog
-{-
-    AVR Code Gen Entry Point
--}
 
 avrCodeGen :: (AST, SymbolTable) -> Int -> (Int, String)
 avrCodeGen ((MainClass   child), st) label = avrCodeGen (child, st) label

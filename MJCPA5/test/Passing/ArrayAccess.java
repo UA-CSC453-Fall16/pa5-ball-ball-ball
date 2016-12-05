@@ -1,6 +1,6 @@
 import meggy.Meggy;
 
-class Example{
+class ArrayAccess{
 	public static void main(String[] args){
 		new Test().testArrays().possiblyValid();
 	}

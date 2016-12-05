@@ -10,14 +10,42 @@
 -- Step (2) of compiling.
 --
 -- ReLex module simplifies some of the tokens by condensing Meggy call tokens and Byte Casting
---
+-- Combines token sequences for more logical parsing
+-- Example: [TokenBigMeggy, TokenDot, TokenSetPixel] -> TokenMeggySetPix
+
+{-
+ReLex produces a single token output from the following sequences:
+
+Meggy library calls to avoid ambiguity
+    Meggy . setPixel     => TokenMeggySetPix (Avoids LL(1) parsing ambiguity in cases like [TokenBigMeggy, ???])
+    Meggy . toneStart
+    Meggy . delay
+    Meggy . getPixel
+    Meggy . checkButton
+    Meggy . setAuxLEDs 
+
+Meggy Literal prefixes (example: Meggy.Tone.C3 => [TokenMeggyTone, TokenTone "C3"])
+    Meggy . Color . 
+    Meggy . Button . 
+    Meggy . Tone . 
+    Meggy . Color [ ]
+
+Conveneient reductions: 
+    int [ ]                 => TokenIntArrayType
+    import meggy . Meggy ;  => TokenMeggyImport
+    . length                => TokenDotLength (Avoids LL(1) expression ambiguity in cases like [TokenDot, ???])
+    ( byte )                => TokenByteCast  (Avoids LL(1) expression ambiguity in cases like [TokenLeftParen, ???])
+
+Meggy Types (not to be confused with the literal prefixes above, for example these may appear as a return type)
+    Meggy . Color 
+    Meggy . Button
+    Meggy . Tone
+-}
 
 module ReLex where
 
 import Lexer
 
---Combines token sequences for more logical parsing
--- Example: [TokenBigMeggy, TokenDot, TokenSetPixel] -> TokenMeggySetPix
 tokenSimplifier :: [(Token, (Int,Int))] -> [(Token, (Int,Int))]
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenSetPixel,(_,_)):rest)                = (TokenMeggySetPix, (r1,c1)):(tokenSimplifier rest)
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenToneStart,(_,_)):rest)               = (TokenMeggyToneStart, (r1,c1)):(tokenSimplifier rest)

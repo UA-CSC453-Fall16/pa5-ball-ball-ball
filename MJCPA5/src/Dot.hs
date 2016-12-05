@@ -252,8 +252,6 @@ astdotviz_rec _ myid astnode =
 
             (Epsilon) -> (myid, prefix++"(Epsilon - Ignore)"++suffix)
 
-            --x -> error ("Found " ++ show x ++ " but did not match any pattern\n") 
-
 visitChildren :: Int -> Int -> [AST] -> (Int,String)
 visitChildren _ myid [] = (myid,"")
 visitChildren pid myid (x:xs) =

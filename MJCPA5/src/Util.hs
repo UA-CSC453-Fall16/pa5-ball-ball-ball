@@ -14,6 +14,8 @@
 
 module Util where
 
+import Data.Map as M
+
 data AST
     -- Overall structure
     = Prog      AST [AST]           -- Program has a main class and list of classes
@@ -94,6 +96,19 @@ data TypeSig
     = TS [(String,Type)] Type       -- A TypeSignature has a list of parameters, which are (Identifier, Type) tuples, and a return type
     deriving(Show,Eq)
 
+-- SymbolTable data structure
+-- Scope is outermost program scope and the stack of strings keeps track
+-- of our current scope nesting.
+data SymbolTable = SymTab Scope [String]
+    deriving (Show,Eq)
+
+type Scope = M.Map String STE
+
+data STE
+    =   ClassSTE    String Scope Int -- String is name, int is the max offset for member variables
+    |   MethodSTE   String (Scope, TypeSig) Int -- String is name, int is the max offset for params and local variables
+    |   VarSTE      Type String String Int -- Type, Name, Base, Offset
+    deriving (Show,Eq)
 
 -- Provided header and footer code 
 -- Written by instructors of CS453, not myself

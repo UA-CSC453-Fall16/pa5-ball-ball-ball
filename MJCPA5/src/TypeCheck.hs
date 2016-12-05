@@ -17,7 +17,6 @@ module TypeCheck where
 
 import Util
 import SymbolTable
-import Debug.Trace
 
 -- entry point
 typeCheck :: (AST, SymbolTable)-> Bool
