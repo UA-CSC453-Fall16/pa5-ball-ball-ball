@@ -1,6 +1,6 @@
 import meggy.Meggy;
 
-class Variable1{
+class VariableError1{
 	public static void main(String[] args){
 		new C().test();
 	}
@@ -8,11 +8,7 @@ class Variable1{
 
 class C{
 	public void test(){
-		int var;
-		byte variable;
-		Meggy.Color color;
-		boolean b;
-		Meggy.Button butt;
-		Meggy.Tone t;
 	}
-} 
+
+	int var;
+}
