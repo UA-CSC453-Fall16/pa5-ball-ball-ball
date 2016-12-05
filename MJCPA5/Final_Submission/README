@@ -1,0 +1,24 @@
+PA5 - CS453 - Dr. Strout
+
+Initial Group: Ben Shields, Theodore Sackos
+
+Final Group:   Ben Shields, Theodore Sackos
+
+Usernames:     theodorejsackos
+               benjaminshields
+
+E-mails:       theodorejsackos@email.arizona.edu
+               benjaminshields@email.arizona.edu
+
+Credit is due where credit is due:
+
+* Dot.hs was adapted from PA3 Group 3881
+* Lexer.hs was based off of the class code
+* SymbolTable.hs was based off of the class code
+* SymbolTable.hs's symTabToString and genSTEs functions
+  were adapted from PA4 Group 9748
+
+Notes on compiler:
+* Our code is inherently obfucscated!
+* Highly upgraded from PA4, it now handles recursion!
+
