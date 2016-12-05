@@ -1,4 +1,4 @@
-2016-12-04 17:41:12,483 [main] FATAL ui.AVRSim - Encountered error during runtime.
+2016-12-04 17:42:00,656 [main] FATAL ui.AVRSim - Encountered error during runtime.
 instructions.RuntimeError: Hit max number of jumps for label: MJ_L4:
 	at machine.MachineState.executeInstruction(MachineState.java:310)
 	at ui.AVRSim.runAssem(AVRSim.java:97)
