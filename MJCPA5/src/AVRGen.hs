@@ -903,7 +903,7 @@ avrCodeGen ((Assignment variable value), st) label=
         implicitThis   = if variableBase == " Z " then "    # Variable is class member, goes to memory\n    ldd r31, Y + 2\n    ldd r30, Y + 1\n" else "    # Variable belongs to method, will go on stack\n"
 
         storeLow       = "    std   " ++ variableBase ++ "+ " ++ show variableOffset ++ ", r24\n"
-        storeHi        =  if retSize valueType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
+        storeHi        = if retSize valueType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
     in
         (newLabel, 
                 valueExpr 
@@ -914,7 +914,7 @@ avrCodeGen ((Assignment variable value), st) label=
         ++      implicitThis
         ++ "    # Store the right hand side value into " ++ variable ++ "\n"
         ++      storeLow   
-        ++      storeHi       
+        ++      storeHi
         )
 
 avrCodeGen ((ArrayAssignment variable index value), st) label = 
