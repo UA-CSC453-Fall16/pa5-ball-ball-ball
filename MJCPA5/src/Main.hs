@@ -1,11 +1,3 @@
-
--- SymbolTable.hs
---
--- Step (0) of compiling. Entry point of program.
---
--- Main Module 
---
-
 module Main where
 
 import System.IO
@@ -22,15 +14,17 @@ import AVRGen
 
 main :: IO ()
 main = do
-    -- get input
+
+    -- Store the source text as the string raw_input.
     [inf_name] <- getArgs
     in_file <- openFile inf_name ReadMode
     raw_input <- hGetContents in_file
 
-    -- create tokens (Lexer.hs)
+    -- Convert the source text into a list of tokens and store it in tokens1
     let tokens1 = lexer raw_input
 
     -- simplify tokens with second lexing pass (ReLex.hs)
+    -- For example, [..., TokenLeftParen, TokenByte, TokenRightParen, ...] == ReLex ==> [..., TokenByteCast, ...]
     let final_token_string = tokenSimplifier tokens1
     
     putStrLn ("\nTwittling thumbs... \n\t -> Lexing Done.")
@@ -46,11 +40,11 @@ main = do
     out_file <- openFile outf_name WriteMode
     hPutStrLn out_file dot
     hClose out_file --AST Dot debug output
-    putStrLn ("Checking Piazza... \n\t -> AST dot file generated")
+    putStrLn ("Checking Piazza... \n\t -> AST dot file Generated.")
 
     -- traverses AST and builds a symbol table (BuildST.hs)
     let symbol_table = genSymbolTable ast
-    putStrLn ("Oh yes! We call him little Bobby Tables... \n\n")-- ++ (symTabToString symbol_table 0))
+    putStrLn ("Oh yes! We call him little Bobby Tables...\n\t -> Symbol Table Generated.")-- ++ (symTabToString symbol_table 0))
 
     -- uses AST and symbol table to perform type checking (TypeCheck.hs)
     if typeCheck (ast, symbol_table) then
@@ -69,6 +63,3 @@ main = do
     hPutStrLn out_file avr_code
     hClose out_file
     putStrLn ("You win this time...\n\t -> AVR Code written to file: " ++ outf_name ++ "\nBye Weirdo!\n\n")
-    {- start of omit shit because we are testing" comment
-
-    End of "omit shit because we are testing" comment -}
