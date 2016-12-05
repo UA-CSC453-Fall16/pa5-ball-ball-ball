@@ -25,11 +25,11 @@ class C{
 
 	public int test2(){
 		int[] AI;	
-		AI = new int[3];
+		AI = new int[(byte)3];
 		
 		Meggy.delay(AI[0]);
 
-		return ia[1];
+		return ia[(byte)1];
 	}
 
 	public Meggy.Color test3(){

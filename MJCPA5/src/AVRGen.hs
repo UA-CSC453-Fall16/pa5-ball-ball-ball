@@ -71,7 +71,7 @@ avrCodeGen ((Boolean value), _) label =
 avrCodeGen ((Identifier id), st) label = 
     let
         id_type  = tCheck ((Identifier id), st)
-        pushSize = retSize id_type
+        pushSize = typeToBytes id_type
         offset   = lookupVariableOffset st id 
         base     = lookupVariableBase   st id
 
@@ -830,7 +830,7 @@ avrCodeGen ((IntArrayInstance capacity), st) label =
     let
         (newLabel, capacityExpr) = avrCodeGen (capacity, st) label
         capacityType = tCheck (capacity, st)
-        loadAndPushExp = if retSize capacityType == 2 then (arrayLoadAndCast 2 26) else (arrayLoadAndCast 1 26)
+        loadAndPushExp = if typeToBytes capacityType == 2 then (arrayLoadAndCast 2 26) else (arrayLoadAndCast 1 26)
     in
         (newLabel, 
                 capacityExpr
@@ -898,12 +898,12 @@ avrCodeGen ((Assignment variable value), st) label=
         variableOffset = lookupVariableOffset st variable 
 
         loadLow        = "    pop r24\n"
-        loadHi         = if retSize valueType == 2 then "    pop r25\n" else ""
+        loadHi         = if typeToBytes valueType == 2 then "    pop r25\n" else ""
 
         implicitThis   = if variableBase == " Z " then "    # Variable is class member, goes to memory\n    ldd r31, Y + 2\n    ldd r30, Y + 1\n" else "    # Variable belongs to method, will go on stack\n"
 
         storeLow       = "    std   " ++ variableBase ++ "+ " ++ show variableOffset ++ ", r24\n"
-        storeHi        = if retSize valueType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
+        storeHi        = if typeToBytes valueType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
     in
         (newLabel, 
                 valueExpr 
@@ -934,7 +934,6 @@ avrCodeGen ((ArrayAssignment variable index value), st) label =
                                             ""
 
         store          = "    std Z+0, r24\n" ++ if valueType == IntType then "    std Z+1, r25\n" else ""
-
     in
         (newLabel2, 
                 variableCode 
@@ -1091,7 +1090,7 @@ setUpFunctionCall st@(SymTab prog_scope [method_name,class_name]) =
                      ++ "    pop r24\n"
                      ++ "    pop r25\n"
                      ++ "    call " ++ id ++ "\n"
-        ret_exp_size = retSize ret_type
+        ret_exp_size = typeToBytes ret_type
     in
         if ret_exp_size == 2 then
             (params ++ call_function ++ 
@@ -1107,20 +1106,10 @@ setUpFunctionCall st@(SymTab prog_scope [method_name,class_name]) =
 
 setUpFunctionCall st = error("Error: AVRGen, setUpFunctionCall:\n"++ (symTabToString st 0))
 
--- called by setUpFunctionCall
-retSize :: Type -> Int
-retSize IntType        = 2
-retSize (ClassType _)  = 2
-retSize IntArrayType   = 2
-retSize ColorArrayType = 2
-retSize MeggyToneType  = 2
-retSize VoidType       = 0
-retSize other          = 1
-
 helpStoreMethodParams :: [(String, Type)] -> SymbolTable -> Int -> String
 helpStoreMethodParams [] st reg = ""
 helpStoreMethodParams ((pName,pType):rest) st reg
-    | retSize pType == 2 =
+    | typeToBytes pType == 2 =
         let
             offsetH = lookupParamOffset st pName
             offsetL = offsetH
@@ -1136,7 +1125,7 @@ helpStoreMethodParams ((pName,pType):rest) st reg
 
 helpLoadMethodReturnValue :: Type -> String
 helpLoadMethodReturnValue ret_type                  -- = to fix syntax hilighting.
-    | retSize ret_type == 2 = "    # load a two byte expression off stack\n"
+    | typeToBytes ret_type == 2 = "    # load a two byte expression off stack\n"
                            ++ "    pop r24\n"
                            ++ "    pop r25\n"
     | ret_type == VoidType = "    # Nothing to return -> Void return type\n"
@@ -1146,7 +1135,7 @@ helpLoadMethodReturnValue ret_type                  -- = to fix syntax hilightin
 functionLoadParams :: [(String, Type)] -> Int-> String
 functionLoadParams [] reg = ""
 functionLoadParams ((pName, pType):rest) reg
-    | retSize pType == 2 =
+    | typeToBytes pType == 2 =
         "    # load a two byte expression off stack\n"
      ++ "    pop r"++show reg++"\n"
      ++ "    pop r"++show (reg+1)++"\n"

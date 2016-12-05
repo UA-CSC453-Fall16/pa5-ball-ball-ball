@@ -1,6 +1,6 @@
 import meggy.Meggy;
 
-class VariableError0{
+class VarErr1{
 	public static void main(String[] args){
 		new C().test();
 	}
@@ -8,7 +8,7 @@ class VariableError0{
 
 class C{
 	public void test(){
-		Meggy.delay(400);
-		int var;
 	}
+
+	int var;
 }

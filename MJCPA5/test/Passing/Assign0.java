@@ -13,7 +13,7 @@ class C{
 		boolean bb;
 		Meggy.Color mc;
 		Meggy.Tone mt;
-		Meggy.Button mb;
+		//Meggy.Button mb;
 
 		int[] ia;
 		Meggy.Color[] mca;

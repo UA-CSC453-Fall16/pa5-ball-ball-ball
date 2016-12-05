@@ -132,12 +132,13 @@ insertParam (SymTab progScope [methodname,classname]) param pType =
 
 -- helper function to insertParam, determines offset based on type
 typeToBytes :: Type -> Int
-typeToBytes (ClassType name) = 2
-typeToBytes IntType          = 2
-typeToBytes IntArrayType     = 2
-typeToBytes ColorArrayType   = 2 --;
-typeToBytes MeggyToneType    = 2
-typeToBytes other = 1
+typeToBytes (ClassType _)   = 2
+typeToBytes IntType         = 2
+typeToBytes IntArrayType    = 2
+typeToBytes ColorArrayType  = 2
+typeToBytes MeggyToneType   = 2
+typeToBytes VoidType        = 0
+typeToBytes other           = 1
 
 -- Given some current scope, and a parameter name, lookup the type of the parameter
 lookupParamType :: SymbolTable -> String -> Type

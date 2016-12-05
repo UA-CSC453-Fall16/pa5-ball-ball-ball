@@ -1,10 +1,9 @@
 #!/bin/bash
 
 function cmp() {
-    PARAM="$1"
-    SOURCE="test/$PARAM"
+    SOURCE="$1"
 
-    output=`stack exec MJCPA5 "$SOURCE"` # can possibly use suppress
+    stack exec MJCPA5 "$SOURCE"  >/dev/null 2>/dev/null # can possibly use suppress
 
     if [ $? == 0 ]; then 
         mv "$SOURCE.s" ./ours.s
@@ -13,7 +12,7 @@ function cmp() {
         ours=1
     fi
 
-    outpus=`java -jar MJ.jar "$SOURCE"`
+    java -jar MJ.jar "$SOURCE"  >/dev/null 2>/dev/null
     if [ $? == 0 ]; then 
         mv "$SOURCE.s" ./ref.s
         theirs=0
@@ -35,29 +34,31 @@ function cmp() {
     fi
 }
 
+FOLDER="test/$1"
+
 clear
-
-echo "Usage: bash test.sh"
-
+echo "Usage: bash test.sh <FOLDER>"
 stack build MJCPA5 
 
 if [ $? == 0 ]; then
     # don't use spaces around '=' ?
-    rm test/Passing/*.dot
-    rm test/Passing/*.png
-    FILES=$(ls test/Passing) # `` surrounding a command gets its result as a string
+    rm "$FOLDER"/*.dot 2> /dev/null
+    rm "$FOLDER"/*.png 2> /dev/null
+    rm "$FOLDER"/*.s 2> /dev/null
+    FILES=$(ls $FOLDER) # `` surrounding a command gets its result as a string
 
     res=""
     for x in $FILES
     do
-        cmp "Passing/$x"
+        cmp "$FOLDER/$x"
         if [$res == ""]; then
-            echo "test $x passed"
+            echo -e "$x\tpassed"
         else
             echo "--------------"
-            echo "TEST $x FAILED"
+            echo -e "$x\tFAILED"
             echo "--------------"
         fi
     done
-    rm test/Passing/*.dot
+    rm "$FOLDER"/*.dot 2> /dev/null
+    rm "$FOLDER"/*.s 2> /dev/null
 fi
