@@ -1,0 +1,838 @@
+commit c66dd45cfbdf239373b04429eb60dd2da4eefd91
+Merge: 0d9c233 c2091bb
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Mon Dec 5 02:59:12 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 0d9c233e54f7f46b3470dadb2d5f9614fefbdc95
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Mon Dec 5 02:59:05 2016 -0700
+
+    Ascii art!
+
+commit c2091bbdcaf960de56d7c321f3bbdc7f97dc6c05
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Mon Dec 5 02:58:19 2016 -0700
+
+    Finalized documentation
+
+commit 1df5037998ee0b2668208c480326426182f2ffd4
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Mon Dec 5 02:51:46 2016 -0700
+
+    new fonts
+
+commit 5863dd68c56b26689be78365c1705516faf9c2f9
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Mon Dec 5 02:44:41 2016 -0700
+
+    updated ascii text
+
+commit bebd5fc6ca5da2e8ae68f792ed836d4cbb8d9ba3
+Merge: e224b6c 2ab32cf
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Mon Dec 5 02:42:26 2016 -0700
+
+    updated documentation
+
+commit 2ab32cfed3f2ae31b6b06f9e5e621855a1ef51b3
+Merge: 6e34f6b c306ba6
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Mon Dec 5 02:40:54 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 6e34f6b48423749d8735e138c14c80b0e9a52d58
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Mon Dec 5 02:40:45 2016 -0700
+
+    now we can have identifiers of: A, B, Up, Down, Left, and Right. Put a hack in Lexer.hs and changed Relex.hs
+
+commit e224b6c9c5a818db5b2a8ac51508155af5537a0b
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Mon Dec 5 02:39:57 2016 -0700
+
+    updated documentation
+
+commit c306ba6042794912c9876a568dbf1bbb36278f73
+Merge: 1cc0a18 8836ad1
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Mon Dec 5 00:59:17 2016 -0700
+
+    Start of code documentation process
+
+commit 1cc0a186d4d0ace02b04a0bf02058662c366b6fb
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Mon Dec 5 00:58:27 2016 -0700
+
+    Start of code documentation process
+
+commit 8836ad179cef877bc2734f984d0a0438e97e24a9
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Mon Dec 5 00:58:17 2016 -0700
+
+    merging
+
+commit 557d2d85db1f20cf1e6f02f285624e451b995cb8
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Mon Dec 5 00:49:29 2016 -0700
+
+    preparing final submission
+
+commit 8eab9d75863731d6a0a526296644d44d4a32e0c7
+Merge: 1effc94 3eb3791
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 21:32:00 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 1effc9433d29ee7967c9fccba9fa5bb2841da090
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 21:31:48 2016 -0700
+
+    I made my own version of regress.sh! It's called test.sh. I removed the redundant function retSize and replaced calls to it with typeToBytes
+
+commit 74338e396be90399a26f1c8097966a77c1cc46a7
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 21:29:04 2016 -0700
+
+    I made my own version of regress.sh! It's called test.sh. I removed the redundant function retSize and replaced calls to it with typeToBytes
+
+commit 3eb3791e20cfbfbdceb6b65126e2bf860eac4f31
+Merge: ee102b0 20a0d11
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 20:52:51 2016 -0700
+
+    fixed if statements not being able to be followed by a return statement
+
+commit ee102b083f3900d5e5fd66be65611ef87a7959a4
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 20:51:15 2016 -0700
+
+    fixed if statements not being able to be followed by a return statement
+
+commit 20a0d113047e28f38c702af3a56a349c9b68f24f
+Merge: e1db09f b10b661
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 20:21:16 2016 -0700
+
+    being so productive
+
+commit e1db09f79437625cbacce198b2bdf59c69d5c69b
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 20:17:53 2016 -0700
+
+    We are being very productive right now doing bash scripts
+
+commit b10b6611347d0c7584bd2b2497f94a5b385f747a
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 19:44:48 2016 -0700
+
+    all test cases have been run and partitioned
+
+commit 0e3683a4c84be34e8b49d9080ba621189af24ae7
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 19:44:30 2016 -0700
+
+    all test cases have been run and partitioned
+
+commit a65141e31eae6afd86b4734cc5050f5e2e8ec7ad
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 19:18:47 2016 -0700
+
+    Updated scripts to be executables
+
+commit 2c37dd1a4a5fd33077c19b3d8ba2ad5090278444
+Merge: f9c1b0c 0a49a5b
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 19:02:36 2016 -0700
+
+    commit to merge with ben's fixes
+
+commit f9c1b0c4fb10c1bad2432cb851e3882334c4407b
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 19:01:04 2016 -0700
+
+    commit to merge with ben's fixes
+
+commit 0a49a5bc081935bc8cf45dd943dff4ad16e6f5b0
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 19:00:50 2016 -0700
+
+    merging
+
+commit 162f262ac5e7c7c87c92230854fb44e4a9803e05
+Merge: deb2ab1 8e9ee52
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 18:27:29 2016 -0700
+
+    merging
+
+commit deb2ab1da0c3446fc731486ee8fab21e2a86b018
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 18:26:38 2016 -0700
+
+    merging
+
+commit 8e9ee528750e11f2f6efe2648e4d281381902a4c
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 18:25:22 2016 -0700
+
+    Fixed recursion bugs, we were using PA4 code for the critical task of generating code for identifiers (which is a little different when we include the flexibility of class and method variables)
+
+commit 098b0d14c828a677e069aa57b0f1c97eecf94ec8
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 17:45:33 2016 -0700
+
+    Idk why you're not getting these
+
+commit 586ca93aa39a5979eefb2b353de87dbdcd545168
+Merge: 16d4feb 60093d8
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 17:44:46 2016 -0700
+
+    no change
+
+commit 16d4febaf8693a47f483a6b89624996ff0a88941
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 17:43:55 2016 -0700
+
+    no change
+
+commit 60093d8a22b984e26dd1c923c994262d41d1603e
+Merge: 4a4d950 9292d2e
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 17:43:04 2016 -0700
+
+    merging
+
+commit 9292d2e2d88e66efeae048188b80d360e49fb220
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 17:41:36 2016 -0700
+
+    No changes, we are ignoring the issues or storing and using MeggyButton variables
+
+commit 4a4d95060a8ed9a68067c54367bf4537219bd1dc
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 17:41:29 2016 -0700
+
+    we're working on getting recursion to work
+
+commit 367131f902f6236ed495f4822af38f63416f9e2c
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 16:22:57 2016 -0700
+
+    fixed stack allocation size for meggy tones
+
+commit de42dd8b841b7f19b3a45f74dcf483deddd3994e
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 04:17:05 2016 -0700
+
+    still pass all previous tests, now passing invoke0.java
+
+commit 94ee302862c6a1b239d1032d72b3dcf8f880efe6
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 03:51:28 2016 -0700
+
+    Okay, so array[0, 1, 2, 6] param0 and access1 all work and are doing well. Things to consider are whether or not we sub 1 from bitchassinteger when we grab the activation size or somethign like that idk
+
+commit 6758b19ea61819eee49f9727f6805f49d864106e
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 01:58:52 2016 -0700
+
+    Bitch ass integer got fixed. Array0.java successfully runs.
+
+commit 3fb3d9f77c5f985cc525ee7347a26ac9b537eb75
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 00:44:31 2016 -0700
+
+    Fixing bugs in AVRCodeGen, have not yet fully compiled
+
+commit 3e6d461917a037d6576fd12fa57c5f553a30e942
+Merge: cb5c3d5 510c8ef
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 00:07:16 2016 -0700
+
+    merging
+
+commit 510c8ef179a4a1d8f3367c03cd7ad029b508c207
+Merge: a80c5e6 1adc0cc
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 00:05:00 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit a80c5e62fa6e03de1023c5b21c0e95c1eb939180
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sun Dec 4 00:04:44 2016 -0700
+
+    Okay, so. We implemented the Array functionality to AVR code gen. Updated the way the program classes and methods are traversed due to changes in the AST structure in code gen. This way we handle the new way to do things
+
+commit cb5c3d540e68663cd4a2ac1d86c1bfe06ddf1fe2
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sun Dec 4 00:04:18 2016 -0700
+
+    implemented AVRGen.hs functions: length, instance, invoke, retSize
+
+commit 1adc0cc294ef0e52d9e3e22888272c31d5af6b12
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 20:38:17 2016 -0700
+
+    uncommented code gen in Main.hs
+
+commit 6067e991d5f85b0d91ac19ea14eb9129653af82a
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 20:36:20 2016 -0700
+
+    changed a parseP production
+
+commit 39d88d0f17de414b98d4c958b30a2f41b203ac18
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 20:14:47 2016 -0700
+
+    round 1 of type check testing completed, many fixes applied
+
+commit 4346e24aac797290b86e84bfbe3116b03c69eb7b
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 17:57:16 2016 -0700
+
+    adding back in all the things that were deleted
+
+commit 0c6d4bf96ca264956b892de0b6a38857cd90d807
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 17:52:13 2016 -0700
+
+    time to test out typeChecking
+
+commit 4fd15429c6e9ad7d9bb7dbe1fa7423a4eb871f5f
+Merge: 895d4d0 00686ec
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 17:18:23 2016 -0700
+
+    um merge
+
+commit 895d4d06a389be30c7ce0e114bc392279658380c
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 17:15:03 2016 -0700
+
+    attempted to bring typechecking for instance and invoke up to speed with the changes to parser and symboltable
+
+commit 00686ec04250cd266aa188620cf72874ae75589e
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 17:14:30 2016 -0700
+
+    implemented type checking for array types, added test cases for array type checking
+
+commit 33afffcbb77f76493f4c6e6b50232d1f334f702f
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 17:04:59 2016 -0700
+
+    implemented type checking for array types
+
+commit 5dc9d58658570d1f07444493695c91eb97e3ce0c
+Merge: 433e596 1b06c53
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 16:07:46 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 433e5966b6e93462ced77683fa1128c617d1dbee
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 16:07:43 2016 -0700
+
+    int array color array array length typ checking
+
+commit 1b06c53f64c4074e614ebee29e2bea746d4df8e2
+Merge: ef6747f f970c5e
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 16:06:53 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit ef6747fd698392e8f4b50685a8684e21bbde6031
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 16:06:47 2016 -0700
+
+    merging, symtab, pretty print symtab, and buildst are complete
+
+commit f970c5e86a6bec80fbf67ff4a533855c235a362d
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 16:06:12 2016 -0700
+
+    not much has changed
+
+commit 35667f13a8fffcf23a21423001b1380156849c71
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 15:54:27 2016 -0700
+
+    fixed parser bug for nullable ParseU - it shit its pants on token public because the pattern for the follow set came after the general pattern
+
+commit 0f6469c0e3ad330a3460d3528908236b7bbed73d
+Merge: b411e46 9e5c4a0
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 15:22:43 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit b411e460256270838d3a26b68ead6ce66010111d
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 15:22:35 2016 -0700
+
+    refactored SymbolTable.hs and BuildST.hs to work with our new Parser, compiles, added a pretty print for SymTab
+
+commit 9e5c4a0444fa226712cd0a05d2fa4fc0d26d0d8b
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 15:22:30 2016 -0700
+
+    Started updating typechecker, the AST nodes at the top of Util are good I think, Invoke and instance are next
+
+commit 868c10abbf300bcfa158b2eece0915288e73586a
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 14:12:39 2016 -0700
+
+    removed void type variables from being parsed
+
+commit 0d5c07d4ec94ce892774a14d3d959faaf60b1a7c
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 14:00:30 2016 -0700
+
+    All done with parser for now
+
+commit 5460f290d4b9b1e7af181d0e9a32fbfd459f7c89
+Merge: 5fb3c0f 9945876
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 13:13:18 2016 -0700
+
+    fixed merge conflict
+
+commit 5fb3c0f5da0c51f725eafa3ab59e95c3a5e43804
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 13:12:08 2016 -0700
+
+    nothing much.
+
+commit 99458765c9fc6a50943d65cbc6205f752697ca3a
+Merge: 5cfaca1 3d05f47
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 13:11:28 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 5cfaca1d367b2296b8fe2847af3389b7ccb2b03a
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 13:11:20 2016 -0700
+
+    merging, working in BuildST.hs and SymbolTable.hs
+
+commit 3d05f473e9a0481a08d9dace4817bd7ab9cb44dc
+Merge: 15169f7 a6516a8
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 13:10:25 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 15169f788a761cfc9084c9d3ba01b85a2b10f9a5
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 13:09:03 2016 -0700
+
+    added setAuxLeds ast to parser
+
+commit b1b2067f913f934f6a4906814ef920d3ac2327a3
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 13:03:45 2016 -0700
+
+    fixed method name issue for dot file
+
+commit a6516a8ff9ebed5d4d5cb49509542a976305e7da
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 12:11:26 2016 -0700
+
+    I am merged now
+
+commit 2e50e0e5eab176928023602d674a3a7b204482a9
+Merge: 49d9bda 0b524dc
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 11:56:12 2016 -0700
+
+    merging
+
+commit 49d9bda2cbe9912a1e1cc1678c1a9c25b0507416
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Sat Dec 3 11:50:32 2016 -0700
+
+    pulling
+
+commit 0b524dccda2bdbd2e6365f8e5a136c6ace10f7cb
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 00:51:24 2016 -0700
+
+    added the parsePostE fix to invocations on "this" so that we can parse method calls to things in the local class
+
+commit 58f3883b620f265758b343759f3599904b5ed543
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 00:44:06 2016 -0700
+
+    deleted junk (.dot) files from test directory and added that pattern to gitignore
+
+commit ffbc6247fda60403cbc458cef631befdfa91118b
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Sat Dec 3 00:40:21 2016 -0700
+
+    Okay, so every parser test case we have is passing. Dot should* now work for any possible string you throw at it without having dot complain about the quotes that show creates. I wish I could provide a better explanation of what I did but just check the commit diff on github, not too crazy much changed.
+
+commit d7950d026e05b91e99d3a86de01d71e95416eb4f
+Merge: ec62be2 eb306c5
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Fri Dec 2 21:59:33 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit eb306c5a12d9bf217c6b54e7d00db375ddda406e
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 21:59:23 2016 -0700
+
+    Okay, so we should be parsing everything with the correct productions but now we need to check that it still works (both with regression testing) and for the things we have yet to test
+
+commit ec62be28d9f6be026bb92881d2826d1e24fa4379
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Fri Dec 2 21:59:07 2016 -0700
+
+    probably fixed all of our refactoring of parsePostE
+
+commit cfee76d3f82883009cf63e08e2a8c285dfabf396
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 21:41:43 2016 -0700
+
+    idk
+
+commit 1865a2964070265492e99f052cb38b9428c56d97
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 21:38:20 2016 -0700
+
+    idk
+
+commit e07696633f3791fa90049484b7bd0727e6a03477
+Merge: 7f76b61 75f38ac
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 21:28:37 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 7f76b61e9d71118a8179d02a68b86f49a78c8f12
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 21:28:34 2016 -0700
+
+    yeah I'm never doing that
+
+commit 75f38ac46b7d34a72637f2b074f1c27e4666de2c
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Fri Dec 2 21:27:20 2016 -0700
+
+    fixed some stack build errors
+
+commit a55a7bd617af9b9b679f1f49d65fcb752e453102
+Merge: 430e203 55be0c9
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 21:12:27 2016 -0700
+
+    updated expression parsing for assignments and array assignments
+
+commit 430e20333b62f4c2f231336556a988bfea03bb17
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 21:11:23 2016 -0700
+
+    updated expression parsing for assignments and array assignments
+
+commit 55be0c91d4f7de807a7d7d766cac0aa3153726d5
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Fri Dec 2 21:09:21 2016 -0700
+
+    refactored our invocation, .length, array access, stuff like that
+
+commit 37aa0cd5935f3108a8c16eb0ce180e47effac75f
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Fri Dec 2 01:05:17 2016 -0700
+
+    if the push goes throuh, I'll pull
+
+commit 2dfb75dfd027925daeefab601127807e7941f39d
+Merge: cabe830 7f76075
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Fri Dec 2 00:48:39 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit cabe830bc160b045ee9d2147bed8f697d945f523
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Fri Dec 2 00:48:30 2016 -0700
+
+    preparing to refactor recursive invocation
+
+commit 7f76075790c18c21b3514b5db5e91230c9c1d041
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 00:35:13 2016 -0700
+
+    updated BuildST.hs, we need to implement the SymbolTable functions that it uses but structurally it should be on the right track
+
+commit b78e747d24f48fc0191e9243695688661308aa26
+Merge: 85da90d d44b65d
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Fri Dec 2 00:00:04 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 85da90de4f66783031ab092e789740cfc74cf14a
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 23:59:57 2016 -0700
+
+    okay
+
+commit d44b65d408a43948e5b71165f76a107c7b452209
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 23:59:22 2016 -0700
+
+    preparing to refactor invocation to handle nesting of method invocation
+
+commit 9fed59bfa3a0945248731633415d96101b677e13
+Merge: 1a2824b ea8aa9a
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 22:10:41 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 1a2824bd7ca032db0fce2b0c6cd2c89c054dd980
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 22:10:32 2016 -0700
+
+    did some assignment
+
+commit ea8aa9af710b4fcb659148441144982fe281fc26
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 22:08:39 2016 -0700
+
+    Okay, so AST should now correctly generate without failing no matter what identifiers appear in the source code (using function id instead of show). Array stuff works in parser now.
+
+commit 73ceb5dcfa751a1cabeccc1a67cd9d236c22d675
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 21:36:54 2016 -0700
+
+    array parsing seems to work for basic .length and access[E] expressions, need to run the other test cases when we fix our connection/
+
+commit 6d5fcfbd867f0b1a2d400da4ae21f7958c81f58c
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 20:29:56 2016 -0700
+
+    added some assignment productions to parseStm in Parser.hs
+
+commit 54a0a308cdbf4c6c9d470983a2914fb792a8f31a
+Merge: 2c66939 dc1abda
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 20:27:40 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit dc1abdac2a3f1f1cfe411905555c2a73bfcc46fd
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 20:25:58 2016 -0700
+
+    Added array access and length to parser
+
+commit 2c6693972bbc9fe26568d01cfbf20c0cdceacbbc
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 20:25:32 2016 -0700
+
+    added some assignment productions in parseStm in Parser.hs
+
+commit 05641375f0de824e11b47235612cc111d21fa60e
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 20:04:15 2016 -0700
+
+    rebase
+
+commit 6cd031f9e361ae63da73c57984f1407a5fe2f4a4
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 20:02:02 2016 -0700
+
+    everything good
+
+commit 261c3e4e826b380937b0acebe68c11de2342ce5b
+Merge: 9864ad6 cc56af7
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 20:01:37 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit 9864ad6e627f7a90524bc2a51b9c0da9d3b508d4
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 20:01:18 2016 -0700
+
+    everything good
+
+commit cc56af7423ae0b0193ce210c81342d0beda3d438
+Merge: 3fb155e 75363d2
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 19:56:22 2016 -0700
+
+    new test added VariableFail.java
+
+commit 75363d21dc5a7dc75c86f19da6a6764ff2466fe1
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 19:53:16 2016 -0700
+
+    variable declarations in methods and classes implemented. class variables not yet tested
+
+commit 3fb155e02fd831c7c187ad903a1b3793f19beeb8
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 19:52:22 2016 -0700
+
+    the incremental approach is used to move mountains
+
+commit ae04dcc24149eb5cae52e2fbb9a0c136503a69ee
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 19:13:37 2016 -0700
+
+    we are git pros
+
+commit 24fa42a9398c2d258e0809973f5ed7db50b46635
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 19:11:14 2016 -0700
+
+    lets rebase
+
+commit 3a64f18cb60e4b6753483faff160a50ac99a4730
+Merge: dbcc63f b8a3fa9
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 19:09:22 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit dbcc63f4e7270e2c327ea85e7b5ae6ef904680ad
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 19:09:16 2016 -0700
+
+    no change
+
+commit 69a838123f0b2b824cd50d4aa42404526ed07830
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 19:08:46 2016 -0700
+
+    no change
+
+commit b8a3fa934a0bf94d22a136c3f731ab9b3e96d2bd
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 19:08:02 2016 -0700
+
+    I am a commited programmer
+
+commit daecc1c9208a83f11202ee12f7d99b05cb046ac5
+Merge: c3c8afd a8b5a25
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 19:04:12 2016 -0700
+
+    merge conflicts should be fixed
+
+commit c3c8afd34a7d418c1f03c6be3f2af96a4306072f
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 18:58:30 2016 -0700
+
+    changed parseVD to return list of variable declaration ASTs
+
+commit a8b5a2502ed518e636e95de0b2abe94337b6e6a3
+Merge: 473d659 6a75186
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 18:51:53 2016 -0700
+
+    trying again
+
+commit 473d659e382b8668b7f2808756e523c8f5ef3495
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 18:48:45 2016 -0700
+
+    updated method production and the dot.hs
+
+commit 6a751868dda48cce77b566bfb600a793c598d43f
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 18:19:50 2016 -0700
+
+    added parseVD to Parser.hs
+
+commit 232263939074517c6d1e7aed41407b7724e6359f
+Merge: 3681ff9 cae580e
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 00:39:01 2016 -0700
+
+    Merge branch 'master' of git+ssh://github.com/UA-CSC453-Fall16/pa5-ball-ball-ball
+
+commit cae580e8ca35364b56772485e3935f35beb034c5
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Thu Dec 1 00:37:10 2016 -0700
+
+    added parser stuff for setAuxLeds and added the AST nodes for the PA5 grammer. Still need to update the MD and CD ASt nodes to include variable declarations.
+
+commit 3681ff910a887cbd2deb044c2af37eeba37e8e89
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Thu Dec 1 00:36:16 2016 -0700
+
+    added some productions
+
+commit 861c061129d51289694ce57df04d45a8eff43735
+Merge: 84162a6 a522964
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Wed Nov 30 23:42:14 2016 -0700
+
+    PA4 problems fixed except recursion issue, and fixed merge conflicts
+
+commit 84162a6ddefa2ac2da909a86b5766bc040222653
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Wed Nov 30 23:35:42 2016 -0700
+
+    PA4 problems fixed except recursion issue
+
+commit a5229643e2bcd9ddeb0b730334a451140778a8e9
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Wed Nov 30 23:20:55 2016 -0700
+
+    fixing some PA4 errors
+
+commit 9aacf366c30d26eb9609d61bc22754718c775da7
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Wed Nov 30 22:23:47 2016 -0700
+
+    changed .cabal file, and Tooken
+
+commit 786b25b69b83c3a454116bccd0e916b4c908afc7
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Wed Nov 30 01:52:13 2016 -0700
+
+    productions.txt
+
+commit e555aa585b72761ee18e8e37468ca97ccc51d3f1
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Wed Nov 30 00:28:46 2016 -0700
+
+    updated Lexer.hs and ReLex.hs. New tokens have been added relex should handle tokens that are not explicitly created by the lexer. For example, int[] will lex to TokenInt TokenLeftBracket TokenRightBracket and relex will comine that into TokenIntArrayType, seemed like the simplest solution since relex is already in use.
+
+commit c58f289457dad8fb534ccaea3408de7830498ece
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Tue Nov 29 23:50:57 2016 -0700
+
+    Building off our own PA4 src. Copied it over including the post-submission fix.
+
+commit 55e1d98c27c373850af78fa9432c9fdf574d0b8c
+Author: Benjamin David Shields <benjaminshields@email.arizona.edu>
+Date:   Tue Nov 29 19:37:14 2016 -0700
+
+    newGrammar.txt
+
+commit 8ea4c2fe62551a4404bf09a75e23e1f7b751fffa
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Tue Nov 29 19:04:16 2016 -0700
+
+    Created project
+
+commit 34b6442ebe4e0a45899aebc7660eb1865b830fd4
+Author: Theodore Sackoss <theodorejsackos@email.arizona.edu>
+Date:   Tue Nov 29 18:58:18 2016 -0700
+
+    first push
