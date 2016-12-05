@@ -31,12 +31,15 @@ lexer' input (row,col)    =
     let -- start in state 0 with an empty token string
         ((new_row,new_col), pair@(tok, loc),remaining) = driveTable (row,col) 0 "" input
     in
-        case tok of
-            WhiteSpace   -> lexer' remaining (new_row,new_col)
-            TokenNewLine -> lexer' remaining (new_row,new_col)
-            TokenComment -> lexer' remaining (new_row,new_col)
-            TokenUnknown s  -> error ("ERR: (Lexer) -> Illegal Identifier \"" ++ s ++ "...\" at [" ++ (show new_row) ++ ", " ++ (show new_col) ++ "]")
-            _ -> pair : (lexer' remaining (new_row,new_col) )
+        if new_col == -666 then
+            (TokenMeggyButton, (row,col)) : pair :  lexer' remaining (new_row,col)
+        else
+            case tok of
+                WhiteSpace   -> lexer' remaining (new_row,new_col)
+                TokenNewLine -> lexer' remaining (new_row,new_col)
+                TokenComment -> lexer' remaining (new_row,new_col)
+                TokenUnknown s  -> error ("ERR: (Lexer) -> Illegal Identifier \"" ++ s ++ "...\" at [" ++ (show new_row) ++ ", " ++ (show new_col) ++ "]")
+                _ -> pair : (lexer' remaining (new_row,new_col) )
 
 -- Table driven analysis.
 -- From given state will continue to add to the first string
@@ -44,6 +47,18 @@ lexer' input (row,col)    =
 -- Evaluates to (token, location) tuple and remaining string.
 driveTable :: (Int,Int) -> Int -> String -> String -> ((Int,Int),(Token, (Int,Int)),String)
 driveTable (row,col) currState currTokStr []       = ((row,col),(UnexpectedEOF currTokStr, (row, (col - length currTokStr))), "")
+driveTable (row,col) 0 "" ('M':'e':'g':'g':'y':'.':'B':'u':'t':'t':'o':'n':'.':'A':rest) =
+    ((row+14,-666),((TokenButtonValue "A"),(row,col)),rest)
+driveTable (row,col) 0 "" ('M':'e':'g':'g':'y':'.':'B':'u':'t':'t':'o':'n':'.':'B':rest) =
+    ((row+14,-666),((TokenButtonValue "B"),(row,col)),rest)
+driveTable (row,col) 0 "" ('M':'e':'g':'g':'y':'.':'B':'u':'t':'t':'o':'n':'.':'U':'p':rest) =
+    ((row+15,-666),((TokenButtonValue "Up"),(row,col)),rest)
+driveTable (row,col) 0 "" ('M':'e':'g':'g':'y':'.':'B':'u':'t':'t':'o':'n':'.':'D':'o':'w':'n':rest) =
+    ((row+17,-666),((TokenButtonValue "Down"),(row,col)),rest)
+driveTable (row,col) 0 "" ('M':'e':'g':'g':'y':'.':'B':'u':'t':'t':'o':'n':'.':'L':'e':'f':'t':rest) =
+    ((row+17,-666),((TokenButtonValue "Left"),(row,col)),rest)
+driveTable (row,col) 0 "" ('M':'e':'g':'g':'y':'.':'B':'u':'t':'t':'o':'n':'.':'R':'i':'g':'h':'t':rest) =
+    ((row+18,-666),((TokenButtonValue "Right"),(row,col)),rest)
 driveTable (row,col) currState currTokStr (c:rest) =
     let 
         ((new_row,new_col),next,consume) = nextState (row,col) currState c
@@ -61,7 +76,6 @@ nextStrings :: String -> Char -> String -> Bool -> (String,String)
 nextStrings tokStr c remaining consume 
     | consume      = (tokStr ++ [c], remaining)
     | not consume  = (tokStr       , c:remaining)
-
 
 -- **************************** Specific to one lexer
 -- DFA for implementation.
@@ -210,12 +224,12 @@ lookupKW (row,col) keyword
     | keyword  == "BLUE"        = (TokenColorValue 5, (row,(col - (length keyword))))
     | keyword  == "VIOLET"      = (TokenColorValue 6, (row,(col - (length keyword))))
     | keyword  == "WHITE"       = (TokenColorValue 7, (row,(col - (length keyword))))
-    | keyword  == "Up"          = (TokenButtonValue "Up", (row,(col - (length keyword))))
-    | keyword  == "Down"        = (TokenButtonValue "Down", (row,(col - (length keyword))))
-    | keyword  == "Left"        = (TokenButtonValue "Left", (row,(col - (length keyword))))
-    | keyword  == "Right"       = (TokenButtonValue "Right", (row,(col - (length keyword))))
-    | keyword  == "B"           = (TokenButtonValue "B", (row,(col - (length keyword))))
-    | keyword  == "A"           = (TokenButtonValue "A", (row,(col - (length keyword))))
+    -- | keyword  == "Up"          = (TokenButtonValue "Up", (row,(col - (length keyword))))
+    -- | keyword  == "Down"        = (TokenButtonValue "Down", (row,(col - (length keyword))))
+    -- | keyword  == "Left"        = (TokenButtonValue "Left", (row,(col - (length keyword))))
+    -- | keyword  == "Right"       = (TokenButtonValue "Right", (row,(col - (length keyword))))
+    -- | keyword  == "B"           = (TokenButtonValue "B", (row,(col - (length keyword))))
+    -- | keyword  == "A"           = (TokenButtonValue "A", (row,(col - (length keyword))))
     | keyword  == "C3"          = (TokenToneValue 61157, (row,(col - (length keyword))))
     | keyword  == "Cs3"         = (TokenToneValue 57724, (row,(col - (length keyword))))
     | keyword  == "D3"          = (TokenToneValue 54485, (row,(col - (length keyword))))

@@ -54,7 +54,7 @@ tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenGetPixel,(_,_))
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenCheckButton,(_,_)):rest)             = (TokenMeggyCheckButton, (r1,c1)):(tokenSimplifier rest)
 
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenColor,(_,_)):(TokenDot,(_,_)):rest)  = (TokenMeggyColor, (r1,c1)):(tokenSimplifier rest)
-tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenButton,(_,_)):(TokenDot,(_,_)):rest) = (TokenMeggyButton, (r1,c1)):(tokenSimplifier rest)
+-- tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenButton,(_,_)):(TokenDot,(_,_)):rest) = (TokenMeggyButton, (r1,c1)):(tokenSimplifier rest)
 tokenSimplifier ((TokenBigMeggy, (r1,c1)):(TokenDot,(_,_)):(TokenTone,(_,_)):(TokenDot,(_,_)):rest)   = (TokenMeggyTone, (r1,c1)):(tokenSimplifier rest)
 
 --PA5 Relex
