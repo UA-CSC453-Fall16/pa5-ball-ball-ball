@@ -356,14 +356,6 @@ typeCheckInvoke ([], []      , ret_type) method_name st = ret_type
 typeCheckInvoke (extra:[], [], ret_type) method_name st = error(method_name ++ " invocation error: extra parameter found of type: " ++ show extra)
 typeCheckInvoke ([], extra:[], ret_type) method_name st = error(method_name ++ " invocation error: insufficient number of parameters, requires: " ++ show extra)
 
-typeCheckInvoke ( (param@(Identifier id):restP), ((exp_name,expected_type):restE), ret_type) method_name st
-    | expected_type == IntType && param_type == ByteType = typeCheckInvoke (restP, restE, ret_type) method_name st1
-    | param_type /= expected_type = error(method_name ++ " invocation error: expected type:" ++ show expected_type ++ " but found type: " ++ show param)
-    | otherwise = typeCheckInvoke (restP, restE, ret_type) method_name st1
-    where
-        st1 = pushScope st method_name
-        param_type = (tCheck (param, st1))
-
 typeCheckInvoke ( (param:restP), ((exp_name,expected_type):restE), ret_type) method_name st
     | expected_type == IntType && param_type == ByteType = typeCheckInvoke (restP, restE, ret_type) method_name st
     | param_type /= expected_type = error(method_name ++ " invocation error: expected type:" ++ show expected_type ++ " but found type: " ++ show param)
