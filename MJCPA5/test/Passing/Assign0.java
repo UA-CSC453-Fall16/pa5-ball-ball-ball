@@ -20,12 +20,8 @@ class C{
 
 		i = 10;
 		b = (byte) i;
-		//bb = true;
-		//mc = Meggy.Color.RED;
-
-		// mt = Meggy.Tone.B2; // HOLY FUCK THIS LAG
-
-		mb = Meggy.Button.B;
+		bb = true;
+		mc = Meggy.Color.RED;
 
 		ia = new int[2];
 		ia[0] = i + b;

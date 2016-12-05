@@ -2,7 +2,7 @@ import meggy.Meggy;
 
 class Code0{
 	public static void main(String[] args){
-		new C().invoke((byte) 6 * (byte) 2 - 3);
+		new C().invoke((byte) 6 * (byte) (2 - 3));
 		new C().bro();
 		Meggy.delay(new C().ret(5));
 	}
