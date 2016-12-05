@@ -25,7 +25,7 @@ class C{
 
 		// mt = Meggy.Tone.B2; // HOLY FUCK THIS LAG
 
-		mb = Meggy.Button.A;
+		mb = Meggy.Button.B;
 
 		ia = new int[2];
 		ia[0] = i + b;
