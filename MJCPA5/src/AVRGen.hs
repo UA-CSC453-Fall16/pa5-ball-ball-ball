@@ -245,7 +245,7 @@ avrCodeGen ((LogicalAnd child1 child2), st) label =
 
 
 avrCodeGen ((LogicalEqual child1 child2), st) label 
-    | tCheck (child1, st) == IntType && tCheck (child2, st) == IntType =
+    | typeChild1 == IntType && typeChild2 == IntType =
         ( (newLabel2 + 4), code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression for two ints\n"
             ++ "    pop     r18\n"
@@ -267,7 +267,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 3)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == ByteType && tCheck (child2, st) == IntType =
+    | typeChild1 == ByteType && typeChild2 == IntType =
         ( (newLabel2 + 6) , code1 ++ "\n" ++  code2 ++ "\n"
             ++ "    # equality check expression for an int and a byte\n"
             ++ "    pop     r18\n"
@@ -289,7 +289,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 5)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == IntType && tCheck (child2, st) == ByteType =
+    | typeChild1 == IntType && typeChild2 == ByteType =
         ( (newLabel2 + 6) , code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression for a byte and an int\n"
             ++ "    pop     r18\n"
@@ -311,7 +311,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 5)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == ByteType && tCheck (child2, st) == ByteType = 
+    | typeChild1 == ByteType && typeChild2 == ByteType = 
         ( (newLabel2 + 8) , code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression for two byte expressions\n"
             ++ "    pop     r18\n"
@@ -333,7 +333,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 7)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == MeggyColorType && tCheck (child2, st) == MeggyColorType =
+    | typeChild1 == MeggyColorType && typeChild2 == MeggyColorType =
         ( (newLabel2 + 4), code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression for colors\n"
             ++ "    pop     r18\n"
@@ -352,7 +352,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 3)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == BooleanType && tCheck (child2, st) == BooleanType =
+    | typeChild1 == BooleanType && typeChild2 == BooleanType =
         ( (newLabel2 + 4), code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression\n"
             ++ "    pop     r18\n"
@@ -370,12 +370,34 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "    # store result of equal expression\n"
             ++ "MJ_L" ++ (show (newLabel2 + 3)) ++ ":\n"
             ++ "    push    r24\n")
+    | typeChild1 == (ClassType "this") && typeChild2 == (ClassType "this") =
+        ( (newLabel2 + 4), code1 ++ "\n" ++ code2 ++ "\n"
+            ++ "    # equality check expression for two ints\n"
+            ++ "    pop     r18\n"
+            ++ "    pop     r19\n\n"
+            ++ "    pop     r24\n"
+            ++ "    pop     r25\n\n"
+            ++ "    # Do comparasin \n"
+            ++ "    cp      r24, r18\n"
+            ++ "    cpc     r25, r19\n\n"
+            ++ "    breq MJ_L" ++ (show (newLabel2 + 2)) ++ "\n"
+            ++ "    # result is false\n"
+            ++ "MJ_L" ++ (show (newLabel2 + 1)) ++ ":\n"
+            ++ "    ldi     r24, 0\n"
+            ++ "    jmp     MJ_L" ++ (show (newLabel2 + 3)) ++ "\n"
+            ++ "    # result is true\n"
+            ++ "MJ_L" ++ (show (newLabel2 + 2)) ++ ":\n"
+            ++ "    ldi     r24, 1\n"
+            ++ "    # store result of equal expression\n"
+            ++ "MJ_L" ++ (show (newLabel2 + 3)) ++ ":\n"
+            ++ "    push    r24\n")
 
-    | otherwise = error("Error in generating code for equality expression")
+    | otherwise = error("Error in generating code for equality expression, cannot deal with types: " ++ show typeChild1 ++ " == " ++ show typeChild2 ++ "\n")
     where 
         (newLabel1, code1) = avrCodeGen (child1, st) label
         (newLabel2, code2) = avrCodeGen (child2, st) newLabel1
-
+        typeChild1         = tCheck (child1, st)
+        typeChild2         = tCheck (child2, st)
 avrCodeGen ((Add child1 child2), st) label =
     let
         (newLabel1, code1) = avrCodeGen (child1, st) label
@@ -734,7 +756,7 @@ avrCodeGen ((Invoke receiver list_of_params method_name), st) label0 =
         (ClassType receiver_type)         = tCheck (receiver, st)
         st1                               = if receiver_type /= "this" then pushScope (setProgScope st) receiver_type else popScope st
         st2                               = pushScope st1 method_name
-        (label1, param_evaluations)       = evaluateParams (list_of_params, st2) method_name label
+        (label1, param_evaluations)       = evaluateParams (list_of_params, st) method_name label
         function_call_code                = setUpFunctionCall st2
         st3                               = popScope st2
         st4                               = popScope st3
