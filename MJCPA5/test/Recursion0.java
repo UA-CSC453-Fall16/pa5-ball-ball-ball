@@ -9,7 +9,7 @@ class Recursion0 {
 class C{
 	public void testRecursion(int c){
 		if ( c < 3 )
-			this.testRecursion(c -  1);
+			this.testRecursion(c + 1);
 		Meggy.delay(c);
 	}
 }
