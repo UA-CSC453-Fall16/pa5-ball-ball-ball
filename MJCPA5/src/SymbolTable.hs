@@ -11,6 +11,8 @@ import Data.Map as M
 
 import Util
 
+import Debug.Trace
+
 -- ========================= SymbolTable data structure
 
 -- Scope is outermost program scope and the stack of strings keeps track
@@ -213,6 +215,34 @@ lookupVariableType st@(SymTab progScope [classname]) vname =
             Nothing -> error (vname++" not found in "++classname)
             (Just (VarSTE vartype name base offset)) -> vartype
             (Just x) -> error ("Variable without a type, "++(symTabToString st 0))
+
+{-
+      _____                   _______                   _____                   _______         
+     /\    \                 /::\    \                 /\    \                 /::\    \        
+    /::\    \               /::::\    \               /::\    \               /::::\    \       
+    \:::\    \             /::::::\    \             /::::\    \             /::::::\    \      
+     \:::\    \           /::::::::\    \           /::::::\    \           /::::::::\    \     
+      \:::\    \         /:::/~~\:::\    \         /:::/\:::\    \         /:::/~~\:::\    \    
+       \:::\    \       /:::/    \:::\    \       /:::/  \:::\    \       /:::/    \:::\    \   
+       /::::\    \     /:::/    / \:::\    \     /:::/    \:::\    \     /:::/    / \:::\    \  
+      /::::::\    \   /:::/____/   \:::\____\   /:::/    / \:::\    \   /:::/____/   \:::\____\ 
+     /:::/\:::\    \ |:::|    |     |:::|    | /:::/    /   \:::\ ___\ |:::|    |     |:::|    |
+    /:::/  \:::\____\|:::|____|     |:::|    |/:::/____/     \:::|    ||:::|____|     |:::|    |
+   /:::/    \::/    / \:::\    \   /:::/    / \:::\    \     /:::|____| \:::\    \   /:::/    / 
+  /:::/    / \/____/   \:::\    \ /:::/    /   \:::\    \   /:::/    /   \:::\    \ /:::/    /  
+ /:::/    /             \:::\    /:::/    /     \:::\    \ /:::/    /     \:::\    /:::/    /   
+/:::/    /               \:::\__/:::/    /       \:::\    /:::/    /       \:::\__/:::/    /    
+\::/    /                 \::::::::/    /         \:::\  /:::/    /         \::::::::/    /     
+ \/____/                   \::::::/    /           \:::\/:::/    /           \::::::/    /      
+                            \::::/    /             \::::::/    /             \::::/    /       
+                             \::/____/               \::::/    /               \::/____/        
+                              ~~                      \::/____/                 ~~              
+                                                       ~~                                       
+                                                                                                
+GET RID OF THAT EVIL PATTERN RIGHT BELOW
+-}
+
+lookupVariableType st vname = trace("vname: "++vname++"\n"++(symTabToString st 0)) VoidType
 
 -- Given some current scope, and a variable name, lookup the lower offset of the variable
 lookupVariableOffset :: SymbolTable -> String -> Int
