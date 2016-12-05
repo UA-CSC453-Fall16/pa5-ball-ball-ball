@@ -5,4 +5,4 @@ MJCPA5/.stack-work/*
 *.test
 *.s
 *.dot
-
+*.batch.out
