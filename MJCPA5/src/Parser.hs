@@ -104,7 +104,6 @@ module Parser where
 
 import Lexer
 import Util
---import Debug.Trace
 
 -- entry point
 genAST :: [(Token, (Int,Int))] -> AST
