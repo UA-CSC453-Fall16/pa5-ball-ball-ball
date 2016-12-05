@@ -323,7 +323,7 @@ parseA ((TokenElse, (row,col)):rest) =
         (stmt, ts1)
 
 parseA ((t, (row,col)):rest) = 
-    if t == TokenRightCurly || t == TokenIf || t == TokenWhile || t == TokenMeggySetPix || t == TokenMeggyDelay then
+    if t == TokenRightCurly || t == TokenIf || t == TokenWhile || t == TokenMeggySetPix || t == TokenMeggyDelay || t == TokenReturn then
         (Epsilon, ((t, (row,col)):rest))
     else 
         error("ERR: (Parser - ParseA) Invalid else body on token " ++ show t ++ " at [" ++ show row ++ ", " ++ show col ++ "]\n")
