@@ -29,12 +29,22 @@ avrCodeGen ((Return      child), st) label = avrCodeGen (child, st) label
 -- then return that string
 avrCodeGen (Epsilon, _)   label = (label, "")
 avrCodeGen ((Body []), _) label = (label, "")
+avrCodeGen ((Body ((Return child):[])), st) label = avrCodeGen (child, st) label
+
 avrCodeGen ((Body (stmt:stmts)), st) label
     = let
         (newLabel, codeStr1) = avrCodeGen (stmt, st) label
         (newLabel2, codeStr2) = avrCodeGen ((Body stmts), st) newLabel
+        returnType = tCheck(stmt, st)
+        nakedValue = 
+            if (typeToBytes returnType == 2) then 
+                "    # Discard the naked value\n    pop r12\n    pop r12\n\n"
+            else if (typeToBytes returnType == 1) then
+                "    # Discard the naked value\n    pop r12\n\n"
+            else 
+                ""
     in
-        (newLabel2, codeStr1 ++ codeStr2)
+        (newLabel2, (codeStr1 ++ nakedValue) ++ codeStr2)
 
 --Literals
 avrCodeGen ((IntLiteral i), _) label
@@ -93,10 +103,10 @@ avrCodeGen ((Identifier id), st) label =
 
         loadExp  = "    # Identifier Expression\n    # Loading variable " ++ id ++ " \n" ++ 
             (if base == " Y " then 
-                    "    # Variable is local\n"
+                    "    # Variable is local\n\n    #load the variable\n"
                  ++      loadCode'
             else 
-                    "    # Variable belongs to the class\n"
+                    "    # Variable belongs to the class\n\n    #load the variable\n"
                  ++      classVar
                  ++      loadCode')
     in
@@ -108,7 +118,7 @@ avrCodeGen ((SetAuxLEDs child), st) label =
         (newLabel, code) = avrCodeGen (child, st) label
     in
         (newLabel, code
-        ++ "    \n### Meggy.setAuxLEDs(num) call\n"
+        ++ "    \n    ### Meggy.setAuxLEDs(num) call\n"
         ++ "    # load a two byte expression off stack\n"
         ++ "    pop    r24\n"
         ++ "    pop    r25\n"
@@ -119,7 +129,7 @@ avrCodeGen ((Delay child), st) label =
         (newLabel, code) = avrCodeGen (child, st) label
     in
         (newLabel, code
-        ++ "    \n### Meggy.delay() call\n"
+        ++ "    \n    ### Meggy.delay() call\n"
         ++ "    # load delay parameter\n"
         ++ "    # load a two byte expression off stack\n"
         ++ "    pop    r24\n"
@@ -194,7 +204,7 @@ avrCodeGen ((ByteCast bcExp), st) label
         ++ "    # back on. Low order bits are on top of stack.\n"
         ++ "    pop   r24\n"
         ++ "    pop   r25\n"
-        ++ "    push  r24\n")
+        ++ "    push  r24\n\n")
     where
         (newLabel, bcExpStr) = avrCodeGen (bcExp, st)label
         typeChild = tCheck (bcExp, st)
@@ -218,10 +228,10 @@ avrCodeGen ((GetPixel child1 child2), st) label =
 
 avrCodeGen ((LogicalAnd child1 child2), st) label =
     let
-        (newLabel1, code1) = avrCodeGen (child1, st) label
+        (newLabel1, code1) = avrCodeGen (child1, st) (label + 3)
         (newLabel2, code2) = avrCodeGen (child2, st) newLabel1
     in
-        ( (newLabel2 + 3), 
+        ( newLabel2, 
            "    #Short circuited && operation\n"
         ++ "    # &&: left operand\n"
         ++ code1 ++ "\n"
@@ -233,19 +243,19 @@ avrCodeGen ((LogicalAnd child1 child2), st) label =
         ++ "    ldi     r25, 0\n"
         ++ "    cp      r24, r25\n"
         ++ "    # if left is false short circuit out\n"
-        ++ "    brne    MJ_L" ++ (show (newLabel2 + 2)) ++ "\n"
-        ++ "    jmp     MJ_L" ++ (show (newLabel2 + 1)) ++ "\n"
-        ++ "MJ_L" ++ (show (newLabel2 + 2)) ++ ":\n"
+        ++ "    brne    MJ_L" ++ (show (label + 2)) ++ "\n"
+        ++ "    jmp     MJ_L" ++ (show (label + 1)) ++ "\n"
+        ++ "MJ_L" ++ (show (label + 2)) ++ ":\n"
         ++ "    # right operand\n"
         ++ "    pop     r24\n"
         ++ code2 ++ "\n"
         ++ "    pop    r24\n"
         ++ "    push   r24\n"
-        ++ "MJ_L" ++ (show (newLabel2 + 1)) ++ ":\n")
+        ++ "MJ_L" ++ (show (label + 1)) ++ ":\n")
 
 
 avrCodeGen ((LogicalEqual child1 child2), st) label 
-    | tCheck (child1, st) == IntType && tCheck (child2, st) == IntType =
+    | typeChild1 == IntType && typeChild2 == IntType =
         ( (newLabel2 + 4), code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression for two ints\n"
             ++ "    pop     r18\n"
@@ -267,7 +277,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 3)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == ByteType && tCheck (child2, st) == IntType =
+    | typeChild1 == ByteType && typeChild2 == IntType =
         ( (newLabel2 + 6) , code1 ++ "\n" ++  code2 ++ "\n"
             ++ "    # equality check expression for an int and a byte\n"
             ++ "    pop     r18\n"
@@ -289,7 +299,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 5)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == IntType && tCheck (child2, st) == ByteType =
+    | typeChild1 == IntType && typeChild2 == ByteType =
         ( (newLabel2 + 6) , code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression for a byte and an int\n"
             ++ "    pop     r18\n"
@@ -311,7 +321,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 5)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == ByteType && tCheck (child2, st) == ByteType = 
+    | typeChild1 == ByteType && typeChild2 == ByteType = 
         ( (newLabel2 + 8) , code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression for two byte expressions\n"
             ++ "    pop     r18\n"
@@ -333,7 +343,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 7)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == MeggyColorType && tCheck (child2, st) == MeggyColorType =
+    | typeChild1 == MeggyColorType && typeChild2 == MeggyColorType =
         ( (newLabel2 + 4), code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression for colors\n"
             ++ "    pop     r18\n"
@@ -352,7 +362,7 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "MJ_L" ++ (show (newLabel2 + 3)) ++ ":\n"
             ++ "    push    r24\n")
 
-    | tCheck (child1, st) == BooleanType && tCheck (child2, st) == BooleanType =
+    | typeChild1 == BooleanType && typeChild2 == BooleanType =
         ( (newLabel2 + 4), code1 ++ "\n" ++ code2 ++ "\n"
             ++ "    # equality check expression\n"
             ++ "    pop     r18\n"
@@ -370,12 +380,34 @@ avrCodeGen ((LogicalEqual child1 child2), st) label
             ++ "    # store result of equal expression\n"
             ++ "MJ_L" ++ (show (newLabel2 + 3)) ++ ":\n"
             ++ "    push    r24\n")
+    | typeChild1 == (ClassType "this") && typeChild2 == (ClassType "this") =
+        ( (newLabel2 + 4), code1 ++ "\n" ++ code2 ++ "\n"
+            ++ "    # equality check expression for two ints\n"
+            ++ "    pop     r18\n"
+            ++ "    pop     r19\n\n"
+            ++ "    pop     r24\n"
+            ++ "    pop     r25\n\n"
+            ++ "    # Do comparasin \n"
+            ++ "    cp      r24, r18\n"
+            ++ "    cpc     r25, r19\n\n"
+            ++ "    breq MJ_L" ++ (show (newLabel2 + 2)) ++ "\n"
+            ++ "    # result is false\n"
+            ++ "MJ_L" ++ (show (newLabel2 + 1)) ++ ":\n"
+            ++ "    ldi     r24, 0\n"
+            ++ "    jmp     MJ_L" ++ (show (newLabel2 + 3)) ++ "\n"
+            ++ "    # result is true\n"
+            ++ "MJ_L" ++ (show (newLabel2 + 2)) ++ ":\n"
+            ++ "    ldi     r24, 1\n"
+            ++ "    # store result of equal expression\n"
+            ++ "MJ_L" ++ (show (newLabel2 + 3)) ++ ":\n"
+            ++ "    push    r24\n")
 
-    | otherwise = error("Error in generating code for equality expression")
+    | otherwise = error("Error in generating code for equality expression, cannot deal with types: " ++ show typeChild1 ++ " == " ++ show typeChild2 ++ "\n")
     where 
         (newLabel1, code1) = avrCodeGen (child1, st) label
         (newLabel2, code2) = avrCodeGen (child2, st) newLabel1
-
+        typeChild1         = tCheck (child1, st)
+        typeChild2         = tCheck (child2, st)
 avrCodeGen ((Add child1 child2), st) label =
     let
         (newLabel1, code1) = avrCodeGen (child1, st) label
@@ -526,37 +558,37 @@ avrCodeGen ((Mul child1 child2), st) label =
 
 avrCodeGen ((While child1 child2), st) label = 
     let
-        (newLabel1, condition) = avrCodeGen (child1, st) label
+        (newLabel1, condition) = avrCodeGen (child1, st) (label + 3)
         (newLabel2, whileBody) = avrCodeGen (child2, st) newLabel1
     in
-    (newLabel2 + 3, 
+    (newLabel2, 
        "\n    ### while statement\n"
-    ++ "MJ_L" ++ (show (newLabel2 + 0)) ++ ":\n\n"
+    ++ "MJ_L" ++ (show (label + 0)) ++ ":\n\n"
     ++ condition ++ "\n"
     ++ "    # if not(condition)\n"
     ++ "    # load a one byte expression off stack\n"
     ++ "    pop     r24\n"
     ++ "    ldi     r25, 0\n"
     ++ "    cp      r24, r25\n"
-    ++ "    # WANT breq MJ_L" ++ (show (newLabel2 + 2)) ++ "\n"
-    ++ "    brne    MJ_L" ++ (show (newLabel2 + 1)) ++ "\n"
-    ++ "    jmp     MJ_L" ++ (show (newLabel2 + 2)) ++ "\n"
+    ++ "    # WANT breq MJ_L" ++ (show (label + 2)) ++ "\n"
+    ++ "    brne    MJ_L" ++ (show (label + 1)) ++ "\n"
+    ++ "    jmp     MJ_L" ++ (show (label + 2)) ++ "\n"
     ++ "\n    # while loop body\n"
-    ++ "MJ_L" ++ (show (newLabel2 + 1)) ++ ":\n\n"
+    ++ "MJ_L" ++ (show (label + 1)) ++ ":\n"
     ++ whileBody ++ "\n"
     ++ "\n    # jump to while test\n"
-    ++ "    jmp     MJ_L" ++ (show (newLabel2 + 0)) ++ "\n"
+    ++ "    jmp     MJ_L" ++ (show (label + 0)) ++ "\n"
     ++ "\n    # end of while\n"
-    ++ "MJ_L" ++ (show (newLabel2 + 2)) ++ ":\n")
+    ++ "MJ_L" ++ (show (label + 2)) ++ ":\n")
 
 --Trinary statements
 avrCodeGen ((If child1 child2 child3), st) label =
     let
-        (newLabel1, condition) = avrCodeGen (child1, st) label
+        (newLabel1, condition) = avrCodeGen (child1, st) (label + 3)
         (newLabel2, thenBody)  = avrCodeGen (child2, st) newLabel1
         (newLabel3, elseBody)  = avrCodeGen (child3, st) newLabel2
     in
-        (newLabel3 + 3, 
+        (newLabel3, 
            "    # condition to branch on:\n"  
         ++ condition ++ "\n"
         ++ "    # load if condition\n"
@@ -566,18 +598,18 @@ avrCodeGen ((If child1 child2 child3), st) label =
         ++ "    # cp will compare and set SREG flag\n"
         ++ "    cp      r24, r25\n"
         ++ "    # if they are not equal do a long jump to else body\n"
-        ++ "    brne    MJ_L" ++ (show (newLabel3 + 0)) ++ "\n"
-        ++ "    jmp     MJ_L" ++ (show (newLabel3 + 1)) ++ "\n\n"
+        ++ "    brne    MJ_L" ++ (show (label + 0)) ++ "\n"
+        ++ "    jmp     MJ_L" ++ (show (label + 1)) ++ "\n\n"
         ++ "    # thenBody label for if statement\n"
-        ++ "MJ_L" ++ (show (newLabel3 + 0)) ++ ":\n\n"
+        ++ "MJ_L" ++ (show (label + 0)) ++ ":\n\n"
         ++ thenBody ++ "\n\n"
         ++ "    #break out of thenBody without executing else body\n"
-        ++ "    jmp     MJ_L" ++ (show (newLabel3 + 2)) ++ "\n\n"
+        ++ "    jmp     MJ_L" ++ (show (label + 2)) ++ "\n\n"
         ++ "    # elseBody label for if statement\n"
-        ++ "MJ_L" ++ (show (newLabel3 + 1)) ++ ":\n\n"
+        ++ "MJ_L" ++ (show (label + 1)) ++ ":\n\n"
         ++ elseBody ++ "\n\n"
         ++ "    #done label for if statement\n"
-        ++ "MJ_L" ++ (show (newLabel3 + 2)) ++ ":\n\n")
+        ++ "MJ_L" ++ (show (label + 2)) ++ ":\n\n")
 
 -- from a Meggy.SetPixel statement, post-order traverse to child argumentsto 
 -- get their AVR code strings, concatenate them, then prepend that to the AVR 
@@ -589,7 +621,7 @@ avrCodeGen ((SetPixel bc1 bc2 col), st) label =
         (newLabel3, colstr) = avrCodeGen (col, st) newLabel2
     in
         (newLabel3, bc1str++bc2str++colstr
-        ++ "    \n### Meggy.setPixel(x,y,color) call\n"
+        ++ "    \n    ### Meggy.setPixel(x,y,color) call\n"
         ++ "    # load a one byte expression off stack\n"
         ++ "    pop     r20\n"
         ++ "    # load a one byte expression off stack\n"
@@ -663,7 +695,7 @@ avrCodeGen ((MethDecl []), st) label = (label, "")
 avrCodeGen (MethDecl ((method@(Method variables body method_name sig):rest)), st@(SymTab progScope [class_name])) label =
     let
         f_id      = correctName (class_name ++ method_name)
-        functHead = ("\n\n### Function Head\n    .text\n" ++ ".global " ++ f_id ++ "\n" ++ "   .type " ++ f_id ++ ", @function\n" ++ f_id ++ ":\n")
+        functHead = ("\n\n### Function Head\n    .text\n" ++ ".global " ++ f_id ++ "\n" ++ "    .type " ++ f_id ++ ", @function\n" ++ f_id ++ ":\n")
         functFoot = ("    #restore FP and return\n" ++ "    pop r28\n" ++ "    pop r29\n" ++ "    ret\n" ++ "    .size " ++ f_id ++ ", .-" ++ f_id ++ "\n")
         (newLabel, method_code) = avrCodeGen (method, st) label
         function_complete = functHead ++ method_code ++ functFoot
@@ -734,7 +766,7 @@ avrCodeGen ((Invoke receiver list_of_params method_name), st) label0 =
         (ClassType receiver_type)         = tCheck (receiver, st)
         st1                               = if receiver_type /= "this" then pushScope (setProgScope st) receiver_type else popScope st
         st2                               = pushScope st1 method_name
-        (label1, param_evaluations)       = evaluateParams (list_of_params, st2) method_name label
+        (label1, param_evaluations)       = evaluateParams (list_of_params, st) method_name label
         function_call_code                = setUpFunctionCall st2
         st3                               = popScope st2
         st4                               = popScope st3
@@ -832,9 +864,9 @@ avrCodeGen ((IntArrayInstance capacity), st) label =
     let
         (newLabel, capacityExpr) = avrCodeGen (capacity, st) label
         capacityType = tCheck (capacity, st)
-        loadAndPushExp = if typeToBytes capacityType == 2 then (arrayLoadAndCast 2 26) else (arrayLoadAndCast 1 26)
+        (final_label, loadAndPushExp) = if typeToBytes capacityType == 2 then (arrayLoadAndCast 2 26 label) else (arrayLoadAndCast 1 26 label)
     in
-        (newLabel, 
+        (final_label, 
                 capacityExpr
         ++ "    ### New Integer Array Instance \n"
         ++ "    # Load capacity of array from stack\n"
@@ -865,9 +897,9 @@ avrCodeGen ((ColorArrayInstance capacity), st) label =
     let
         (newLabel, capacityExpr) = avrCodeGen (capacity, st) label
         capacityType = tCheck (capacity, st)
-        loadAndPushExp = if capacityType == IntType then (arrayLoadAndCast 2 26) else (arrayLoadAndCast 1 26)
+        (final_label, loadAndPushExp) = if capacityType == IntType then (arrayLoadAndCast 2 26 label) else (arrayLoadAndCast 1 26 label)
     in
-        (newLabel, 
+        (final_label, 
                 capacityExpr
         ++ "    ### New Color Array Instance \n"
         ++ "    # Load capacity of array from stack\n"
@@ -902,17 +934,22 @@ avrCodeGen ((Assignment variable value), st) label=
         loadLow        = "    pop r24\n"
         loadHi         = if typeToBytes valueType == 2 then "    pop r25\n" else ""
 
+        assgnType      = tCheck ((Identifier variable), st)
+        promotion      = if typeToBytes assgnType == 2 && typeToBytes valueType == 1 then promote 24 label else ""
+        final_label    = if typeToBytes assgnType == 2 && typeToBytes valueType == 1 then newLabel + 2 else newLabel
+
         implicitThis   = if variableBase == " Z " then "    # Variable is class member, goes to memory\n    ldd r31, Y + 2\n    ldd r30, Y + 1\n" else "    # Variable belongs to method, will go on stack\n"
 
         storeLow       = "    std   " ++ variableBase ++ "+ " ++ show variableOffset ++ ", r24\n"
-        storeHi        = if typeToBytes valueType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
+        storeHi        = if typeToBytes assgnType == 2 then "    std   " ++ variableBase ++ "+ " ++ show (variableOffset+1) ++ ", r25\n" else ""
     in
-        (newLabel, 
+        (final_label, 
                 valueExpr 
         ++ "    ### Variable Assignment\n"    
         ++ "    # Load right hand side expression off the stack\n"    
         ++      loadLow   
-        ++      loadHi    
+        ++      loadHi  
+        ++      promotion  
         ++      implicitThis
         ++ "    # Store the right hand side value into " ++ variable ++ "\n"
         ++      storeLow   
@@ -1088,10 +1125,12 @@ setUpFunctionCall st@(SymTab prog_scope [method_name,class_name]) =
         starting_register = (24) - (num_params * 2)
         params = functionLoadParams (reverse paramTypes) starting_register
         id = correctName (class_name ++ method_name)
-        call_function = "\n    #receiver will be passed in as first param\n"
+        call_function = "\n    #### function call\n"
+                     ++ "    # put parameter values into appropriate registers\n"
+                     ++ "    #receiver will be passed in as first param\n\n"
                      ++ "    pop r24\n"
-                     ++ "    pop r25\n"
-                     ++ "    call " ++ id ++ "\n"
+                     ++ "    pop r25\n\n"
+                     ++ "    call " ++ id ++ "\n\n"
         ret_exp_size = typeToBytes ret_type
     in
         if ret_exp_size == 2 then
@@ -1147,21 +1186,23 @@ functionLoadParams ((pName, pType):rest) reg
      ++ "    pop r"++show reg++"\n"
      ++ functionLoadParams rest (reg+2)
 
-arrayLoadAndCast :: Int -> Int -> String
-arrayLoadAndCast bytes reg
+arrayLoadAndCast :: Int -> Int -> Int -> (Int, String)
+arrayLoadAndCast bytes reg label
     | bytes == 2 =
+        (label,
         "    # load a two byte expression off stack\n"
      ++ "    pop r"++show reg++"\n"
      ++ "    pop r"++show (reg+1)++"\n"
      ++ "    push r"++show (reg+1)++"\n"
-     ++ "    push r"++show reg++"\n"     
+     ++ "    push r"++show reg++"\n")     
     | otherwise =
+        (label + 2, 
         "    # load a one byte expression off stack, array length is non-negative we \n"
      ++ "    # can assume that the upper bits will not need to be sign extended\n"
      ++ "    pop r"++show reg++"\n"
-     ++ "    ldi r"++show (reg+1)++", 0\n"
+     ++     (promote reg label)
      ++ "    push r"++show (reg+1)++"\n"
-     ++ "    push r"++show reg++"\n"  
+     ++ "    push r"++show reg++"\n")  
 
 
 -- A list of ASTs (parameters) and the symbol table and the method name and the current label number produce
