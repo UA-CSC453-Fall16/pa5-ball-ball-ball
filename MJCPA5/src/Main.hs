@@ -75,6 +75,6 @@ main = do
     ---write output
     let outf_name = inf_name ++ ".s"
     out_file <- openFile outf_name WriteMode
-    hPutStrLn out_file avr_code
+    hPutStrLn out_file (B.unpack avr_code)
     hClose out_file
     putStrLn ("You win this time...\n\t -> AVR Code written to file: " ++ outf_name ++ "\nBye Weirdo!\n\n")
