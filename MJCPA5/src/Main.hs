@@ -27,7 +27,6 @@ import SymbolTable
 import TypeCheck
 import AVRGen
 
-
 main :: IO ()
 main = do
 
