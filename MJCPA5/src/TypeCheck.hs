@@ -171,7 +171,7 @@ tCheck ((ParenExp child), st)
 
 tCheck ((SetAuxLEDs child), st) 
     | expType  /= IntType = error("Type Error: Invalid expression type passed to Meggy.setAuxLEDs(): " ++ (show expType))
-    | otherwise = expType
+    | otherwise = VoidType
     where
         expType = tCheck (child, st)
         

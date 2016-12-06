@@ -51,7 +51,7 @@ class PA5Execution{
         //Not going to lie, these three lines are used to completely use the grammar
         //My program only needs 46/49 of the grammar.
         unused = -1;
-        unBool = this == this;
+        //unBool = this == this;
         unused = (byte) 4 * (byte) 2; 
 
         dun       = Meggy.Tone.G3;
